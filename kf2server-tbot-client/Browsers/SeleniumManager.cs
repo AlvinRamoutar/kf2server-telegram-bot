@@ -31,7 +31,18 @@ namespace kf2server_tbot_client.Browsers {
             Driver.Url = Properties.Settings.Default.KF2ServerURL;
 
             PageManager = PageManager.Instance;
-            PageManager.Init(Driver);
+            //PageManager.Init(Driver);
+
+            TestLongRunningTasks();
+  
+
+        }
+
+        private void TestLongRunningTasks() {
+
+            Console.WriteLine(PageManager.Init(Driver));
+            Console.WriteLine(PageManager.Init(Driver));
+            Console.WriteLine(PageManager.Init(Driver));
 
         }
 

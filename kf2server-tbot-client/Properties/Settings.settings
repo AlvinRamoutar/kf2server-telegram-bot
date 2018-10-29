@@ -33,10 +33,13 @@
       <Value Profile="(Default)">60</Value>
     </Setting>
     <Setting Name="DefaultTaskTimeoutSeconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">60</Value>
+      <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="UsersRelFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">Users.dll</Value>
+    </Setting>
+    <Setting Name="PageNavTimeoutSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
     </Setting>
   </Settings>
 </SettingsFile>

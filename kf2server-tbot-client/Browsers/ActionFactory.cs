@@ -9,16 +9,31 @@ namespace kf2server_tbot_client.Browsers {
 
     class ActionFactory {
 
+
+        #region Singleton Structure
+        private static ActionFactory instance = null;
+        private static readonly object padlock = new object();
+
+        public static ActionFactory Instance {
+            get {
+                lock (padlock) {
+                    if (instance == null) {
+                        instance = new ActionFactory();
+                    }
+                    return instance;
+                }
+            }
+        }
+
+        ActionFactory() { }
+        #endregion
+
+
         private static readonly int TASK_TIMEOUT = Properties.Settings.Default.DefaultTaskTimeoutSeconds;
 
-        //List<Task> PendingActions { get; set; }
-        List<TaskFactory> PendingActions { get; set; }
+        List<TaskFactory> PendingActions = new List<TaskFactory>();
+        Queue<Task> Pending = new Queue<Task>();
 
-        public ActionFactory() {
-
-            //PendingActions = new List<Task>();
-            PendingActions = new List<TaskFactory>();
-        }
 
         public void AddAction(Task<object> task) {
 
@@ -50,6 +65,73 @@ namespace kf2server_tbot_client.Browsers {
             taskWrapper.Start();
 
         }
+
+
+        public void Add() {
+
+        }
+
+
+        public void EnhancedAdd(Task actualTask, CancellationTokenSource cts) {
+
+
+            Task wrapperTask = new Task(() => {
+
+                Thread thrd = Thread.CurrentThread;
+
+                Task t = new Task(() => {
+                    while (true) {
+                        if (cts.Token.IsCancellationRequested) {
+
+                            object locker = new object();
+                            lock(locker) {
+                                Pending.Dequeue();
+                            }
+                            
+                            thrd.Abort();
+                        }
+                    }
+                });
+                t.Start();
+
+                actualTask.Start();
+
+                if (actualTask.Wait(TASK_TIMEOUT)) {
+
+                    object locker = new object();
+                    lock(locker) {
+                        Pending.Dequeue();
+                    }
+                }
+
+            }, cts.Token, TaskCreationOptions.None);
+
+
+            if (Pending.Count != 0) {
+
+                Pending.Last<Task>().ContinueWith((pendingTask) => {
+                    wrapperTask.Start();
+                });
+
+                object locker = new object();
+                lock(locker) {
+                    Pending.Enqueue(wrapperTask);
+                }
+
+            }
+            else {
+
+                object locker = new object();
+                lock (locker) {
+                    Pending.Enqueue(wrapperTask);
+                }
+
+                wrapperTask.Start();
+
+            }
+
+        }
+
 
     }
 

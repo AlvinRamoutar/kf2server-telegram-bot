@@ -2,9 +2,6 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace kf2server_tbot_client.ServerAdmin.Settings {
 
@@ -28,19 +25,18 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
         General() { }
         #endregion
 
+        #region Properties
+        // Dictionary of saved GameDifficulties Select element options
         private Dictionary<double, string> GameDifficulties { get; set; }
+
+        // Dictionary of saved GameLengths Select element options
         private Dictionary<int, string> GameLengths { get; set; }
+        #endregion
 
         public override Tuple<bool, string> Init() {
-
-            OpenPage(Properties.Settings.Default.GeneralURL);
-
-            PageManager.Pages[PageType.General] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
-            WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
-
-            // Waiting until select element is available
-            new WebDriverWait(Driver, TimeSpan.FromSeconds(10))
-                .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists((By.Id("settings_GameDifficulty"))));
+            
+            WindowHandleID = OpenPage(Properties.Settings.Default.GeneralURL);
+            PageManager.Pages[PageType.General] = WindowHandleID;
 
             // Grab possible Difficulties from dropdown
             GameDifficulties = new Dictionary<double, string>();
@@ -60,12 +56,15 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
         }
 
 
+
         public Tuple<bool, string> ChangeGameDifficulty(string difficulty) {
 
             // Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
-            if (double.TryParse(difficulty, out double difficultyValue) &&
+            double difficultyValue = 0f;
+
+            if (double.TryParse(difficulty, out difficultyValue) &&
                 GameDifficulties.ContainsKey(difficultyValue)) {
 
                 new SelectElement(Driver.FindElement(By.Name("settings_GameDifficulty")))
@@ -87,12 +86,16 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
             return new Tuple<bool, string>(true, null);
         }
 
+
+
         public Tuple<bool, string> ChangeGameLength(string length) {
 
             // Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
-            if (int.TryParse(length, out int lengthValue) &&
+            int lengthValue = 0;
+
+            if (int.TryParse(length, out lengthValue) &&
                 GameDifficulties.ContainsKey(lengthValue)) {
 
                 new SelectElement(Driver.FindElement(By.Name("settings_GameLength")))
@@ -114,13 +117,18 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
 
         }
 
+
+
         public Tuple<bool, string> ChangeGameDifficultyAndLength(string difficulty, string length) {
 
             // Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
+            double difficultyValue = 0f;
+            int lengthValue = 0;
+
             // Difficulty
-            if (double.TryParse(difficulty, out double difficultyValue) &&
+            if (double.TryParse(difficulty, out difficultyValue) &&
                 GameDifficulties.ContainsKey(difficultyValue)) {
 
                 new SelectElement(Driver.FindElement(By.Name("settings_GameDifficulty")))
@@ -137,7 +145,7 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
             }
 
             // Length
-            if (int.TryParse(length, out int lengthValue) &&
+            if (int.TryParse(length, out lengthValue) &&
                 GameDifficulties.ContainsKey(lengthValue)) {
 
                 new SelectElement(Driver.FindElement(By.Name("settings_GameLength")))
@@ -157,7 +165,5 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
             return new Tuple<bool, string>(true, null);
 
         }
-
     }
-
 }
