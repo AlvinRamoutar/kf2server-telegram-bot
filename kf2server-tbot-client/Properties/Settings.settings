@@ -35,5 +35,8 @@
     <Setting Name="DefaultTaskTimeoutSeconds" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">60</Value>
     </Setting>
+    <Setting Name="UsersRelFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Users.dll</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

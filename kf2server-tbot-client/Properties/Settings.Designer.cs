@@ -154,5 +154,17 @@ namespace kf2server_tbot_client.Properties {
                 this["DefaultTaskTimeoutSeconds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Users.dll")]
+        public string UsersRelFilePath {
+            get {
+                return ((string)(this["UsersRelFilePath"]));
+            }
+            set {
+                this["UsersRelFilePath"] = value;
+            }
+        }
     }
 }

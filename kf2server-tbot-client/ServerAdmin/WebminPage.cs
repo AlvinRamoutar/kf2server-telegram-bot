@@ -28,7 +28,6 @@ namespace kf2server_tbot_client.ServerAdmin {
 
             IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
             js.ExecuteScript("window.open('" + tmpServerUrl + tmpResourceUrl + "', '_blank');");
-
         }
 
         public abstract Tuple<bool, string> Init();

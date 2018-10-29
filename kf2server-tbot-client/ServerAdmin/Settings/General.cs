@@ -38,9 +38,13 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
             PageManager.Pages[PageType.General] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
             WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
 
+            // Waiting until select element is available
+            new WebDriverWait(Driver, TimeSpan.FromSeconds(10))
+                .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists((By.Id("settings_GameDifficulty"))));
+
             // Grab possible Difficulties from dropdown
             GameDifficulties = new Dictionary<double, string>();
-            SelectElement gameDifficultySelect = new SelectElement(Driver.FindElement(By.Name("settings_GameDifficulty")));
+            SelectElement gameDifficultySelect = new SelectElement(Driver.FindElement(By.Id("settings_GameDifficulty")));
             foreach (IWebElement option in gameDifficultySelect.Options) {
                 GameDifficulties.Add(Convert.ToDouble(option.GetAttribute("value")), option.Text);
             }
