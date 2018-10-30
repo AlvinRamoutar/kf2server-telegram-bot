@@ -63,6 +63,7 @@
     <Compile Include="Auth\Crypto.cs" />
     <Compile Include="Auth\Users.cs" />
     <Compile Include="Browsers\ActionFactory.cs" />
+    <Compile Include="Browsers\ActionQueue.cs" />
     <Compile Include="Browsers\SeleniumManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

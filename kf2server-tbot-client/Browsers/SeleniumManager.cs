@@ -34,16 +34,46 @@ namespace kf2server_tbot_client.Browsers {
             //PageManager.Init(Driver);
 
             TestLongRunningTasks();
-  
 
         }
 
         private void TestLongRunningTasks() {
 
-            Console.WriteLine(PageManager.Init(Driver));
-            Console.WriteLine(PageManager.Init(Driver));
-            Console.WriteLine(PageManager.Init(Driver));
+            //PageManager.Init(Driver);
+            //PageManager.Init(Driver);
+            //PageManager.Init(Driver);
+            //PageManager.Init(Driver);
+            //PageManager.Init(Driver);
 
+            /*
+            Console.WriteLine(PageManager.Init(Driver));
+            Console.WriteLine(PageManager.Init(Driver));
+            Console.WriteLine(PageManager.Init(Driver));
+            Console.WriteLine(PageManager.Init(Driver));
+            Console.WriteLine(PageManager.Init(Driver));
+            Console.WriteLine(PageManager.Init(Driver));
+            */
+
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
+            PageManager.Init(Driver);
+            System.Threading.Thread.SpinWait(1000);
         }
 
 

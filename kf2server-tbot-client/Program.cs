@@ -16,6 +16,11 @@ namespace kf2server_tbot_client {
             // Init Browsers (Selenium)
             SeleniumManager sm = new SeleniumManager();
 
+            System.Threading.Thread.SpinWait(999999999);
+
+            foreach (int a in ActionFactory.tracker)
+                Console.WriteLine(a);
+
             // Init WCF
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ClientClose);
             WCFServiceManager wcf = new WCFServiceManager();
