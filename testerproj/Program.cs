@@ -11,10 +11,50 @@ namespace testerproj {
 
         static void Main(string[] args) {
 
-            Init();
+            //Init();
+
+            ActionQueueTest();
 
             Console.ReadKey();
         }
+
+        private static void ActionQueueTest() {
+
+            ActionQueue.Instance.Act(new Thread(() => {
+                Console.WriteLine("...");
+                for(int i = 0; i < new Random().Next(10, 20); i++) {
+                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
+                    System.Threading.Thread.SpinWait(9000000);
+                }
+                Console.WriteLine("...done");
+            }));
+            ActionQueue.Instance.Act(new Thread(() => {
+                Console.WriteLine("...");
+                for (int i = 0; i < new Random().Next(10, 20); i++) {
+                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
+                    System.Threading.Thread.SpinWait(9000000);
+                }
+                Console.WriteLine("...done");
+            }));
+            ActionQueue.Instance.Act(new Thread(() => {
+                Console.WriteLine("...");
+                for (int i = 0; i < new Random().Next(10, 20); i++) {
+                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
+                    System.Threading.Thread.SpinWait(9000000);
+                }
+                Console.WriteLine("...done");
+            }));
+            ActionQueue.Instance.Act(new Thread(() => {
+                Console.WriteLine("...");
+                for (int i = 0; i < new Random().Next(10, 20); i++) {
+                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
+                    System.Threading.Thread.SpinWait(9000000);
+                }
+                Console.WriteLine("...done");
+            }));
+
+        }
+
 
         private static void Init() {
 
@@ -47,7 +87,9 @@ namespace testerproj {
             af.Act(t3);
         }
 
+
     }
+
 
 
     class ActionFactory {

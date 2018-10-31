@@ -1,21 +1,29 @@
 ﻿using kf2server_tbot_client.ServerAdmin;
+using kf2server_tbot_client.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace kf2server_tbot_client.Browsers {
 
     class SeleniumManager {
 
+        #region Properties and Fields
         PageManager PageManager { get; set; }
 
         public FirefoxProfile Profile { get; set; }
         public FirefoxOptions Options { get; set; }
+
         public IWebDriver Driver { get; set; }
+
+        public static IWebDriver CurrentDriver { get; private set; }
+        #endregion
+
 
         public SeleniumManager() {
 
@@ -30,57 +38,28 @@ namespace kf2server_tbot_client.Browsers {
             Driver = new FirefoxDriver(Options);
             Driver.Url = Properties.Settings.Default.KF2ServerURL;
 
+            CurrentDriver = Driver;
+
             PageManager = PageManager.Instance;
-            //PageManager.Init(Driver);
-
-            TestLongRunningTasks();
+            
+            PageManager.Init(Driver);
 
         }
 
-        private void TestLongRunningTasks() {
 
-            //PageManager.Init(Driver);
-            //PageManager.Init(Driver);
-            //PageManager.Init(Driver);
-            //PageManager.Init(Driver);
-            //PageManager.Init(Driver);
-
-            /*
-            Console.WriteLine(PageManager.Init(Driver));
-            Console.WriteLine(PageManager.Init(Driver));
-            Console.WriteLine(PageManager.Init(Driver));
-            Console.WriteLine(PageManager.Init(Driver));
-            Console.WriteLine(PageManager.Init(Driver));
-            Console.WriteLine(PageManager.Init(Driver));
-            */
-
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-            PageManager.Init(Driver);
-            System.Threading.Thread.SpinWait(1000);
-        }
-
-
-        public Tuple<bool, string> Quit() {
+        public static Tuple<bool, string> Quit() {
 
             try {
-                Driver.Quit();
+
+                foreach(string id in CurrentDriver.WindowHandles) {
+
+                    CurrentDriver.SwitchTo().Window(id);
+                    CurrentDriver.Close();
+
+                }
+
+                CurrentDriver.Quit();
+
             } catch(Exception e) {
                 return new Tuple<bool, string>(false, e.Message);
             }

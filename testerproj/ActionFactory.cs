@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace kf2server_tbot_client.Browsers {
+namespace testerproj {
 
     class ActionFactory {
 

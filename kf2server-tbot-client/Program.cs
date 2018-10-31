@@ -13,18 +13,32 @@ namespace kf2server_tbot_client {
 
         static void Main(string[] args) {
 
-            // Init Browsers (Selenium)
-            SeleniumManager sm = new SeleniumManager();
-
-            System.Threading.Thread.SpinWait(999999999);
-
-            foreach (int a in ActionFactory.tracker)
-                Console.WriteLine(a);
-
-            // Init WCF
+            /// Implementing handler for ProcessExit
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ClientClose);
-            WCFServiceManager wcf = new WCFServiceManager();
 
+            SeleniumManager sm = null;
+            WCFServiceManager wcf = null;
+
+            try {
+
+                /// Init Browsers (Selenium)
+                sm = new SeleniumManager();
+
+                /// Init WCF
+                wcf = new WCFServiceManager();
+
+            } catch(Exception e) {
+
+                Console.WriteLine("Unrecoverable error occured: {0}", e.Message);
+
+                try {
+                    SeleniumManager.Quit();
+                    WCFServiceManager.Quit();
+                }
+                catch (Exception) { }
+
+                return;
+            }
 
             foreach (KeyValuePair<ServerAdmin.PageType, string> wp in ServerAdmin.PageManager.Pages) {
                 Console.WriteLine(wp.Key + "|" + wp.Value);

@@ -186,6 +186,11 @@ namespace kf2server_tbot_client.Utils {
             }
         }
 
+
+        public static void Quit() {
+
+        }
+
         /*
          * NEEDED for non-admin binding addr
         public void Start() {
