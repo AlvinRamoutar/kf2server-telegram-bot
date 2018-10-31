@@ -178,5 +178,29 @@ namespace kf2server_tbot_client.Properties {
                 this["PageNavTimeoutSeconds"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Log.txt")]
+        public string Logfile {
+            get {
+                return ((string)(this["Logfile"]));
+            }
+            set {
+                this["Logfile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool VerboseLogging {
+            get {
+                return ((bool)(this["VerboseLogging"]));
+            }
+            set {
+                this["VerboseLogging"] = value;
+            }
+        }
     }
 }

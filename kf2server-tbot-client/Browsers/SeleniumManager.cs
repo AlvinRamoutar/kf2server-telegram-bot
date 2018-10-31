@@ -1,13 +1,7 @@
 ﻿using kf2server_tbot_client.ServerAdmin;
-using kf2server_tbot_client.Utils;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace kf2server_tbot_client.Browsers {
 

@@ -13,6 +13,8 @@ namespace kf2server_tbot_client {
 
         static void Main(string[] args) {
 
+            LogEngine.Instance.HelpText();
+
             /// Implementing handler for ProcessExit
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ClientClose);
 
@@ -22,14 +24,14 @@ namespace kf2server_tbot_client {
             try {
 
                 /// Init Browsers (Selenium)
-                sm = new SeleniumManager();
+                //sm = new SeleniumManager();
 
                 /// Init WCF
                 wcf = new WCFServiceManager();
 
             } catch(Exception e) {
 
-                Console.WriteLine("Unrecoverable error occured: {0}", e.Message);
+                LogEngine.Instance.Log(Status.GENERIC_FAILURE, e.Message);
 
                 try {
                     SeleniumManager.Quit();
@@ -40,6 +42,8 @@ namespace kf2server_tbot_client {
                 return;
             }
 
+            
+            // Testing that all windows opened via window handlers
             foreach (KeyValuePair<ServerAdmin.PageType, string> wp in ServerAdmin.PageManager.Pages) {
                 Console.WriteLine(wp.Key + "|" + wp.Value);
             }
@@ -48,9 +52,9 @@ namespace kf2server_tbot_client {
             /* TESTS BEGIN */
 
             //ServerAdmin.ChatConsole.SendMessage("Annual Diagnostics");
-            Console.WriteLine("Action Start");
+            //Console.WriteLine("Action Start");
             //Console.WriteLine(ServerAdmin.PageManager.Instance.ChangeMap.ChangeMapOnly("KF-BioticsLab").Item1);
-            Console.WriteLine("Action End");
+            //Console.WriteLine("Action End");
             //sm.Quit();
 
             Console.ReadLine();
@@ -61,7 +65,7 @@ namespace kf2server_tbot_client {
 
             Auth.Crypto.EncryptalizeUsers(Auth.AuthManager.Users);
 
-            Console.WriteLine("Quitting Application...");
+            LogEngine.Instance.Log(Status.GENERIC_INFO, "Quitting Application...");
 
             System.Threading.Thread.Sleep(1000);
 
