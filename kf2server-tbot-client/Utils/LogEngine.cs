@@ -40,10 +40,8 @@ namespace kf2server_tbot_client.Utils {
                                 Path.Combine(Directory.GetCurrentDirectory(), Properties.Settings.Default.Logfile));
                         }
                         catch (Exception e) {
-                            if (IS_LOG_TO_FILE_ENABLED)
-                                Instance.Log(Status.LOGGER_ERROR, "Executing user can not write log data to " +
-                                    Properties.Settings.Default.Logfile + ": " + e.ToString());
-                            IS_LOG_TO_FILE_ENABLED = false;
+                            Log(Status.LOGGER_ERROR, "Executing user can not write log data to " +
+                                Properties.Settings.Default.Logfile + ": " + e.ToString());
                         }
                     }
                     return instance;
@@ -56,9 +54,9 @@ namespace kf2server_tbot_client.Utils {
 
 
         #region Properties and Fields
-        private static bool IS_LOG_TO_FILE_ENABLED = true;
-
         private static object Locker = new object();
+
+        private StreamWriter sw { get; set; }
         #endregion
 
 
@@ -68,7 +66,14 @@ namespace kf2server_tbot_client.Utils {
         /// <param name="status">Status prefix for entry, such as 'ERROR', 'WARNING', etc.</param>
         /// <param name="msg">Actual message body of the entry</param>
         /// <param name="isCustom">Whether or not to create a custom-formatted, console-only entry</param>
-        public void Log(Status status, String msg, bool isCustom = false) {
+        public static void Log(Status status, String msg, bool isCustom = false) {
+
+            // Perform quick init if not already
+            if (LogEngine.Instance == null) {
+                object tmp = LogEngine.Instance;
+                tmp = null;
+            }
+
             String statusText = (status == Status.NONE) ? "" : status.ToString();
             String logLine = msg;
 
@@ -77,12 +82,12 @@ namespace kf2server_tbot_client.Utils {
             }
 
             try {
-                if (!isCustom || !IS_LOG_TO_FILE_ENABLED) {
+                if (!isCustom) {
 
                     /// Using lock to ensure sequential writing to log file, which prevents StreamWriter file locks
                     lock (Locker) {
 
-                        StreamWriter file = new StreamWriter(Properties.Settings.Default.Logfile);
+                        StreamWriter file = new StreamWriter(Properties.Settings.Default.Logfile, true);
 
                         file.WriteLine(logLine);
                         file.Flush();
@@ -97,16 +102,16 @@ namespace kf2server_tbot_client.Utils {
                     
                 switch(statusCategoryText) {
                     case "SUCCESS":
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.Green;
                         break;
                     case "INFO":
-                        Console.ForegroundColor = ConsoleColor.DarkBlue;
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         break;
                     case "WARNING":
                         Console.ForegroundColor = ConsoleColor.DarkYellow;
                         break;
                     case "FAILURE":
-                        Console.ForegroundColor = ConsoleColor.DarkRed;
+                        Console.ForegroundColor = ConsoleColor.Red;
                         break;
                 }
 

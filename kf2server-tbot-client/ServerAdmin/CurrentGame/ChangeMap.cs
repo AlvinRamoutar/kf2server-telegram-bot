@@ -31,7 +31,7 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
         public override Tuple<bool, string> Init() {
 
-            OpenPage(Properties.Settings.Default.ChangeMapURL);
+            OpenPage(Properties.Settings.Default.ChangeMapURL, "//*[@id=\"chatwindowframe\"]");
 
             PageManager.Pages[PageType.ChangeMap] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
             WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];

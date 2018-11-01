@@ -13,8 +13,9 @@ namespace kf2server_tbot_client.Utils {
 
         public WCFServiceManager() {
 
-            // Retrieve Users data, provide to AuthManager
-            AuthManager.Users = Crypto.DecryptalizeUsers();
+
+            //AuthManager.Users = Crypto.DecryptalizeUsers();
+            AuthManager.Users = new Users();
 
             StartServices();
 
@@ -22,7 +23,8 @@ namespace kf2server_tbot_client.Utils {
 
             //UserXMLDeserialization();
 
-            Encryptalize();
+            //Encryptalize();
+
             //Decryptalize();
 
             //UserXMLReader();

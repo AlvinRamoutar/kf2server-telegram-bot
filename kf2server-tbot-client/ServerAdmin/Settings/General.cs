@@ -35,7 +35,7 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
 
         public override Tuple<bool, string> Init() {
             
-            WindowHandleID = OpenPage(Properties.Settings.Default.GeneralURL);
+            WindowHandleID = OpenPage(Properties.Settings.Default.GeneralURL, "//*[@id=\"chatwindowframe\"]");
             PageManager.Pages[PageType.General] = WindowHandleID;
 
             // Grab possible Difficulties from dropdown

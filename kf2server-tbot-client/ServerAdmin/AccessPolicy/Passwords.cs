@@ -29,7 +29,7 @@ namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
 
         public override Tuple<bool, string> Init() {
 
-            OpenPage(Properties.Settings.Default.PasswordsURL);
+            OpenPage(Properties.Settings.Default.PasswordsURL, "//*[@id=\"chatwindowframe\"]");
 
             PageManager.Pages[PageType.Passwords] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
             WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];

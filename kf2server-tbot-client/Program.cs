@@ -31,7 +31,7 @@ namespace kf2server_tbot_client {
 
             } catch(Exception e) {
 
-                LogEngine.Instance.Log(Status.GENERIC_FAILURE, e.Message);
+                LogEngine.Log(Status.GENERIC_FAILURE, e.Message);
 
                 try {
                     SeleniumManager.Quit();
@@ -65,7 +65,7 @@ namespace kf2server_tbot_client {
 
             Auth.Crypto.EncryptalizeUsers(Auth.AuthManager.Users);
 
-            LogEngine.Instance.Log(Status.GENERIC_INFO, "Quitting Application...");
+            LogEngine.Log(Status.GENERIC_INFO, "Quitting Application...");
 
             System.Threading.Thread.Sleep(1000);
 

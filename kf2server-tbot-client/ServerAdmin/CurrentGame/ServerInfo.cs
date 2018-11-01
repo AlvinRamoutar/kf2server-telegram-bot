@@ -29,7 +29,7 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
         public override Tuple<bool, string> Init() {
 
-            OpenPage(Properties.Settings.Default.ServerInfoURL);
+            OpenPage(Properties.Settings.Default.ServerInfoURL, "//*[@id=\"chatwindowframe\"]");
 
             PageManager.Pages[PageType.ServerInfo] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
             WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
