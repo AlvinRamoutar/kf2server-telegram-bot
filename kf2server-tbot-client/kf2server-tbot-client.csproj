@@ -82,7 +82,6 @@
     <Compile Include="ServerAdmin\CurrentGame\ServerInfo.cs" />
     <Compile Include="ServerAdmin\Login.cs" />
     <Compile Include="ServerAdmin\PageManager.cs" />
-    <Compile Include="ServerAdmin\Settings\GameTypes.cs" />
     <Compile Include="ServerAdmin\Settings\General.cs" />
     <Compile Include="ServerAdmin\WebminPage.cs" />
     <Compile Include="Service\AccessPolicyService.cs" />

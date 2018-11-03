@@ -11,7 +11,7 @@ namespace kf2server_tbot_client.ServerAdmin {
         Login,
         ServerInfo, ChangeMap, Players,
         Passwords,
-        General, GameTypes
+        General
     }
 
     class PageManager {
@@ -43,7 +43,6 @@ namespace kf2server_tbot_client.ServerAdmin {
         public Players Players { get; set; }
         public Passwords Passwords { get; set; }
         public General General { get; set; }
-        public GameTypes GameTypes { get; set; }
 
         public static Dictionary<PageType, string> Pages = new Dictionary<PageType, string>();
         #endregion
@@ -80,9 +79,6 @@ namespace kf2server_tbot_client.ServerAdmin {
             General.Driver = driver;
             General.Init();
 
-            GameTypes = GameTypes.Instance;
-            GameTypes.Driver = driver;
-            GameTypes.Init();
 
             return new Tuple<bool, string>(true, errorMessage);
         }

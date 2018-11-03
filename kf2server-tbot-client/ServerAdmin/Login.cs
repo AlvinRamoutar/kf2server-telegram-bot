@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using kf2server_tbot_client.Utils;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -36,14 +37,16 @@ namespace kf2server_tbot_client.ServerAdmin {
                 return new Tuple<bool, string>(true, Properties.Resources.AlreadyLoggedInMessage);
             }
 
+            string errorMessage = string.Empty;
+
             try {
 
                 PageManager.Pages[PageType.Login] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
                 WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
 
-                Driver.FindElement(By.Id("username")).SendKeys("admin");
+                Driver.FindElement(By.Id("username")).SendKeys(Properties.Settings.Default.WebAdminUsername);
 
-                Driver.FindElement(By.Id("password")).SendKeys("WelcomeToBrampton69");
+                Driver.FindElement(By.Id("password")).SendKeys(Properties.Settings.Default.WebAdminPassword);
 
                 SelectElement rememberDOM = new SelectElement(Driver.FindElement(By.Name("remember")));
 
@@ -51,9 +54,19 @@ namespace kf2server_tbot_client.ServerAdmin {
 
                 Driver.FindElement(By.CssSelector("button[type='submit']")).Click();
 
-                string errorMessage = Driver.FindElement(By.CssSelector("div[class='message error']")).Text;
+                /// Check if there exists an error message. If there is, then login failed.
+                /// Else, exception is thrown, which means a successful login.
+                try { 
+                    errorMessage = Driver.FindElement(By.CssSelector("div[class='message error']")).Text;
 
-                IsLoggedIn = true;
+                    LogEngine.Log(Status.PAGELOAD_FAILURE, string.Format("Failed to login: {0}", errorMessage));
+                    IsLoggedIn = false;
+                    return new Tuple<bool, string>(false, string.Format("Failed to login: {0}", errorMessage));
+
+                } catch(NoSuchElementException) {
+                    LogEngine.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully logged in ({0})", WindowHandleID));
+                    IsLoggedIn = true;
+                }
 
 
             } catch(NoSuchElementException nsee) {

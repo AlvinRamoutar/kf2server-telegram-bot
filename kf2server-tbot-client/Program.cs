@@ -42,12 +42,6 @@ namespace kf2server_tbot_client {
                 return;
             }
 
-            
-            // Testing that all windows opened via window handlers
-            foreach (KeyValuePair<ServerAdmin.PageType, string> wp in ServerAdmin.PageManager.Pages) {
-                Console.WriteLine(wp.Key + "|" + wp.Value);
-            }
-
 
             /* TESTS BEGIN */
 
@@ -57,7 +51,10 @@ namespace kf2server_tbot_client {
             //Console.WriteLine("Action End");
             //sm.Quit();
 
-            Console.ReadLine();
+            Console.ReadKey();
+
+            SeleniumManager.Quit();
+            WCFServiceManager.Quit();
         }
 
 
@@ -69,6 +66,7 @@ namespace kf2server_tbot_client {
 
             System.Threading.Thread.Sleep(1000);
 
+            Environment.Exit(0);
         }
 
     }

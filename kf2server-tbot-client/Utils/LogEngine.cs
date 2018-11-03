@@ -7,10 +7,21 @@ namespace kf2server_tbot_client.Utils {
 
     public enum Status {
         NONE,
+
         GENERIC_SUCCESS,
         GENERIC_INFO,
         GENERIC_WARNING,
         GENERIC_FAILURE,
+
+        PAGELOAD_SUCCESS,
+        PAGELOAD_INFO,
+        PAGELOAD_WARNING,
+        PAGELOAD_FAILURE,
+
+        SERVICE_SUCCESS,
+        SERVICE_INFO,
+        SERVICE_WARNING,
+        SERVICE_FAILURE,
 
         LOGGER_WARNING,
         LOGGER_ERROR

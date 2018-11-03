@@ -14,8 +14,8 @@ namespace kf2server_tbot_client.Utils {
         public WCFServiceManager() {
 
 
-            //AuthManager.Users = Crypto.DecryptalizeUsers();
-            AuthManager.Users = new Users();
+            AuthManager.Users = Crypto.DecryptalizeUsers();
+            //AuthManager.Users = new Users();
 
             StartServices();
 
@@ -38,25 +38,32 @@ namespace kf2server_tbot_client.Utils {
             ServiceHost SettingsServiceHost;
             ServiceHost MiscellaneousServiceHost;
 
+
             CurrentGameServiceHost = new ServiceHost(typeof(CurrentGameService));
             CurrentGameServiceHost.Open();
-            Console.WriteLine("{0} hosted at {1}", CurrentGameServiceHost.Description.Name,
-                CurrentGameServiceHost.Description.Endpoints[0].Address);
+
+            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", CurrentGameServiceHost.Description.Name,
+                CurrentGameServiceHost.Description.Endpoints[0].Address));
+
 
             AccessPolicyServiceHost = new ServiceHost(typeof(AccessPolicyService));
             AccessPolicyServiceHost.Open();
-            Console.WriteLine("{0} hosted at {1}", AccessPolicyServiceHost.Description.Name,
-                AccessPolicyServiceHost.Description.Endpoints[0].Address);
+
+            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", AccessPolicyServiceHost.Description.Name,
+                AccessPolicyServiceHost.Description.Endpoints[0].Address));
+
 
             SettingsServiceHost = new ServiceHost(typeof(SettingsService));
             SettingsServiceHost.Open();
-            Console.WriteLine("{0} hosted at {1}", SettingsServiceHost.Description.Name,
-                SettingsServiceHost.Description.Endpoints[0].Address);
+
+            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", SettingsServiceHost.Description.Name,
+                SettingsServiceHost.Description.Endpoints[0].Address));
 
             MiscellaneousServiceHost = new ServiceHost(typeof(MiscellaneousService));
             MiscellaneousServiceHost.Open();
-            Console.WriteLine("{0} hosted at {1}", MiscellaneousServiceHost.Description.Name,
-                MiscellaneousServiceHost.Description.Endpoints[0].Address);
+
+            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", MiscellaneousServiceHost.Description.Name,
+                MiscellaneousServiceHost.Description.Endpoints[0].Address));
         }
 
 
@@ -154,7 +161,7 @@ namespace kf2server_tbot_client.Utils {
                     switch (r.NodeType) {
                         case XmlNodeType.Attribute:
                             //if(!string.IsNullOrEmpty(r.GetAttribute("nature")))
-                            //    Console.WriteLine("Attr: {0}", r.GetAttribute("nature"));
+                            ///    Console.WriteLine("Attr: {0}", r.GetAttribute("nature"));
 
                             break;
 

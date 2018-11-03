@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using kf2server_tbot_client.Utils;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,12 +30,22 @@ namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
 
         public override Tuple<bool, string> Init() {
 
-            OpenPage(Properties.Settings.Default.PasswordsURL, "//*[@id=\"chatwindowframe\"]");
+            try {
+                OpenPage(Properties.Settings.Default.PasswordsURL, "//*[@id=\"chatwindowframe\"]");
 
-            PageManager.Pages[PageType.Passwords] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
-            WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
+                PageManager.Pages[PageType.Passwords] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
+                WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
 
-            return new Tuple<bool, string>(true, null);
+                LogEngine.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded Passwords page ({0})", WindowHandleID));
+
+                return new Tuple<bool, string>(true, null);
+
+            } catch(NoSuchElementException nsee) {
+                LogEngine.Log(Status.PAGELOAD_FAILURE, "Failed to load Passwords page");
+                return new Tuple<bool, string>(false, nsee.Message);
+            }
+
+            
         }
 
 
@@ -46,7 +57,7 @@ namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
         /// <returns></returns>
         public Tuple<bool, string> GamePwd(string pwd = null) {
 
-            // Changes focus to this page
+            /// Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
             IWebElement GamePasswordForm = Driver.FindElement(By.Id("gamepassword"));

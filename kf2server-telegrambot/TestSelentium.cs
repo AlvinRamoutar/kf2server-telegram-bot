@@ -37,8 +37,8 @@ namespace kf2server_telegrambot {
             tabs.Add(driver.CurrentWindowHandle);
             
 
-            // Launch a window for necessary actions at init
-            // all commands from all users that require that action, port through that window, one at a time.
+            /// Launch a window for necessary actions at init
+            /// all commands from all users that require that action, port through that window, one at a time.
 
             //driver.SwitchTo().Window()
             //driver.Quit();

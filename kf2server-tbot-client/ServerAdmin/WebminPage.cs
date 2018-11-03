@@ -22,19 +22,19 @@ namespace kf2server_tbot_client.ServerAdmin {
         /// <returns>WindowHandlerID</returns>
         public string OpenPage(string URL) {
 
-            // Removes '/' from end of resource URL
+            /// Removes '/' from end of resource URL
             string tmpResourceUrl = URL;
             tmpResourceUrl = (URL.EndsWith("/")) ? URL.Remove(URL.Length - 1) : URL;
 
-            // Removes '/' from end of server URL
+            /// Removes '/' from end of server URL
             string tmpServerUrl = Properties.Settings.Default.KF2ServerURL;
             tmpServerUrl = (tmpServerUrl.EndsWith("/")) ? tmpServerUrl : tmpServerUrl + "/" ;
 
-            // Uses javascript to launch a new window via window.open();
+            /// Uses javascript to launch a new window via window.open();
             IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
             js.ExecuteScript("window.open('" + tmpServerUrl + tmpResourceUrl + "', '_blank');");
 
-            // Switch focus to newly opened window
+            /// Switch focus to newly opened window
             Driver.SwitchTo().Window(Driver.WindowHandles.Last());
 
             return Driver.WindowHandles.Last();
@@ -50,10 +50,10 @@ namespace kf2server_tbot_client.ServerAdmin {
         /// <returns>WindowHandlerID</returns>
         public string OpenPage(string URL, string xPath) {
 
-            // Perform page nav
+            /// Perform page nav
             string WindowHandleId = OpenPage(URL);
 
-            // Wait until element is loaded, or timeout as defined in settings.
+            /// Wait until element is loaded, or timeout as defined in settings.
             new WebDriverWait(Driver, TimeSpan.FromSeconds(Properties.Settings.Default.PageNavTimeoutSeconds))
                 .Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists((By.XPath(xPath))));
 

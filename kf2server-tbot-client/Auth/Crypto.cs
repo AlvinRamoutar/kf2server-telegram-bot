@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kf2server_tbot_client.Utils;
+using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,10 +18,10 @@ namespace kf2server_tbot_client.Auth {
 
             using (SHA256 sha256Hash = SHA256.Create()) {
                 
-                // Returns byte array (result of data hashed)
+                /// Returns byte array (result of data hashed)
                 byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
 
-                // Construct string object from byte array
+                /// Construct string object from byte array
                 StringBuilder builder = new StringBuilder();
 
                 for (int i = 0; i < bytes.Length; i++) {
@@ -108,30 +109,39 @@ namespace kf2server_tbot_client.Auth {
 
             AES = new AesManaged();
 
-            // If both key and IV files exist in app dir
+            /// If both key and IV files exist in app dir
             if (File.Exists("Key.dll") && File.Exists("IV.dll")) {
 
-                // Read bytes from key file into AesManaged Key property
+                /// Read bytes from key file into AesManaged Key property
                 using (FileStream fs = File.Open("Key.dll", FileMode.Open)) {
                     byte[] tmpKey = new byte[32];
                     fs.Read(tmpKey, 0, 32);
                     AES.Key = tmpKey;
-                    
                 }
 
-                // Read bytes from IV file into AesManaged IV property
+                /// Read bytes from IV file into AesManaged IV property
                 using (FileStream fs = File.Open("IV.dll", FileMode.Open)) {
-                    fs.Read(AES.IV, 0, 16);
+                    byte[] tmpIV = new byte[16];
+                    fs.Read(tmpIV, 0, 16);
+                    AES.IV = tmpIV;
                 }
 
-            } else { // Otherwise, create these files
+                string tmpKey2 = string.Empty;
+                foreach (byte b in AES.Key) tmpKey2 += b;
 
-                // Writes bytes in AesManaged Key property to file
+                string tmpIV2 = string.Empty;
+                foreach (byte b in AES.IV) tmpIV2 += b;
+
+                System.Diagnostics.Debug.WriteLine(string.Format("Key:{0} IV:{1}", tmpKey2, tmpIV2));
+
+            } else { /// Otherwise, create these files
+
+                /// Writes bytes in AesManaged Key property to file
                 using (FileStream fs = File.Open("Key.dll", FileMode.Create)) {
                     fs.Write(AES.Key, 0, 32);
                 }
 
-                // Writes bytes in AesManaged IV property to file
+                /// Writes bytes in AesManaged IV property to file
                 using (FileStream fs = File.Open("IV.dll", FileMode.Create)) {
                     Console.WriteLine(AES.IV.Length);
                     fs.Write(AES.IV, 0, 16);

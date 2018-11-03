@@ -71,22 +71,22 @@ namespace kf2server_telegrambot {
             HtmlWeb web = new HtmlWeb();
             HtmlDocument doc = web.Load(urlAddress);
 
-            // Post link
+            /// Post link
             doc = web.Load("http://kf2server.rhome.net:8080/ServerAdmin/current/chat+frame+data");
 
-            // get the form
+            /// get the form
             var form = doc.DocumentNode.SelectSingleNode("//form[@id='chatform']");
 
-            // get the form URI
+            /// get the form URI
             string actionValue = form.Attributes["action"]?.Value;
             System.Uri uri = new System.Uri(actionValue);
 
-            // Populate the form variable
+            /// Populate the form variable
             var formVariables = new List<KeyValuePair<string, string>>();
             formVariables.Add(new KeyValuePair<string, string>("chatmessage", "Annual LV2 Diagnostics - Success"));
             var formContent = new FormUrlEncodedContent(formVariables);
 
-            // submit the form
+            /// submit the form
             HttpClient client = new HttpClient();
             return await client.PostAsync(uri, formContent);
         }

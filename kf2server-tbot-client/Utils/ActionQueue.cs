@@ -36,7 +36,7 @@ namespace kf2server_tbot_client.Utils {
 
         #region Properties and Fields
 
-        // Using ConcurrentQueue for thread safety
+        /// Using ConcurrentQueue for thread safety
         private readonly ConcurrentQueue<Task> queue = new ConcurrentQueue<Task>();
 
         private static readonly int TIMEOUT = Properties.Settings.Default.DefaultTaskTimeoutSeconds;
@@ -73,14 +73,14 @@ namespace kf2server_tbot_client.Utils {
                     /// Prevent processor starvation
                     Thread.SpinWait(10);
 
-                    if (cts.Token.IsCancellationRequested) { // Timed out
+                    if (cts.Token.IsCancellationRequested) { /// Timed out
                         //Console.WriteLine("  Thread termination: {0}", Task.CurrentId);
                         actualThread.Abort();
                         this.Dequeue();
                         return;
                     }
 
-                    if (!actualThread.IsAlive) { // Completed Successfully
+                    if (!actualThread.IsAlive) { /// Completed Successfully
                         //Console.WriteLine("  Thread completion: {0}", Task.CurrentId);
                         this.Dequeue();
                         return;
