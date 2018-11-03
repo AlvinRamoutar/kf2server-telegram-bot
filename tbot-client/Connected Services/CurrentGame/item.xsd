@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/CurrentGameService/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" />
+  <xs:element name="Status">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="StatusResult" nillable="true" type="q1:ResponseValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeGameType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="gametype" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeGameTypeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="ChangeGameTypeResult" nillable="true" type="q2:ResponseValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeMap">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="map" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeMapResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="ChangeMapResult" nillable="true" type="q3:ResponseValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeGametypeAndMap">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="gametype" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="map" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ChangeGametypeAndMapResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="ChangeGametypeAndMapResult" nillable="true" type="q4:ResponseValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Players">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="PlayersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="PlayersResult" nillable="true" type="q5:ResponseValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Players_KickPlayer">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Players_KickPlayerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="Players_KickPlayerResult" nillable="true" type="q6:ResponseValue" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

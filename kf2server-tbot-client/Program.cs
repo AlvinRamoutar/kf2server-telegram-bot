@@ -24,7 +24,7 @@ namespace kf2server_tbot_client {
             try {
 
                 /// Init Browsers (Selenium)
-                //sm = new SeleniumManager();
+                sm = new SeleniumManager();
 
                 /// Init WCF
                 wcf = new WCFServiceManager();
@@ -60,7 +60,7 @@ namespace kf2server_tbot_client {
 
         static void ClientClose(object sender, EventArgs e) {
 
-            Auth.Crypto.EncryptalizeUsers(Auth.AuthManager.Users);
+            Security.Crypto.EncryptalizeUsers(Security.AuthManager.Users);
 
             LogEngine.Log(Status.GENERIC_INFO, "Quitting Application...");
 

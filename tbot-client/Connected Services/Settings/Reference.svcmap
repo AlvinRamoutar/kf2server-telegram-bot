@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="40261535-564b-4bba-88f4-67029d42ebcd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="b63575aa-e322-498b-9276-eb3a0eb489be" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?xsd=xsd3" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="a2ab5b92-44c6-451b-8029-874be4a75cb3" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?disco" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="9e8d9f08-c15b-40e2-9781-a09effd74dbf" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?xsd=xsd2" />
+    <MetadataFile FileName="SettingsService.wsdl" MetadataType="Wsdl" ID="24ef6f74-51be-4970-8b4b-1824b0692ecb" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?wsdl" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="3adfdd24-e166-4acc-babd-fd8eea765cfd" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?xsd=xsd1" />
+    <MetadataFile FileName="item3.xsd" MetadataType="Schema" ID="bc5b916e-2126-4bb4-8174-ac3e775698d4" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -3,7 +3,7 @@ using System.IdentityModel.Selectors;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 
-namespace kf2server_tbot_client.Auth {
+namespace kf2server_tbot_client.Security {
 
 
     /// <summary>
@@ -18,7 +18,7 @@ namespace kf2server_tbot_client.Auth {
 
 
         /// <summary>
-        /// Validator for service authorizatioin. Authorizes against KF2 Server Webmin credentials from config.
+        /// Validator for service authorization. Authorizes against KF2 Server Webmin credentials from config.
         /// </summary>
         /// <param name="userName">KF2 Server Webmin Username</param>
         /// <param name="password">KF2 Server Webmin Password</param>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace kf2server_tbot_client.Auth {
+namespace kf2server_tbot_client.Security {
 
     [Serializable, XmlRoot("Users")]
     public class Users {

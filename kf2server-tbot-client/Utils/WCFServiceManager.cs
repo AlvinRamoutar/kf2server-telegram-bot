@@ -5,7 +5,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Xml;
 using System.Xml.Serialization;
-using kf2server_tbot_client.Auth;
+using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Service;
 
 namespace kf2server_tbot_client.Utils {
@@ -80,11 +80,11 @@ namespace kf2server_tbot_client.Utils {
                 for (int j = 0; j < i; j++)
                     tmpRoleIDs.Add("role" + j);
 
-                Auth.Role tmpRole = new Auth.Role();
+                Security.Role tmpRole = new Security.Role();
                 tmpRole.RoleID = tmpRoleIDs.ToArray<string>();
 
 
-                users.Accounts.Add(new Auth.Account() {
+                users.Accounts.Add(new Security.Account() {
                     Username = "username" + i,
                     Password = "password" + i,
                     Roles = tmpRole
@@ -119,11 +119,11 @@ namespace kf2server_tbot_client.Utils {
                 for (int j = 0; j < i; j++)
                     tmpRoleIDs.Add("role" + j);
 
-                Auth.Role tmpRole = new Auth.Role();
+                Security.Role tmpRole = new Security.Role();
                 tmpRole.RoleID = tmpRoleIDs.ToArray<string>();
 
 
-                users.Accounts.Add(new Auth.Account() {
+                users.Accounts.Add(new Security.Account() {
                     Username = "username" + i,
                     Password = "password" + i,
                     Roles = tmpRole

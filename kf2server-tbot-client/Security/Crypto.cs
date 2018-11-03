@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace kf2server_tbot_client.Auth {
+namespace kf2server_tbot_client.Security {
     class Crypto {
 
 
@@ -66,7 +66,7 @@ namespace kf2server_tbot_client.Auth {
                     }
                 }
             } catch(FileNotFoundException) {
-                return new Auth.Users();
+                return new Security.Users();
             }
         }
 

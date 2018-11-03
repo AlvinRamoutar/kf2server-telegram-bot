@@ -59,9 +59,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\AuthManager.cs" />
-    <Compile Include="Auth\Crypto.cs" />
-    <Compile Include="Auth\Users.cs" />
+    <Compile Include="Security\AuthManager.cs" />
+    <Compile Include="Security\Crypto.cs" />
+    <Compile Include="Security\Users.cs" />
     <Compile Include="Browsers\SeleniumManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

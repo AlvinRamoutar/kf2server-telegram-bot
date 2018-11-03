@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CurrentGameService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="BasicHttpBinding_ICurrentGameService_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <http:BasicAuthentication xmlns:http="http://schemas.microsoft.com/ws/06/2004/policy/http" />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/CurrentGameService/?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/CurrentGameService/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/CurrentGameService/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" />
+      <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/CurrentGameService/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICurrentGameService_Status_InputMessage">
+    <wsdl:part name="parameters" element="tns:Status" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_Status_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_ChangeGameType_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeGameType" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_ChangeGameType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeGameTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_ChangeMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeMap" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_ChangeMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeMapResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_ChangeGametypeAndMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeGametypeAndMap" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_ChangeGametypeAndMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ChangeGametypeAndMapResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_Players_InputMessage">
+    <wsdl:part name="parameters" element="tns:Players" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_Players_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PlayersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_Players_KickPlayer_InputMessage">
+    <wsdl:part name="parameters" element="tns:Players_KickPlayer" />
+  </wsdl:message>
+  <wsdl:message name="ICurrentGameService_Players_KickPlayer_OutputMessage">
+    <wsdl:part name="parameters" element="tns:Players_KickPlayerResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICurrentGameService">
+    <wsdl:operation name="Status">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/Status" message="tns:ICurrentGameService_Status_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/StatusResponse" message="tns:ICurrentGameService_Status_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeGameType">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeGameType" message="tns:ICurrentGameService_ChangeGameType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeGameTypeResponse" message="tns:ICurrentGameService_ChangeGameType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeMap">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeMap" message="tns:ICurrentGameService_ChangeMap_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeMapResponse" message="tns:ICurrentGameService_ChangeMap_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeGametypeAndMap">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeGametypeAndMap" message="tns:ICurrentGameService_ChangeGametypeAndMap_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeGametypeAndMapResponse" message="tns:ICurrentGameService_ChangeGametypeAndMap_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Players">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/Players" message="tns:ICurrentGameService_Players_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/PlayersResponse" message="tns:ICurrentGameService_Players_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Players_KickPlayer">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/Players_KickPlayer" message="tns:ICurrentGameService_Players_KickPlayer_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/Players_KickPlayerResponse" message="tns:ICurrentGameService_Players_KickPlayer_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ICurrentGameService" type="tns:ICurrentGameService">
+    <wsp:PolicyReference URI="#BasicHttpBinding_ICurrentGameService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Status">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/Status" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeGameType">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/ChangeGameType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeMap">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/ChangeMap" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeGametypeAndMap">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/ChangeGametypeAndMap" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Players">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/Players" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Players_KickPlayer">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/Players_KickPlayer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CurrentGameService">
+    <wsdl:port name="BasicHttpBinding_ICurrentGameService" binding="tns:BasicHttpBinding_ICurrentGameService">
+      <soap:address location="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/CurrentGameService/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

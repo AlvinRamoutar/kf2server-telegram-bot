@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("kf2server-telegrambot")]
+[assembly: AssemblyTitle("tbot-client")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("kf2server-telegrambot")]
+[assembly: AssemblyProduct("tbot-client")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("358a56d7-cb9a-4271-926f-aa64933a25f3")]
+[assembly: Guid("d05f0bd4-e2a6-4e95-b000-4ab7b0b79d2a")]
 
 // Version information for an assembly consists of the following four values:
 //

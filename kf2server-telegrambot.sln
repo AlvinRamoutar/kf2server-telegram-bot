@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kf2server-telegrambot", "kf2server-telegrambot\kf2server-telegrambot.csproj", "{358A56D7-CB9A-4271-926F-AA64933A25F3}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kf2server-tbot-client", "kf2server-tbot-client\kf2server-tbot-client.csproj", "{BA898F79-B014-408C-993C-78EA1A626EF6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testerproj", "testerproj\testerproj.csproj", "{C8DC11FF-4EAA-4140-88DF-0F5809D925EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TWCFClient", "TWCFClient\TWCFClient.csproj", "{519E96F5-F1E0-4EC5-95A8-840D24E748EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tbot-client", "tbot-client\tbot-client.csproj", "{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{358A56D7-CB9A-4271-926F-AA64933A25F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{358A56D7-CB9A-4271-926F-AA64933A25F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{358A56D7-CB9A-4271-926F-AA64933A25F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{358A56D7-CB9A-4271-926F-AA64933A25F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA898F79-B014-408C-993C-78EA1A626EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA898F79-B014-408C-993C-78EA1A626EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA898F79-B014-408C-993C-78EA1A626EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{519E96F5-F1E0-4EC5-95A8-840D24E748EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{519E96F5-F1E0-4EC5-95A8-840D24E748EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{519E96F5-F1E0-4EC5-95A8-840D24E748EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
