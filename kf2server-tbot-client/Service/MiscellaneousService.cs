@@ -34,10 +34,13 @@ namespace kf2server_tbot_client.Service {
         /// 
         /// </summary>
         /// <returns></returns>
-        /// @todo Implement Pause service method
-        /// @body Need to first implement action in new ServiceAdmin page (just for console cmds)
         [ServiceMethodRoleID("Miscellaneous.Pause")]
         public ResponseValue Pause() {
+
+            /*
+             * @todo Implement Pause service method
+             * @body Need to first implement action in new ServiceAdmin page (just for console cmds)
+             */
             throw new NotImplementedException();
         }
 
