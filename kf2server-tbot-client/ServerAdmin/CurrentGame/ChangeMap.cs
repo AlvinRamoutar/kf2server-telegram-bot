@@ -73,6 +73,7 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
 
 
+
         public Tuple<bool, string> ChangeGameTypeOnly(string gametype) {
 
             /// Check if gametype even exist
@@ -92,10 +93,15 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
                 Properties.Settings.Default.ServerInfoURL));
 
             Driver.Navigate().GoToUrl(Properties.Settings.Default.KF2ServerURL +
-                Properties.Settings.Default.ServerInfoURL);
+                Properties.Settings.Default.ChangeMapURL);
 
             return new Tuple<bool, string>(true, null);
         }
+
+
+
+
+
 
         public Tuple<bool, string> ChangeMapOnly(string map) {
 
@@ -142,9 +148,43 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
                 Properties.Settings.Default.ServerInfoURL));
 
             Driver.Navigate().GoToUrl(Properties.Settings.Default.KF2ServerURL + 
-                Properties.Settings.Default.ServerInfoURL);
+                Properties.Settings.Default.ChangeMapURL);
 
             return new Tuple<bool, string>(true, null);
+        }
+
+
+
+        /// <summary>
+        /// Triggers a map change to force certain game session settings (e.g. difficulty, length changes)
+        /// </summary>
+        /// <returns>True if successful, else false.</returns>
+        public bool TriggerMapChange() {
+
+            try {
+                /// Changes focus to this page
+                Driver.SwitchTo().Window(WindowHandleID);
+
+                Driver.FindElement(By.Id("btnchange")).Click();
+
+                WebDriverWait waiter = new WebDriverWait(Driver, new TimeSpan(0, 0,
+                    Properties.Settings.Default.MapChangeTimeoutSeconds));
+                waiter.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.UrlContains(
+                    Properties.Settings.Default.ServerInfoURL));
+
+                /// Changes focus to this page
+                Driver.SwitchTo().Window(WindowHandleID);
+
+                /// Navigates BACK to this page
+                Driver.Navigate().GoToUrl(Properties.Settings.Default.KF2ServerURL +
+                    Properties.Settings.Default.ChangeMapURL);
+
+                return true;
+
+            } catch (Exception) {
+                return false;
+            }
+
         }
 
     }

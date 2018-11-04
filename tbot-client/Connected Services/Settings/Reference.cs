@@ -105,6 +105,12 @@ namespace tbot_client.Settings {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameLength", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameLengthResponse")]
         System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameLengthAsync(string length);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLength", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLengthResponse")]
+        tbot_client.Settings.ResponseValue General_Game_GameDifficultyAndLength(string difficulty, string length);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLength", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLengthResponse")]
+        System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameDifficultyAndLengthAsync(string difficulty, string length);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -148,6 +154,14 @@ namespace tbot_client.Settings {
         
         public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameLengthAsync(string length) {
             return base.Channel.General_Game_GameLengthAsync(length);
+        }
+        
+        public tbot_client.Settings.ResponseValue General_Game_GameDifficultyAndLength(string difficulty, string length) {
+            return base.Channel.General_Game_GameDifficultyAndLength(difficulty, length);
+        }
+        
+        public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameDifficultyAndLengthAsync(string difficulty, string length) {
+            return base.Channel.General_Game_GameDifficultyAndLengthAsync(difficulty, length);
         }
     }
 }

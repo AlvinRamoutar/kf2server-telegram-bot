@@ -26,21 +26,13 @@ namespace kf2server_tbot_client.Service {
             LogEngine.Log(Status.SERVICE_INFO, 
                 string.Format("{0} ('{1}')", GetType().GetMethod("AdminSay").GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, message));
 
-            return new ResponseValue(true, string.Format("ADMIN: {0}", message), null);
+            return new ResponseValue(true, message, null);
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
+
         [ServiceMethodRoleID("Miscellaneous.Pause")]
         public ResponseValue Pause() {
-
-            /*
-             * @todo Implement Pause service method
-             * @body Need to first implement action in new ServiceAdmin page (just for console cmds)
-             */
             throw new NotImplementedException();
         }
 

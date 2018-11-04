@@ -30,16 +30,16 @@
       <Value Profile="(Default)">settings/gametypes</Value>
     </Setting>
     <Setting Name="MapChangeTimeoutSeconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">60</Value>
+      <Value Profile="(Default)">90</Value>
     </Setting>
     <Setting Name="DefaultTaskTimeoutSeconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">120</Value>
     </Setting>
     <Setting Name="UsersRelFilePath" Type="System.String" Scope="User">
       <Value Profile="(Default)">Users.dll</Value>
     </Setting>
     <Setting Name="PageNavTimeoutSeconds" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8</Value>
+      <Value Profile="(Default)">15</Value>
     </Setting>
     <Setting Name="Logfile" Type="System.String" Scope="User">
       <Value Profile="(Default)">Log.txt</Value>

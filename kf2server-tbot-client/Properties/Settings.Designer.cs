@@ -133,7 +133,7 @@ namespace kf2server_tbot_client.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        [global::System.Configuration.DefaultSettingValueAttribute("90")]
         public int MapChangeTimeoutSeconds {
             get {
                 return ((int)(this["MapChangeTimeoutSeconds"]));
@@ -145,7 +145,7 @@ namespace kf2server_tbot_client.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("120")]
         public int DefaultTaskTimeoutSeconds {
             get {
                 return ((int)(this["DefaultTaskTimeoutSeconds"]));
@@ -169,7 +169,7 @@ namespace kf2server_tbot_client.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        [global::System.Configuration.DefaultSettingValueAttribute("15")]
         public int PageNavTimeoutSeconds {
             get {
                 return ((int)(this["PageNavTimeoutSeconds"]));
