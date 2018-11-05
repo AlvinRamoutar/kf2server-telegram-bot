@@ -41,6 +41,10 @@ namespace kf2server_tbot_client.Browsers {
         }
 
 
+        /// <summary>
+        /// Terminate Selenium Driver, and close all open browsers.
+        /// </summary>
+        /// <returns></returns>
         public static Tuple<bool, string> Quit() {
 
             try {

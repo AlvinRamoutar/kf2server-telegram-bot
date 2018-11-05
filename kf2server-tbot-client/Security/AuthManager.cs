@@ -5,7 +5,6 @@ using System.ServiceModel.Channels;
 
 namespace kf2server_tbot_client.Security {
 
-
     /// <summary>
     /// Simple custom Authorization and Authentication
     /// </summary>
@@ -35,7 +34,9 @@ namespace kf2server_tbot_client.Security {
             }
         }
 
+
         /// <summary>
+        /// WIP
         /// Authorizer for service methods. Checks that a user can execute a method based on assigned roles in config.
         /// </summary>
         /// <param name="roleID">RoleID of service method</param>

@@ -1,10 +1,11 @@
 ﻿using kf2server_tbot_client.Utils;
-using System;
-using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace kf2server_tbot_client.Service {
 
+    /// <summary>
+    /// Interface containing definitions of service methods for Current Game category
+    /// </summary>
     [ServiceContract]
     public interface ICurrentGameService {
 

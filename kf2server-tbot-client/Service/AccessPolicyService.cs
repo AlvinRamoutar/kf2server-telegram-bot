@@ -1,19 +1,57 @@
-﻿using kf2server_tbot_client.Utils;
-using System;
+﻿using kf2server_tbot_client.ServerAdmin.AccessPolicy;
+using kf2server_tbot_client.Utils;
+using System.Linq;
 
 namespace kf2server_tbot_client.Service {
 
-    public class AccessPolicyService : IAccessPolicyService {
+    /// <summary>
+    /// WCF Service implementation for Access Policy category
+    /// </summary>
+    public class AccessPolicyService : ServiceTools, IAccessPolicyService {
 
-        [ServiceMethodRoleID("AccessPolicy.GamePasswordOff")]
-        public ResponseValue GamePasswordOff() {
-            throw new NotImplementedException();
+        /// <summary>
+        /// Sets an active game password for players joining.
+        /// <para>If no parameter passed, then take from config (DefaultGamePassword)</para>
+        /// <para>If config (DefaultGamePassword) is empty or null, then no password set (Open)</para>
+        /// </summary>
+        /// <param name="pwd">Game Password</param>
+        /// <returns>ResponseValue object</returns>
+        [ServiceMethodRoleID("AccessPolicy.GamePasswordOn")]
+        public ResponseValue GamePasswordOn(string pwd = null) {
+
+            ActionQueue.Instance.Act(new System.Threading.Thread(() => {
+                Passwords.Instance.GamePwd((string.IsNullOrEmpty(pwd)) ? Properties.Settings.Default.DefaultGamePassword : pwd);
+            }));
+
+            LogEngine.Log(Status.SERVICE_INFO,
+                string.Format("{0} for {1} ('{2}')", GetType().GetMethod("GamePasswordOn").
+                GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, 
+                GetIP(), pwd));
+
+            return new ResponseValue(true, string.Format("Setting game password to ", 
+                (string.IsNullOrEmpty(pwd)) ? "'" + pwd + "'" : "DefaultGamePassword from config"), null);
+
         }
 
 
-        [ServiceMethodRoleID("AccessPolicy.GamePasswordOn")]
-        public ResponseValue GamePasswordOn(string pwd = null) {
-            throw new NotImplementedException();
+        /// <summary>
+        /// Removes an active game password.
+        /// </summary>
+        /// <returns>ResponseValue object</returns>
+        [ServiceMethodRoleID("AccessPolicy.GamePasswordOff")]
+        public ResponseValue GamePasswordOff() {
+
+            ActionQueue.Instance.Act(new System.Threading.Thread(() => {
+                Passwords.Instance.GamePwd();
+            }));
+
+            LogEngine.Log(Status.SERVICE_INFO,
+                string.Format("{0} for {1}", GetType().GetMethod("GamePasswordOff").
+                GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
+                GetIP()));
+
+            return new ResponseValue(true, string.Format("Removing game password"), null);
+
         }
     }
 }

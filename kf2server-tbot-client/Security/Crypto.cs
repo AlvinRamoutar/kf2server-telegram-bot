@@ -1,13 +1,15 @@
-﻿using kf2server_tbot_client.Utils;
-using System;
+﻿using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 
 namespace kf2server_tbot_client.Security {
-    class Crypto {
 
+    /// <summary>
+    /// Handles encryption/decryption of XML Users data object
+    /// </summary>
+    class Crypto {
 
         /// <summary>
         /// Hashes provided data string using SHA256
@@ -69,11 +71,11 @@ namespace kf2server_tbot_client.Security {
                 return new Security.Users();
             }
         }
-
-
-
-
     }
+
+
+
+
 
     /// <summary>
     /// Singleton holding AesManaged object.
@@ -125,14 +127,6 @@ namespace kf2server_tbot_client.Security {
                     fs.Read(tmpIV, 0, 16);
                     AES.IV = tmpIV;
                 }
-
-                string tmpKey2 = string.Empty;
-                foreach (byte b in AES.Key) tmpKey2 += b;
-
-                string tmpIV2 = string.Empty;
-                foreach (byte b in AES.IV) tmpIV2 += b;
-
-                System.Diagnostics.Debug.WriteLine(string.Format("Key:{0} IV:{1}", tmpKey2, tmpIV2));
 
             } else { /// Otherwise, create these files
 

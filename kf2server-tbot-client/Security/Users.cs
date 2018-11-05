@@ -12,8 +12,23 @@ namespace kf2server_tbot_client.Security {
 
         [XmlElement("RoleIDList")]
         public Role Roles = new Role(new string[] {
+            "AccessPolicy.GamePasswordOn",
+            "AccessPolicy.GamePasswordOff",
+
+            "CurrentGame.ChangeGameType",
+            "CurrentGame.ChangeGametypeAndMap",
+            "CurrentGame.ChangeMap",
+            "CurrentGame.Players",
+            "CurrentGame.Players_KickPlayer",
+            "CurrentGame.Status",
+
+            "Miscellaneous.AdminSay",
+            "Miscellaneous.Pause",
             "Miscellaneous.Test",
-            "Miscellaneous.AdminSay"
+
+            "Settings.General_Game_GameDifficulty",
+            "Settings.General_Game_GameLength",
+            "Settings.General_Game_GameDifficultyAndLength"
         });
 
         public Users() {

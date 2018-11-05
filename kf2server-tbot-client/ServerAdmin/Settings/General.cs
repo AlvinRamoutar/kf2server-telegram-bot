@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace kf2server_tbot_client.ServerAdmin.Settings {
 
+    /// <summary>
+    /// Handles operations related to ServerAdmin/General#SG_Game
+    /// </summary>
     class General : WebminPage {
 
         #region Singleton Structure
@@ -37,6 +40,11 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
         private Dictionary<int, string> GameLengths { get; set; }
         #endregion
 
+        /// <summary>
+        /// Retrieves possible dropdown options from page, and stores in dictionary.
+        /// <para>Reduces the amount of effort required to ensure an option exists.</para>
+        /// </summary>
+        /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         public override Tuple<bool, string> Init() {
 
             try {
@@ -73,7 +81,13 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
         }
 
 
-
+        /// <summary>
+        /// Performs a change in game difficulty.
+        /// <para>Check if difficulty is a double (Key) or string (Value). Then, check if it exists in local dict. 
+        ///  Finally, apply to new game session via map change.</para>
+        /// </summary>
+        /// <param name="rawDifficulty">Difficulty, either as key (double, e.g. 1.0000), or value (text, e.g. "normal")</param>
+        /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         public Tuple<bool, string> ChangeGameDifficulty(string rawDifficulty) {
 
             try {
@@ -106,7 +120,14 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
 
 
                 /// Trigger map change to apply settings instantly to new game session
-                return ApplySettingsTrigger();
+                Tuple<bool, string> ApplyResult = ApplySettingsTrigger();
+
+                if (ApplyResult.Item1) {
+                    LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameDifficulty ({0})", difficulty));
+                    return new Tuple<bool, string>(true, string.Empty);
+                } else {
+                    throw new Exception(ApplyResult.Item2);
+                }
 
             } catch(Exception e) {
                 LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameDifficulty ({0})", e.Message));
@@ -116,7 +137,13 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
         }
 
 
-
+        /// <summary>
+        /// Performs a change in game length.
+        /// <para>Check if length is an int (Key) or string (Value). Then, check if it exists in local dict. 
+        ///  Finally, apply to new game session via map change.</para>
+        /// </summary>
+        /// <param name="rawLength">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
+        /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         public Tuple<bool, string> ChangeGameLength(string rawLength) {
 
             try {
@@ -147,9 +174,16 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
                 }
 
 
-
                 /// Trigger map change to apply settings instantly to new game session
-                return ApplySettingsTrigger(); 
+                Tuple<bool, string> ApplyResult = ApplySettingsTrigger();
+
+                if (ApplyResult.Item1) {
+                    LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameLength ({0})", length));
+                    return new Tuple<bool, string>(true, string.Empty);
+                }
+                else {
+                    throw new Exception(ApplyResult.Item2);
+                }
 
             } catch (Exception e) {
                 LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameLength ({0})", e.Message));
@@ -159,7 +193,14 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
         }
 
 
-
+        /// <summary>
+        /// Performs a change in both difficulty and game length.
+        /// <para>Combination of ChangeGameDifficulty logic (<see cref="ChangeGameDifficulty(string)"/>) and
+        ///  ChangeGameLength logic (<see cref="ChangeGameLength(string)"/>)</para>
+        /// </summary>
+        /// <param name="rawDifficulty">Difficulty, either as key (double, e.g. 1.0000), or value (text, e.g. "normal")</param>
+        /// <param name="rawLength">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
+        /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         public Tuple<bool, string> ChangeGameDifficultyAndLength(string rawDifficulty, string rawLength) {
 
             try { 
@@ -167,9 +208,9 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
                 string difficulty = rawDifficulty.Trim().ToLower().Replace(" ", string.Empty);
                 string length = rawLength.Trim().ToLower().Replace(" ", string.Empty);
 
-
                 /// Changes focus to this page
                 Driver.SwitchTo().Window(WindowHandleID);
+
 
                 double difficultyValue = 0f;
                 int lengthValue = 0;
@@ -214,7 +255,15 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
 
 
                 /// Trigger map change to apply settings instantly to new game session
-                return ApplySettingsTrigger();
+                Tuple<bool, string> ApplyResult = ApplySettingsTrigger();
+
+                if (ApplyResult.Item1) {
+                    LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameDifficultyAndLength ({0}, {1})", difficulty, length));
+                    return new Tuple<bool, string>(true, string.Empty);
+                }
+                else {
+                    throw new Exception(ApplyResult.Item2);
+                }
 
             } catch (Exception e) {
                 LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameDifficultyAndLength ({0})", e.Message));
@@ -224,6 +273,11 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
         }
 
 
+        /// <summary>
+        /// Calls TriggerMapChange in ChangeMap, which changes map back to current map.
+        /// <para>This creates a new game session, with resulting settings applied</para>
+        /// </summary>
+        /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         private Tuple<bool, string> ApplySettingsTrigger() {
 
             if (ChangeMap.Instance.TriggerMapChange()) {
@@ -248,7 +302,5 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
             }
 
         }
-
-
     }
 }

@@ -44,8 +44,8 @@
     <Setting Name="Logfile" Type="System.String" Scope="User">
       <Value Profile="(Default)">Log.txt</Value>
     </Setting>
-    <Setting Name="VerboseLogging" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+    <Setting Name="DefaultGamePassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">there's no password like no password</Value>
     </Setting>
   </Settings>
 </SettingsFile>

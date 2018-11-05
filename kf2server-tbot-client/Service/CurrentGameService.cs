@@ -1,10 +1,13 @@
 ﻿using kf2server_tbot_client.Utils;
 using System;
-using System.Collections.Generic;
+
 
 namespace kf2server_tbot_client.Service {
 
-    public class CurrentGameService : ICurrentGameService {
+    /// <summary>
+    /// WCF Service implementation for Current Game category
+    /// </summary>
+    public class CurrentGameService : ServiceTools, ICurrentGameService {
 
         [ServiceMethodRoleID("CurrentGame.ChangeGameType")]
         public ResponseValue ChangeGameType(string gametype) {

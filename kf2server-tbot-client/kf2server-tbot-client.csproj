@@ -91,11 +91,11 @@
     <Compile Include="Service\IMiscellaneousService.cs" />
     <Compile Include="Service\ISettingsService.cs" />
     <Compile Include="Service\MiscellaneousService.cs" />
+    <Compile Include="Utils\ServiceTools.cs" />
     <Compile Include="Utils\ActionQueue.cs" />
     <Compile Include="Utils\LogEngine.cs" />
     <Compile Include="Utils\ResponseValue.cs" />
     <Compile Include="Service\SettingsService.cs" />
-    <Compile Include="Utils\ServiceMethodRoleIDAttribute.cs" />
     <Compile Include="Utils\WCFServiceManager.cs" />
   </ItemGroup>
   <ItemGroup>

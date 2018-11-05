@@ -9,35 +9,34 @@ using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Service;
 
 namespace kf2server_tbot_client.Utils {
+
+    /// <summary>
+    /// Handles WCF-related operations, notably ServiceHosts
+    /// </summary>
     class WCFServiceManager {
 
+        #region Properties and Fields
+        private static ServiceHost CurrentGameServiceHost;
+        private static ServiceHost AccessPolicyServiceHost;
+        private static ServiceHost SettingsServiceHost;
+        private static ServiceHost MiscellaneousServiceHost;
+        #endregion
+
+        /// <summary>
+        /// Calls StartServices for WCF servicehosts
+        /// </summary>
         public WCFServiceManager() {
 
-
-            AuthManager.Users = Crypto.DecryptalizeUsers();
-            //AuthManager.Users = new Users();
-
             StartServices();
-
-            //UserXMLSerialization(AuthManager.Users);
-
-            //UserXMLDeserialization();
-
-            //Encryptalize();
-
-            //Decryptalize();
-
-            //UserXMLReader();
 
         }
 
 
+        /// <summary>
+        /// Begin starting all ServiceHosts for each WCF service.
+        /// <para>Each WCF service addresses a category from the KF2 ServerAdmin sidebar</para>
+        /// </summary>
         private static void StartServices() {
-            ServiceHost CurrentGameServiceHost;
-            ServiceHost AccessPolicyServiceHost;
-            ServiceHost SettingsServiceHost;
-            ServiceHost MiscellaneousServiceHost;
-
 
             CurrentGameServiceHost = new ServiceHost(typeof(CurrentGameService));
             CurrentGameServiceHost.Open();
@@ -67,41 +66,7 @@ namespace kf2server_tbot_client.Utils {
         }
 
 
-        private static void Encryptalize() {
-
-            #region Users XML Prep
-            Users users = new Users();
-
-            List<string> tmpRoleIDs = new List<string>();
-
-            for (int i = 0; i < 5; i++) {
-
-                tmpRoleIDs.Clear();
-                for (int j = 0; j < i; j++)
-                    tmpRoleIDs.Add("role" + j);
-
-                Security.Role tmpRole = new Security.Role();
-                tmpRole.RoleID = tmpRoleIDs.ToArray<string>();
-
-
-                users.Accounts.Add(new Security.Account() {
-                    Username = "username" + i,
-                    Password = "password" + i,
-                    Roles = tmpRole
-                });
-            }
-            #endregion
-
-            Crypto.EncryptalizeUsers(users);
-        }
-
-        private static void Decryptalize() {
-
-            Users users = Crypto.DecryptalizeUsers();
-
-        }
-
-
+        [Obsolete]
         private static void UserXMLSerialization() {
 
 
@@ -136,6 +101,7 @@ namespace kf2server_tbot_client.Utils {
             Console.WriteLine("Done Serializing");
         }
 
+        [Obsolete]
         private static void UserXMLSerialization(Users users) {
 
             XmlSerializer serializer = new XmlSerializer(typeof(Users));
@@ -149,7 +115,7 @@ namespace kf2server_tbot_client.Utils {
 
         }
 
-
+        [Obsolete]
         private static void UserXMLReader() {
 
             using (XmlReader r = XmlReader.Create(Properties.Settings.Default.UsersRelFilePath)) {
@@ -196,9 +162,24 @@ namespace kf2server_tbot_client.Utils {
         }
 
 
+        /// <summary>
+        /// Terminates all open ServiceHosts
+        /// </summary>
         public static void Quit() {
 
+            try {
+
+                CurrentGameServiceHost.Close();
+                AccessPolicyServiceHost.Close();
+                SettingsServiceHost.Close();
+                MiscellaneousServiceHost.Close();
+
+            } catch (Exception) { }
+
         }
+
+
+
 
         /*
          * NEEDED for non-admin binding addr

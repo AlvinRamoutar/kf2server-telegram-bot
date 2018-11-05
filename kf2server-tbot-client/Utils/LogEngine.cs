@@ -4,7 +4,9 @@ using System.Security.AccessControl;
 
 namespace kf2server_tbot_client.Utils {
 
-
+    /// <summary>
+    /// All possible operation statuses
+    /// </summary>
     public enum Status {
         NONE,
 
@@ -140,6 +142,7 @@ namespace kf2server_tbot_client.Utils {
 
 
         /// <summary>
+        /// WIP
         /// Help text w. command descriptions
         /// </summary>
         public void HelpText() {

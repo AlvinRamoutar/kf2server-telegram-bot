@@ -1,10 +1,6 @@
 ﻿using kf2server_tbot_client.Utils;
 using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
 
@@ -28,6 +24,11 @@ namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
         Passwords() { }
         #endregion
 
+
+        /// <summary>
+        /// Initializes Passwords page
+        /// </summary>
+        /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         public override Tuple<bool, string> Init() {
 
             try {
@@ -53,23 +54,33 @@ namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
         /// Sets the game password to value supplied.
         /// If none supplied, game password is removed.
         /// </summary>
-        /// <param name="pwd"></param>
-        /// <returns></returns>
+        /// <param name="pwd">Game Password</param>
+        /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         public Tuple<bool, string> GamePwd(string pwd = null) {
 
-            /// Changes focus to this page
-            Driver.SwitchTo().Window(WindowHandleID);
+            try {
 
-            IWebElement GamePasswordForm = Driver.FindElement(By.Id("gamepassword"));
+                /// Changes focus to this page
+                Driver.SwitchTo().Window(WindowHandleID);
 
-            if(!string.IsNullOrEmpty(pwd)) {
-                GamePasswordForm.FindElement(By.Name("gamepw1")).SendKeys(pwd);
-                GamePasswordForm.FindElement(By.Name("gamepw2")).SendKeys(pwd);
+                IWebElement GamePasswordForm = Driver.FindElement(By.Id("gamepassword"));
+
+                if (!string.IsNullOrEmpty(pwd)) {
+                    GamePasswordForm.FindElement(By.Name("gamepw1")).SendKeys(pwd);
+                    GamePasswordForm.FindElement(By.Name("gamepw2")).SendKeys(pwd);
+                }
+
+                GamePasswordForm.FindElement(By.CssSelector("input[type='submit']"));
+
+                LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed GamePwd ({0})", string.IsNullOrEmpty(pwd) ? "none" : pwd));
+
+                return new Tuple<bool, string>(true, null);
+
+            } catch(Exception e) {
+                LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with GamePwd ({0})", e.Message));
+
+                return new Tuple<bool, string>(false, string.Format("Unknown error with GamePwd ({0})", e.Message));
             }
-
-            GamePasswordForm.FindElement(By.CssSelector("input[type='submit']"));
-
-            return new Tuple<bool, string>(true, null);
 
         }
     }

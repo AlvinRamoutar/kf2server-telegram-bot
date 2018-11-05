@@ -1,4 +1,5 @@
 ﻿using kf2server_tbot_client.Browsers;
+using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Utils;
 using OpenQA.Selenium;
 using System;
@@ -22,6 +23,9 @@ namespace kf2server_tbot_client {
             WCFServiceManager wcf = null;
 
             try {
+
+                /// Performs assignment of decrypted Users.dll contents to Users property of AuthManager
+                AuthManager.Users = Crypto.DecryptalizeUsers();
 
                 /// Init Browsers (Selenium)
                 sm = new SeleniumManager();
@@ -52,17 +56,26 @@ namespace kf2server_tbot_client {
             //sm.Quit();
 
             Console.ReadKey();
-
-            SeleniumManager.Quit();
-            WCFServiceManager.Quit();
         }
 
 
+        /// <summary>
+        /// Terminates console application.
+        /// <para>First, active Users in AuthManager are serialized, encrypted, then flushed to disk.</para>
+        /// <para>Second, SeleniumManager is disposed, and with it, all open browsers for ServerAdmin pages.</para>
+        /// <para>Third, WCFServiceManager is halted, closing all open ServiceHosts.</para>
+        /// </summary>
+        /// <param name="sender">Console</param>
+        /// <param name="e">Close</param>
         static void ClientClose(object sender, EventArgs e) {
 
-            Security.Crypto.EncryptalizeUsers(Security.AuthManager.Users);
+            Crypto.EncryptalizeUsers(Security.AuthManager.Users);
 
-            LogEngine.Log(Status.GENERIC_INFO, "Quitting Application...");
+            SeleniumManager.Quit();
+
+            WCFServiceManager.Quit();
+
+            LogEngine.Log(Status.GENERIC_WARNING, "Quitting Application...");
 
             System.Threading.Thread.Sleep(1000);
 
