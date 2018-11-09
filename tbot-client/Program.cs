@@ -8,9 +8,9 @@ namespace tbot_client {
     class Program {
         static void Main(string[] args) {
 
-            //MiscellaneousServiceTest();
+            MiscellaneousServiceTest();
 
-            SettingsServiceTest();
+            //SettingsServiceTest();
 
             Console.ReadKey();
         }
@@ -24,9 +24,10 @@ namespace tbot_client {
 
             misc.Open();
 
-            for (int i = 0; i < 10; i++) {
-                misc.AdminSay("Module Test: " + (i + 1));
-            }
+            misc.AddUser("123telegramid456", new string[] {
+                "Miscellaneous.Test",
+                "Miscellaneous.Pause"
+            });
         }
 
         private static void SettingsServiceTest() {
@@ -39,9 +40,10 @@ namespace tbot_client {
             bool IsStarted = false;
             while(!IsStarted) {
                 try {
-                    Console.WriteLine(set.General_Game_GameDifficultyAndLength("hard", "long").Message);
-                    Console.WriteLine(set.General_Game_GameDifficultyAndLength("hard", "normal").Message);
+                    //Console.WriteLine(set.General_Game_GameDifficultyAndLength("hard", "long").Message);
+                    //Console.WriteLine(set.General_Game_GameDifficultyAndLength("hard", "normal").Message);
                     //Console.WriteLine(set.General_Game_GameLength("short").Message);
+                    Console.WriteLine();
                     IsStarted = true;
                 } catch(System.ServiceModel.EndpointNotFoundException) { }
                 System.Threading.Thread.SpinWait(1000000);

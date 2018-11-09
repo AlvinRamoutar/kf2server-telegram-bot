@@ -106,6 +106,18 @@ namespace tbot_client.Miscellaneous {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/Pause", ReplyAction="http://tempuri.org/IMiscellaneousService/PauseResponse")]
         System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> PauseAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/AddUser", ReplyAction="http://tempuri.org/IMiscellaneousService/AddUserResponse")]
+        tbot_client.Miscellaneous.ResponseValue AddUser(string telegramUUID, string[] roles);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/AddUser", ReplyAction="http://tempuri.org/IMiscellaneousService/AddUserResponse")]
+        System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> AddUserAsync(string telegramUUID, string[] roles);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/RemoveUser", ReplyAction="http://tempuri.org/IMiscellaneousService/RemoveUserResponse")]
+        tbot_client.Miscellaneous.ResponseValue RemoveUser(string telegramUUID, string[] roles);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/RemoveUser", ReplyAction="http://tempuri.org/IMiscellaneousService/RemoveUserResponse")]
+        System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> RemoveUserAsync(string telegramUUID, string[] roles);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/Test", ReplyAction="http://tempuri.org/IMiscellaneousService/TestResponse")]
         tbot_client.Miscellaneous.ResponseValue Test();
         
@@ -154,6 +166,22 @@ namespace tbot_client.Miscellaneous {
         
         public System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> PauseAsync() {
             return base.Channel.PauseAsync();
+        }
+        
+        public tbot_client.Miscellaneous.ResponseValue AddUser(string telegramUUID, string[] roles) {
+            return base.Channel.AddUser(telegramUUID, roles);
+        }
+        
+        public System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> AddUserAsync(string telegramUUID, string[] roles) {
+            return base.Channel.AddUserAsync(telegramUUID, roles);
+        }
+        
+        public tbot_client.Miscellaneous.ResponseValue RemoveUser(string telegramUUID, string[] roles) {
+            return base.Channel.RemoveUser(telegramUUID, roles);
+        }
+        
+        public System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> RemoveUserAsync(string telegramUUID, string[] roles) {
+            return base.Channel.RemoveUserAsync(telegramUUID, roles);
         }
         
         public tbot_client.Miscellaneous.ResponseValue Test() {

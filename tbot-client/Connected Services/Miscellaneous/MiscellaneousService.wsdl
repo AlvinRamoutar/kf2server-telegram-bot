@@ -27,6 +27,18 @@
   <wsdl:message name="IMiscellaneousService_Pause_OutputMessage">
     <wsdl:part name="parameters" element="tns:PauseResponse" />
   </wsdl:message>
+  <wsdl:message name="IMiscellaneousService_AddUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUser" />
+  </wsdl:message>
+  <wsdl:message name="IMiscellaneousService_AddUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMiscellaneousService_RemoveUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUser" />
+  </wsdl:message>
+  <wsdl:message name="IMiscellaneousService_RemoveUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveUserResponse" />
+  </wsdl:message>
   <wsdl:message name="IMiscellaneousService_Test_InputMessage">
     <wsdl:part name="parameters" element="tns:Test" />
   </wsdl:message>
@@ -41,6 +53,14 @@
     <wsdl:operation name="Pause">
       <wsdl:input wsaw:Action="http://tempuri.org/IMiscellaneousService/Pause" message="tns:IMiscellaneousService_Pause_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IMiscellaneousService/PauseResponse" message="tns:IMiscellaneousService_Pause_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMiscellaneousService/AddUser" message="tns:IMiscellaneousService_AddUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMiscellaneousService/AddUserResponse" message="tns:IMiscellaneousService_AddUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMiscellaneousService/RemoveUser" message="tns:IMiscellaneousService_RemoveUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMiscellaneousService/RemoveUserResponse" message="tns:IMiscellaneousService_RemoveUser_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Test">
       <wsdl:input wsaw:Action="http://tempuri.org/IMiscellaneousService/Test" message="tns:IMiscellaneousService_Test_InputMessage" />
@@ -61,6 +81,24 @@
     </wsdl:operation>
     <wsdl:operation name="Pause">
       <soap:operation soapAction="http://tempuri.org/IMiscellaneousService/Pause" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <soap:operation soapAction="http://tempuri.org/IMiscellaneousService/AddUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveUser">
+      <soap:operation soapAction="http://tempuri.org/IMiscellaneousService/RemoveUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

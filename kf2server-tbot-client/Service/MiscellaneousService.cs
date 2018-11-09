@@ -112,7 +112,7 @@ namespace kf2server_tbot_client.Service {
 
 
 
-        [ServiceMethodRoleID("MiscellaneousService.Removeuser")]
+        [ServiceMethodRoleID("MiscellaneousService.RemoveUser")]
         public ResponseValue RemoveUser(string telegramUUID, string[] roles = null) {
             throw new NotImplementedException();
         }

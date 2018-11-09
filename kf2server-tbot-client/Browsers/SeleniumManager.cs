@@ -26,7 +26,7 @@ namespace kf2server_tbot_client.Browsers {
             Profile.SetPreference("permissions.default.image", 2);
 
             Options = new FirefoxOptions();
-            //Options.AddArguments("--headless");
+            Options.AddArguments("--headless");
             Options.Profile = Profile;
 
             Driver = new FirefoxDriver(Options);
