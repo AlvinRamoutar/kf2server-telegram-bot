@@ -11,7 +11,7 @@ namespace kf2server_tbot_client.Security {
         public List<Account> Accounts { get; set; }
 
         [XmlElement("RoleIDList")]
-        public Role Roles = new Role(new string[] {
+        public static Role Roles = new Role(new string[] {
             "AccessPolicy.GamePasswordOn",
             "AccessPolicy.GamePasswordOff",
 
@@ -38,7 +38,7 @@ namespace kf2server_tbot_client.Security {
 
         public Account this[string telegramID] {
             get {
-                return Accounts.Find(acc => acc.Username == telegramID);
+                return Accounts.Find(acc => acc.TelegramUUID == telegramID);
             }
         }
 
@@ -48,10 +48,10 @@ namespace kf2server_tbot_client.Security {
     public class Account {
 
         [XmlElement("TelegramID")]
-        public string Username { get; set; }
+        public string TelegramUUID { get; set; }
 
         [XmlElement("SteamUUID")]
-        public string Password { get; set; }
+        public string SteamUUID { get; set; }
 
         [XmlElement("Roles")]
         public Role Roles { get; set; }

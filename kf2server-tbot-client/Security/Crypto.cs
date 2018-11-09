@@ -68,7 +68,9 @@ namespace kf2server_tbot_client.Security {
                     }
                 }
             } catch(FileNotFoundException) {
-                return new Security.Users();
+                Users tmpUsers = new Users();
+                tmpUsers.Accounts = new System.Collections.Generic.List<Account>();
+                return tmpUsers;
             }
         }
     }

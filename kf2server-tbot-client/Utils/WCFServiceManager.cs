@@ -89,8 +89,8 @@ namespace kf2server_tbot_client.Utils {
 
 
                 users.Accounts.Add(new Security.Account() {
-                    Username = "username" + i,
-                    Password = "password" + i,
+                    TelegramUUID = "telegramUUID" + i,
+                    SteamUUID = "steamUUID" + i,
                     Roles = tmpRole
                 });
             }
