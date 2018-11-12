@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace kf2server_tbot_client.Security {
@@ -25,6 +26,8 @@ namespace kf2server_tbot_client.Security {
             "Miscellaneous.AdminSay",
             "Miscellaneous.Pause",
             "Miscellaneous.Test",
+            "Miscellaneous.AddUser",
+            "Miscellaneous.RemoveUser",
 
             "Settings.General_Game_GameDifficulty",
             "Settings.General_Game_GameLength",
@@ -40,6 +43,59 @@ namespace kf2server_tbot_client.Security {
             get {
                 return Accounts.Find(acc => acc.TelegramUUID == telegramID);
             }
+        }
+
+        public static bool AddUser(Users user, string telegramUUID, string[] roles = null) {
+            Account newUser = new Account();
+            string hashedTelegramID = Crypto.Hash(telegramUUID);
+
+
+            bool DoesUserExist = false;
+
+            /// Check: Does user already exist?
+            try {
+                AuthManager.Users[hashedTelegramID].ToString();
+                DoesUserExist = true;
+            } catch (NullReferenceException) { }
+
+
+            if (!DoesUserExist) { /// This user doesn't exist
+
+                Role roleContainer = new Role();
+                newUser.TelegramUUID = hashedTelegramID;
+                List<string> tmpNewUserRoles = new List<string>();
+
+                /// Create new Role object with all supplied roles
+                foreach (string r in roles) {
+                    if (Users.Roles.RoleID.Contains(r)) {
+                        tmpNewUserRoles.Add(r);
+                    }
+                }
+
+                /// Assign roles collection to newly created roles object
+                roleContainer.RoleID = tmpNewUserRoles.ToArray<string>();
+                newUser.Roles = roleContainer;
+
+            } else { /// This user exists, performing role update
+
+                newUser = AuthManager.Users[hashedTelegramID];
+                List<string> tmpNewUserRoles = new List<string>(newUser.Roles.RoleID);
+
+                /// Add role to users' role collection if they don't aready have it, and it exists (is a valid role)
+                foreach (string r in roles) {
+                    if (Users.Roles.RoleID.Contains(r) && !tmpNewUserRoles.Contains(r)) {
+                        tmpNewUserRoles.Add(r);
+                    }
+                }
+
+                /// Replaces users role collection with temp role collection (representing deltas)
+                newUser.Roles.RoleID = tmpNewUserRoles.ToArray<string>();
+
+            }
+
+            AuthManager.Users.Accounts.Add(newUser);
+
+            return DoesUserExist;
         }
 
     }
@@ -71,5 +127,6 @@ namespace kf2server_tbot_client.Security {
             RoleID = roles;
         }
     }
+
 
 }

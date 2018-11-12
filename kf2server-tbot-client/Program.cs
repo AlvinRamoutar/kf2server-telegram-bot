@@ -28,7 +28,7 @@ namespace kf2server_tbot_client {
                 AuthManager.Users = Crypto.DecryptalizeUsers();
 
                 /// Init Browsers (Selenium)
-                sm = new SeleniumManager();
+                //sm = new SeleniumManager();
 
                 /// Init WCF
                 wcf = new WCFServiceManager();
@@ -69,7 +69,7 @@ namespace kf2server_tbot_client {
         /// <param name="e">Close</param>
         static void ClientClose(object sender, EventArgs e) {
 
-            Crypto.EncryptalizeUsers(Security.AuthManager.Users);
+            Crypto.EncryptalizeUsers(AuthManager.Users);
 
             SeleniumManager.Quit();
 

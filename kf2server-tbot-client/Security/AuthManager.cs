@@ -22,6 +22,9 @@ namespace kf2server_tbot_client.Security {
         /// <param name="userName">KF2 Server Webmin Username</param>
         /// <param name="password">KF2 Server Webmin Password</param>
         public override void Validate(string userName, string password) {
+
+            Console.WriteLine("Authing for {0} {1}", userName, password);
+
             if (null == userName || null == password) {
                 throw new ArgumentNullException();
             }
@@ -44,18 +47,25 @@ namespace kf2server_tbot_client.Security {
         /// <returns>True if user is authorized, else false.</returns>
         public static bool Authorize(string roleID, OperationContext context) {
 
-            RequestContext requestContext = context.RequestContext;
-            MessageHeaders headers = requestContext.RequestMessage.Headers;
-            string TelegramID = headers.GetHeader<string>(headers.FindHeader("TelegramID", ""));
+            try {
 
-            Console.WriteLine("{0}", AuthManager.Users[TelegramID]);
+                RequestContext requestContext = context.RequestContext;
+                MessageHeaders headers = requestContext.RequestMessage.Headers;
 
+                string TelegramUUID = headers.GetHeader<string>(headers.FindHeader("TelegramID", ""));
 
-            if (!TelegramID.Equals("1234")) {
-                return false;
-            }
+                Console.WriteLine("Trying auth for: {0}", TelegramUUID);
 
-            return true;
+                Account userAcc = AuthManager.Users[Crypto.Hash(TelegramUUID)];
+
+                foreach (string userRole in userAcc.Roles.RoleID) {
+                    if (userRole.Equals(roleID))
+                        return true;
+                }
+
+            } catch (Exception) { }
+
+            return false;
         }
 
     }
