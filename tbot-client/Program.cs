@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Xml.Linq;
+using System.Collections.Generic;
+using System.ServiceModel;
+using tbot_client.Miscellaneous;
 
 namespace tbot_client {
     class Program {
@@ -13,13 +13,16 @@ namespace tbot_client {
             while (!IsStarted) {
                 try {
 
-                    AddUsers();
+                    // AddUsers();
 
-                    MiscellaneousServiceAuthTest("uuid02");
+                    //MiscellaneousServiceAuthTest("uuid02");
+
+                    MiscellaneousServiceTest();
+
 
                     Console.WriteLine();
                     IsStarted = true;
-                } catch (System.ServiceModel.EndpointNotFoundException) { }
+                } catch (EndpointNotFoundException) { }
                 System.Threading.Thread.SpinWait(1000000);
             }
 
@@ -52,151 +55,23 @@ namespace tbot_client {
 
         private static void MiscellaneousServiceAuthTest(string telegramID) {
 
+            //using (Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient()) {
 
-            /// Create SOAP xml
-            /*
-            XNamespace ns = "http://schemas.xmlsoap.org/soap/envelope/";
-            XNamespace myns = "http://tempuri.org/IMiscellaneousService";
+                Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient();
 
-            XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
-            XNamespace xsd = "http://www.w3.org/2001/XMLSchema";
+                misc.ClientCredentials.UserName.UserName = "admin";
+                misc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
 
-            XDocument soapRequest = new XDocument(
-                new XDeclaration("1.0", "UTF-8", "no"),
-                new XElement(ns + "Envelope",
-                    new XAttribute(XNamespace.Xmlns + "xsi", xsi),
-                    new XAttribute(XNamespace.Xmlns + "xsd", xsd),
-                    new XAttribute(XNamespace.Xmlns + "soap", ns),
-                    new XElement(ns + "Body",
-                        new XElement(myns + "Test",
-                            new XElement(myns + "client",
-                                new XElement(myns + "Username", "admin"),
-                                new XElement(myns + "Password", "WelcomeToBrampton69")),
-                            new XElement(myns + "TelegramID", telegramID)
-                        )
-                    )
-                ));
-            */
+                misc.Open();
 
+                using (OperationContextScope scope = new OperationContextScope(misc.InnerChannel)) {
+                    MessageHeader<string> header = new MessageHeader<string>("uuid02");
+                    var untyped = header.GetUntypedHeader("TelegramID", "");
+                    OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
 
-            /// Create SOAP xml
-            XNamespace ns = "http://schemas.xmlsoap.org/soap/envelope/";
-            XNamespace myns = "http://tempuri.org";
-
-            XNamespace xmlnsAddressing = "http://schemas.microsoft.com/ws/2005/05/addressing/none";
-            string serviceAddr = "http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/MiscellaneousService/";
-            string serviceAction = "http://tempuri.org/IMiscellaneousService/Test";
-
-            XDocument soapRequest = new XDocument(
-                new XDeclaration("1.0", "UTF-8", "no"),
-                new XElement(ns + "Envelope",
-                    new XAttribute(XNamespace.Xmlns + "s", ns),
-                    new XElement(ns + "Header",
-                        new XElement(xmlnsAddressing + "To",
-                            new XAttribute(ns + "mustUnderstand", "1"),
-                            //new XAttribute(myns + "", xmlnsAddressing),
-                            serviceAddr
-                        ),
-                        new XElement(xmlnsAddressing + "Action",
-                            new XAttribute(ns + "mustUnderstand", "1"),
-                            //new XAttribute(myns + "", xmlnsAddressing),
-                            serviceAction
-                        )
-                    ),
-                    new XElement(ns + "Body",
-                        new XElement(myns + "Test",
-                            new XElement(myns + "client",
-                                new XElement(myns + "Username", "admin"),
-                                new XElement(myns + "Password", "WelcomeToBrampton69")),
-                            new XElement(myns + "TelegramID", telegramID)
-                        )
-                    )
-                ));
-
-            Console.WriteLine(soapRequest.ToString());
-
-
-            /// Requesting part 2
-            
-            var WebminCredentials = new NetworkCredential("admin", "WelcomeToBrampton69");
-            var Handler = new HttpClientHandler { Credentials = WebminCredentials };
-
-            using (var client = new HttpClient(Handler)) {
-                client.DefaultRequestHeaders.Add("SOAPAction", "http://tempuri.org/IMiscellaneousService/Test");
-                var content = new StringContent(soapRequest.ToString(), System.Text.Encoding.UTF8, "text/xml");
-                using (var response = client.PostAsync("http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/MiscellaneousService/Test", content)) {
-
-                    System.Threading.Tasks.Task<System.IO.Stream> streamTask = response.Result.Content.ReadAsStreamAsync();
-                    System.IO.Stream stream = streamTask.Result;
-                    var sr = new System.IO.StreamReader(stream);
-                    var soapResponse = XDocument.Load(sr);
-                    Console.WriteLine(soapResponse);
-
-
+                    misc.Test();
                 }
-            }
-            
-
-
-
-            /// Requestiong?
-            /*
-            try
-            {
-
-                var WebminCredentials = new NetworkCredential("admin", "WelcomeToBrampton69");
-                var Handler = new HttpClientHandler { Credentials = WebminCredentials };
-
-                using (var client = new HttpClient(new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip, Credentials = WebminCredentials }) { Timeout = TimeSpan.FromHours(1) }) {
-                    var request = new HttpRequestMessage() {
-                        RequestUri = new Uri(@"http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/MiscellaneousService/Test"),
-                        Method = HttpMethod.Post
-                    };
-
-                    request.Content = new StringContent(soapRequest.ToString(), System.Text.Encoding.UTF8, "text/xml");
-
-                    request.Headers.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("text/xml"));
-                    request.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("text/xml");
-                    request.Headers.Add("SOAPAction", "http://tempuri.org/IMiscellaneousService/Test");
-
-                    HttpResponseMessage response = client.SendAsync(request).Result;
-
-                    if (!response.IsSuccessStatusCode) {
-                        throw new Exception();
-                    }
-
-                    System.Threading.Tasks.Task<System.IO.Stream> streamTask = response.Content.ReadAsStreamAsync();
-                    System.IO.Stream stream = streamTask.Result;
-                    var sr = new System.IO.StreamReader(stream);
-                    var soapResponse = XDocument.Load(sr);
-                    Console.WriteLine(soapResponse);
-                }
-            }
-            catch (AggregateException ex) {
-                if (ex.InnerException is System.Threading.Tasks.TaskCanceledException) {
-                    throw ex.InnerException;
-                } else {
-                    throw ex;
-                }
-            } catch (Exception ex) {
-                throw ex;
-            }
-            */
-
-
-
-            /*
-            var WebminCredentials = new NetworkCredential("admin", "WelcomeToBrampton69");
-            var Handler = new HttpClientHandler { Credentials = WebminCredentials };
-
-            using (HttpClient client = new HttpClient(Handler)) {
-                HttpResponseMessage wcfResponse = client.GetAsync("http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/MiscellaneousService/Test").Result;
-                HttpContent stream = wcfResponse.Content;
-                var data = stream.ReadAsStringAsync();
-                Console.WriteLine(data.Result);
-            }
-            */
+            //}
         }
 
 
@@ -209,10 +84,11 @@ namespace tbot_client {
 
             misc.Open();
 
-            misc.AddUser("123telegramid456", new string[] {
-                "Miscellaneous.Test",
-                "Miscellaneous.Pause"
-            });
+            ResponseValue rv = misc.Status();
+
+            foreach(KeyValuePair<string, string> kvp in rv.Data) {
+                Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
+            }
         }
 
         private static void SettingsServiceTest() {

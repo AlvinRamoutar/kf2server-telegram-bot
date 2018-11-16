@@ -64,7 +64,10 @@ namespace kf2server_tbot_client.Security {
                     using (CryptoStream cs = new CryptoStream(fs, KeyManager.Instance.AES.CreateDecryptor(), CryptoStreamMode.Read)) {
 
                         XmlSerializer xmlser = new XmlSerializer(typeof(Users));
-                        return (Users)xmlser.Deserialize(cs);
+
+                        Users tmpUsers = (Users)xmlser.Deserialize(cs);
+
+                        return (tmpUsers == null) ? new Users() : tmpUsers;
                     }
                 }
             } catch(FileNotFoundException) {

@@ -98,6 +98,51 @@ namespace kf2server_tbot_client.Security {
             return DoesUserExist;
         }
 
+
+
+
+        public static bool RemoveUser(Users user, string telegramUUID, string[] roles = null) {
+            Account currUser = new Account();
+            string hashedTelegramID = Crypto.Hash(telegramUUID);
+
+            bool DoesUserExist = false;
+
+            /// Check: Does user already exist?
+            try {
+                AuthManager.Users[hashedTelegramID].ToString();
+                DoesUserExist = true;
+            } catch (NullReferenceException) { }
+
+
+            if (DoesUserExist) { /// This user exists, performing role update / user removal
+
+                /// Check: Are roles specified to remove? If none are, then assuming USER will be deleted completely
+                if(roles.Length == 0) {
+                    AuthManager.Users.Accounts.Remove(AuthManager.Users[hashedTelegramID]);
+
+                    return true;
+                }
+
+                currUser = AuthManager.Users[hashedTelegramID];
+                List<string> tmpNewUserRoles = new List<string>(currUser.Roles.RoleID);
+
+                /// Remove roles from users' role collection if they aready have it, and it exists (is a valid role)
+                foreach (string r in roles) {
+                    if (Users.Roles.RoleID.Contains(r) && tmpNewUserRoles.Contains(r)) {
+                        tmpNewUserRoles.Remove(r);
+                    }
+                }
+
+                /// Replaces users role collection with temp role collection (representing deltas)
+                currUser.Roles.RoleID = tmpNewUserRoles.ToArray<string>();
+
+            }
+
+            AuthManager.Users[hashedTelegramID].Roles = currUser.Roles;
+
+            return DoesUserExist;
+        }
+
     }
 
     [Serializable, XmlRoot("Account")]

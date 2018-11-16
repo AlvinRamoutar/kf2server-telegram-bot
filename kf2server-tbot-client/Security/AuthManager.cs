@@ -23,8 +23,6 @@ namespace kf2server_tbot_client.Security {
         /// <param name="password">KF2 Server Webmin Password</param>
         public override void Validate(string userName, string password) {
 
-            Console.WriteLine("Authing for {0} {1}", userName, password);
-
             if (null == userName || null == password) {
                 throw new ArgumentNullException();
             }
@@ -45,27 +43,31 @@ namespace kf2server_tbot_client.Security {
         /// <param name="roleID">RoleID of service method</param>
         /// <param name="context">OperationContext of service</param>
         /// <returns>True if user is authorized, else false.</returns>
-        public static bool Authorize(string roleID, OperationContext context) {
+        public static Tuple<bool, string> Authorize(string roleID, OperationContext context) {
+
+            string TelegramUUID = string.Empty;
 
             try {
 
                 RequestContext requestContext = context.RequestContext;
                 MessageHeaders headers = requestContext.RequestMessage.Headers;
 
-                string TelegramUUID = headers.GetHeader<string>(headers.FindHeader("TelegramID", ""));
-
-                Console.WriteLine("Trying auth for: {0}", TelegramUUID);
+                TelegramUUID = headers.GetHeader<string>(headers.FindHeader("TelegramID", ""));
 
                 Account userAcc = AuthManager.Users[Crypto.Hash(TelegramUUID)];
 
                 foreach (string userRole in userAcc.Roles.RoleID) {
                     if (userRole.Equals(roleID))
-                        return true;
+                        return new Tuple<bool, string>(true, null);
                 }
 
-            } catch (Exception) { }
+            } catch (Exception e) {
+                return new Tuple<bool, string>(false, string.Format("User failed authorization for {0} (UUID: {1}). In addition, an error was thrown: {2}",
+                    roleID, (string.IsNullOrEmpty(TelegramUUID)) ? "Undefined" : Crypto.Hash(TelegramUUID), e.Message));
+            }
 
-            return false;
+            return new Tuple<bool, string>(false, string.Format("User failed authorization for {0} (UUID: {1})",
+                roleID, (string.IsNullOrEmpty(TelegramUUID)) ? "Undefined" : Crypto.Hash(TelegramUUID)));
         }
 
     }

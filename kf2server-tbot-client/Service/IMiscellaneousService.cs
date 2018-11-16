@@ -29,6 +29,9 @@ namespace kf2server_tbot_client.Service {
         ResponseValue RemoveUser(string telegramUUID, string[] roles = null);
 
         [OperationContract]
+        ResponseValue Status();
+
+        [OperationContract]
         ResponseValue Test();
 
     }
