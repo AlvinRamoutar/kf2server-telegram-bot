@@ -16,10 +16,7 @@ namespace kf2server_tbot_client.Utils {
     class WCFServiceManager {
 
         #region Properties and Fields
-        private static ServiceHost CurrentGameServiceHost;
-        private static ServiceHost AccessPolicyServiceHost;
-        private static ServiceHost SettingsServiceHost;
-        private static ServiceHost MiscellaneousServiceHost;
+        private static ServiceHost KF2Service;
         #endregion
 
         /// <summary>
@@ -33,36 +30,16 @@ namespace kf2server_tbot_client.Utils {
 
 
         /// <summary>
-        /// Begin starting all ServiceHosts for each WCF service.
-        /// <para>Each WCF service addresses a category from the KF2 ServerAdmin sidebar</para>
+        /// Begin starting service host for KF2Service
         /// </summary>
         private static void StartServices() {
 
-            CurrentGameServiceHost = new ServiceHost(typeof(CurrentGameService));
-            CurrentGameServiceHost.Open();
+            KF2Service = new ServiceHost(typeof(KF2Service));
+            KF2Service.Open();
 
-            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", CurrentGameServiceHost.Description.Name,
-                CurrentGameServiceHost.Description.Endpoints[0].Address));
+            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", KF2Service.Description.Name,
+                KF2Service.Description.Endpoints[0].Address));
 
-
-            AccessPolicyServiceHost = new ServiceHost(typeof(AccessPolicyService));
-            AccessPolicyServiceHost.Open();
-
-            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", AccessPolicyServiceHost.Description.Name,
-                AccessPolicyServiceHost.Description.Endpoints[0].Address));
-
-
-            SettingsServiceHost = new ServiceHost(typeof(SettingsService));
-            SettingsServiceHost.Open();
-
-            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", SettingsServiceHost.Description.Name,
-                SettingsServiceHost.Description.Endpoints[0].Address));
-
-            MiscellaneousServiceHost = new ServiceHost(typeof(MiscellaneousService));
-            MiscellaneousServiceHost.Open();
-
-            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", MiscellaneousServiceHost.Description.Name,
-                MiscellaneousServiceHost.Description.Endpoints[0].Address));
         }
 
 
@@ -169,10 +146,7 @@ namespace kf2server_tbot_client.Utils {
 
             try {
 
-                CurrentGameServiceHost.Close();
-                AccessPolicyServiceHost.Close();
-                SettingsServiceHost.Close();
-                MiscellaneousServiceHost.Close();
+                KF2Service.Close();
 
             } catch (Exception) { }
 
