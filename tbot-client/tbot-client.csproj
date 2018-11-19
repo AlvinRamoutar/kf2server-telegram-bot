@@ -39,7 +39,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,165 +50,76 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\AccessPolicy\Reference.cs">
+    <Compile Include="Bot.cs" />
+    <Compile Include="Connected Services\KF2ServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="Connected Services\CurrentGame\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\Miscellaneous\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Connected Services\Settings\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
+    <Compile Include="KF2Service.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Prompts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Prompts.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Connected Services\AccessPolicy\AccessPolicyService.wsdl" />
-    <None Include="Connected Services\AccessPolicy\item.xsd">
+    <None Include="Connected Services\KF2ServiceReference\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AccessPolicy\item1.xsd">
+    <None Include="Connected Services\KF2ServiceReference\item1.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AccessPolicy\item2.xsd">
+    <None Include="Connected Services\KF2ServiceReference\item2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AccessPolicy\item3.xsd">
+    <None Include="Connected Services\KF2ServiceReference\item3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\AccessPolicy\tbot_client.AccessPolicy.ResponseValue.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\CurrentGame\CurrentGameService.wsdl" />
-    <None Include="Connected Services\CurrentGame\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CurrentGame\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CurrentGame\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CurrentGame\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\CurrentGame\tbot_client.CurrentGame.ResponseValue.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\Miscellaneous\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Miscellaneous\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Miscellaneous\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Miscellaneous\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Miscellaneous\MiscellaneousService.wsdl" />
-    <None Include="Connected Services\Miscellaneous\tbot_client.Miscellaneous.ResponseValue.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Connected Services\Settings\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Settings\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Settings\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Settings\item3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\Settings\SettingsService.wsdl" />
-    <None Include="Connected Services\Settings\tbot_client.Settings.ResponseValue.datasource">
+    <None Include="Connected Services\KF2ServiceReference\KF2Service.wsdl" />
+    <None Include="Connected Services\KF2ServiceReference\tbot_client.KF2ServiceReference.ResponseValue.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\AccessPolicy\" />
-    <WCFMetadataStorage Include="Connected Services\CurrentGame\" />
-    <WCFMetadataStorage Include="Connected Services\Miscellaneous\" />
-    <WCFMetadataStorage Include="Connected Services\Settings\" />
+    <WCFMetadataStorage Include="Connected Services\KF2ServiceReference\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Miscellaneous\item.disco" />
+    <None Include="Connected Services\KF2ServiceReference\item.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Miscellaneous\configuration91.svcinfo" />
+    <None Include="Connected Services\KF2ServiceReference\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Miscellaneous\configuration.svcinfo" />
+    <None Include="Connected Services\KF2ServiceReference\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Miscellaneous\Reference.svcmap">
+    <None Include="Connected Services\KF2ServiceReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\Settings\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Settings\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Settings\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\Settings\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccessPolicy\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccessPolicy\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccessPolicy\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\AccessPolicy\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\CurrentGame\item.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\CurrentGame\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\CurrentGame\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\CurrentGame\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <EmbeddedResource Include="Prompts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Prompts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

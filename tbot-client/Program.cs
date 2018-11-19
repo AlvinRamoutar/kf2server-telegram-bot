@@ -1,50 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using tbot_client.CurrentGame;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-
+using Telegram.Bot.Types;
 
 namespace tbot_client {
 
     class Program {
 
         #region Properties and Fields
-        public static readonly TelegramBotClient BOT = new TelegramBotClient("700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY");
+
+        static Bot bot { get; set; }
+
         #endregion
+
 
         static void Main(string[] args) {
 
+            bot = new Bot(Properties.Settings.Default.Token);
 
-            // Endpoint must be configured with netsh:
-            // netsh http add urlacl url=https://+:8443/ user=<username>
-            // netsh http add sslcert ipport=0.0.0.0:8443 certhash=<cert thumbprint> appid=<random guid>
+        }
 
-            using (WebApp.Start<Startup>("https://+:8443")) {
-                // Register WebHook
-                // You should replace {YourHostname} with your Internet accessible hosname
-                Bot.Api.SetWebhookAsync("https://{YourHostname}:8443/WebHook").Wait();
 
-                Console.WriteLine("Server Started");
 
-                // Stop Server after <Enter>
-                Console.ReadLine();
-
-                // Unregister WebHook
-                Bot.Api.DeleteWebhookAsync().Wait();
-            }
-
-            var me = BOT.GetMeAsync().Result;
-            Console.WriteLine(
-              $"Hello, World! I am user {me.Id} and my name is {me.FirstName}."
-            );
-
-            BOT.OnMessage += Bot_OnMessage;
-            BOT.StartReceiving();
-
-            System.Threading.Thread.Sleep(int.MaxValue);
-
+        private static void ServiceTester() {
             //System.Threading.Thread.Sleep(3000);
 
             //bool IsStarted = false;
@@ -65,35 +45,20 @@ namespace tbot_client {
             //}
 
             ////SettingsServiceTest();
-
-            Console.ReadKey();
         }
-
-
-        static async void Bot_OnMessage(object sender, MessageEventArgs e) {
-            if (e.Message.Text != null) {
-                Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
-
-                await BOT.SendTextMessageAsync(
-                  chatId: e.Message.Chat,
-                  text: "You said:\n" + e.Message.Text
-                );
-            }
-        }
-
 
         private static void PlayersTest() {
 
-            CurrentGameServiceClient cgsc = new CurrentGameServiceClient();
+            KF2ServiceClient kf2s = new KF2ServiceClient();
 
-            cgsc.ClientCredentials.UserName.UserName = "admin";
-            cgsc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
+            kf2s.ClientCredentials.UserName.UserName = "admin";
+            kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
 
-            cgsc.Open();
+            kf2s.Open();
 
-            CurrentGame.ResponseValue rv = cgsc.Status();
-            Console.WriteLine(cgsc.Online().Data["online"]);
-            rv = cgsc.Kick("lygais");
+            ResponseValue rv = kf2s.Status();
+            Console.WriteLine(kf2s.Online().Data["online"]);
+            rv = kf2s.Kick("lygais");
 
             foreach (KeyValuePair<string, string> kvp in rv.Data) {
                 Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
@@ -103,23 +68,23 @@ namespace tbot_client {
 
 
         private static void AddUsers() {
-            Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient();
+            KF2ServiceClient kf2s = new KF2ServiceClient();
 
-            misc.ClientCredentials.UserName.UserName = "admin";
-            misc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
+            kf2s.ClientCredentials.UserName.UserName = "admin";
+            kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
 
-            misc.Open();
+            kf2s.Open();
 
-            misc.AddUser("uuid01", new string[] {
+            kf2s.AddUser("uuid01", new string[] {
                 "Miscellaneous.Pause"
             });
 
-            misc.AddUser("uuid02", new string[] {
+            kf2s.AddUser("uuid02", new string[] {
                 "Miscellaneous.Pause",
                 "Miscellaneous.Test"
             });
 
-            misc.Close();
+            kf2s.Close();
         }
 
 
@@ -127,34 +92,29 @@ namespace tbot_client {
 
             //using (Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient()) {
 
-                Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient();
+            KF2ServiceClient kf2s = new KF2ServiceClient();
 
-                misc.ClientCredentials.UserName.UserName = "admin";
-                misc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
+            kf2s.ClientCredentials.UserName.UserName = "admin";
+                kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
 
-                misc.Open();
+                kf2s.Open();
 
-                using (OperationContextScope scope = new OperationContextScope(misc.InnerChannel)) {
+                using (OperationContextScope scope = new OperationContextScope(kf2s.InnerChannel)) {
                     MessageHeader<string> header = new MessageHeader<string>("uuid02");
                     var untyped = header.GetUntypedHeader("TelegramID", "");
                     OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
 
-                    misc.Test();
+                    kf2s.Test();
                 }
             //}
         }
 
 
-        private static void MiscellaneousServiceTest() {
-
-
-        }
-
         private static void SettingsServiceTest() {
-            Settings.SettingsServiceClient set = new Settings.SettingsServiceClient();
+            KF2ServiceClient kf2s = new KF2ServiceClient();
 
-            set.ClientCredentials.UserName.UserName = "admin";
-            set.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
+            kf2s.ClientCredentials.UserName.UserName = "admin";
+            kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
 
 
             bool IsStarted = false;
