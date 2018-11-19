@@ -1,29 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.Web.Http;
 using tbot_client.CurrentGame;
-using tbot_client.Miscellaneous;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+
 
 namespace tbot_client {
 
     class Program {
 
-        static ITelegramBotClient botClient;
+        #region Properties and Fields
+        public static readonly TelegramBotClient BOT = new TelegramBotClient("700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY");
+        #endregion
 
         static void Main(string[] args) {
 
-            botClient = new TelegramBotClient("700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY");
 
-            var me = botClient.GetMeAsync().Result;
+            // Endpoint must be configured with netsh:
+            // netsh http add urlacl url=https://+:8443/ user=<username>
+            // netsh http add sslcert ipport=0.0.0.0:8443 certhash=<cert thumbprint> appid=<random guid>
+
+            using (WebApp.Start<Startup>("https://+:8443")) {
+                // Register WebHook
+                // You should replace {YourHostname} with your Internet accessible hosname
+                Bot.Api.SetWebhookAsync("https://{YourHostname}:8443/WebHook").Wait();
+
+                Console.WriteLine("Server Started");
+
+                // Stop Server after <Enter>
+                Console.ReadLine();
+
+                // Unregister WebHook
+                Bot.Api.DeleteWebhookAsync().Wait();
+            }
+
+            var me = BOT.GetMeAsync().Result;
             Console.WriteLine(
               $"Hello, World! I am user {me.Id} and my name is {me.FirstName}."
             );
 
-            botClient.OnMessage += Bot_OnMessage;
-            botClient.StartReceiving();
-            botClient.GetFi
+            BOT.OnMessage += Bot_OnMessage;
+            BOT.StartReceiving();
+
             System.Threading.Thread.Sleep(int.MaxValue);
 
             //System.Threading.Thread.Sleep(3000);
@@ -55,14 +75,10 @@ namespace tbot_client {
             if (e.Message.Text != null) {
                 Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
 
-                await botClient.SendTextMessageAsync(
+                await BOT.SendTextMessageAsync(
                   chatId: e.Message.Chat,
                   text: "You said:\n" + e.Message.Text
                 );
-            }
-
-            if(e.Message.) {
-
             }
         }
 
