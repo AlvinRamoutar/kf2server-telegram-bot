@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using System.Web.Http;
 using tbot_client.CurrentGame;
 using Telegram.Bot;
 using Telegram.Bot.Args;
