@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" />
-  <xs:element name="General_Game_GameDifficulty">
+  <xs:element name="GameDifficulty">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="difficulty" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="General_Game_GameDifficultyResponse">
+  <xs:element name="GameDifficultyResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="General_Game_GameDifficultyResult" nillable="true" type="q1:ResponseValue" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="GameDifficultyResult" nillable="true" type="q1:ResponseValue" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="General_Game_GameLength">
+  <xs:element name="GameLength">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="length" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="General_Game_GameLengthResponse">
+  <xs:element name="GameLengthResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="General_Game_GameLengthResult" nillable="true" type="q2:ResponseValue" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="GameLengthResult" nillable="true" type="q2:ResponseValue" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="General_Game_GameDifficultyAndLength">
+  <xs:element name="GameDifficultyAndLength">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="difficulty" nillable="true" type="xs:string" />
@@ -37,10 +37,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="General_Game_GameDifficultyAndLengthResponse">
+  <xs:element name="GameDifficultyAndLengthResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="General_Game_GameDifficultyAndLengthResult" nillable="true" type="q3:ResponseValue" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="GameDifficultyAndLengthResult" nillable="true" type="q3:ResponseValue" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

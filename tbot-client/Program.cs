@@ -1,34 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using tbot_client.CurrentGame;
 using tbot_client.Miscellaneous;
+using Telegram.Bot;
+using Telegram.Bot.Args;
 
 namespace tbot_client {
+
     class Program {
+
+        static ITelegramBotClient botClient;
+
         static void Main(string[] args) {
 
-            System.Threading.Thread.Sleep(3000);
+            botClient = new TelegramBotClient("700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY");
 
-            bool IsStarted = false;
-            while (!IsStarted) {
-                try {
+            var me = botClient.GetMeAsync().Result;
+            Console.WriteLine(
+              $"Hello, World! I am user {me.Id} and my name is {me.FirstName}."
+            );
 
-                    // AddUsers();
+            botClient.OnMessage += Bot_OnMessage;
+            botClient.StartReceiving();
+            botClient.GetFi
+            System.Threading.Thread.Sleep(int.MaxValue);
 
-                    //MiscellaneousServiceAuthTest("uuid02");
+            //System.Threading.Thread.Sleep(3000);
 
-                    MiscellaneousServiceTest();
+            //bool IsStarted = false;
+            //while (!IsStarted) {
+            //    try {
+
+            //        // AddUsers();
+
+            //        //MiscellaneousServiceAuthTest("uuid02");
+
+            //        PlayersTest();
 
 
-                    Console.WriteLine();
-                    IsStarted = true;
-                } catch (EndpointNotFoundException) { }
-                System.Threading.Thread.SpinWait(1000000);
-            }
+            //        Console.WriteLine();
+            //        IsStarted = true;
+            //    } catch (EndpointNotFoundException) { }
+            //    System.Threading.Thread.SpinWait(1000000);
+            //}
 
-            //SettingsServiceTest();
+            ////SettingsServiceTest();
 
             Console.ReadKey();
+        }
+
+
+        static async void Bot_OnMessage(object sender, MessageEventArgs e) {
+            if (e.Message.Text != null) {
+                Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
+
+                await botClient.SendTextMessageAsync(
+                  chatId: e.Message.Chat,
+                  text: "You said:\n" + e.Message.Text
+                );
+            }
+
+            if(e.Message.) {
+
+            }
+        }
+
+
+        private static void PlayersTest() {
+
+            CurrentGameServiceClient cgsc = new CurrentGameServiceClient();
+
+            cgsc.ClientCredentials.UserName.UserName = "admin";
+            cgsc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
+
+            cgsc.Open();
+
+            CurrentGame.ResponseValue rv = cgsc.Status();
+            Console.WriteLine(cgsc.Online().Data["online"]);
+            rv = cgsc.Kick("lygais");
+
+            foreach (KeyValuePair<string, string> kvp in rv.Data) {
+                Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
+            }
+
         }
 
 
@@ -77,18 +132,7 @@ namespace tbot_client {
 
         private static void MiscellaneousServiceTest() {
 
-            Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient();
 
-            misc.ClientCredentials.UserName.UserName = "admin";
-            misc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
-
-            misc.Open();
-
-            ResponseValue rv = misc.Status();
-
-            foreach(KeyValuePair<string, string> kvp in rv.Data) {
-                Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
-            }
         }
 
         private static void SettingsServiceTest() {

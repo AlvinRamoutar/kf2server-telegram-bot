@@ -94,23 +94,23 @@ namespace tbot_client.Settings {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Settings.ISettingsService")]
     public interface ISettingsService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameDifficulty", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameDifficultyResponse")]
-        tbot_client.Settings.ResponseValue General_Game_GameDifficulty(string difficulty);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/GameDifficulty", ReplyAction="http://tempuri.org/ISettingsService/GameDifficultyResponse")]
+        tbot_client.Settings.ResponseValue GameDifficulty(string difficulty);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameDifficulty", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameDifficultyResponse")]
-        System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameDifficultyAsync(string difficulty);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/GameDifficulty", ReplyAction="http://tempuri.org/ISettingsService/GameDifficultyResponse")]
+        System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> GameDifficultyAsync(string difficulty);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameLength", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameLengthResponse")]
-        tbot_client.Settings.ResponseValue General_Game_GameLength(string length);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/GameLength", ReplyAction="http://tempuri.org/ISettingsService/GameLengthResponse")]
+        tbot_client.Settings.ResponseValue GameLength(string length);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameLength", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameLengthResponse")]
-        System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameLengthAsync(string length);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/GameLength", ReplyAction="http://tempuri.org/ISettingsService/GameLengthResponse")]
+        System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> GameLengthAsync(string length);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLength", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLengthResponse")]
-        tbot_client.Settings.ResponseValue General_Game_GameDifficultyAndLength(string difficulty, string length);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/GameDifficultyAndLength", ReplyAction="http://tempuri.org/ISettingsService/GameDifficultyAndLengthResponse")]
+        tbot_client.Settings.ResponseValue GameDifficultyAndLength(string difficulty, string length);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLength", ReplyAction="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLengthResponse")]
-        System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameDifficultyAndLengthAsync(string difficulty, string length);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ISettingsService/GameDifficultyAndLength", ReplyAction="http://tempuri.org/ISettingsService/GameDifficultyAndLengthResponse")]
+        System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> GameDifficultyAndLengthAsync(string difficulty, string length);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -140,28 +140,28 @@ namespace tbot_client.Settings {
                 base(binding, remoteAddress) {
         }
         
-        public tbot_client.Settings.ResponseValue General_Game_GameDifficulty(string difficulty) {
-            return base.Channel.General_Game_GameDifficulty(difficulty);
+        public tbot_client.Settings.ResponseValue GameDifficulty(string difficulty) {
+            return base.Channel.GameDifficulty(difficulty);
         }
         
-        public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameDifficultyAsync(string difficulty) {
-            return base.Channel.General_Game_GameDifficultyAsync(difficulty);
+        public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> GameDifficultyAsync(string difficulty) {
+            return base.Channel.GameDifficultyAsync(difficulty);
         }
         
-        public tbot_client.Settings.ResponseValue General_Game_GameLength(string length) {
-            return base.Channel.General_Game_GameLength(length);
+        public tbot_client.Settings.ResponseValue GameLength(string length) {
+            return base.Channel.GameLength(length);
         }
         
-        public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameLengthAsync(string length) {
-            return base.Channel.General_Game_GameLengthAsync(length);
+        public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> GameLengthAsync(string length) {
+            return base.Channel.GameLengthAsync(length);
         }
         
-        public tbot_client.Settings.ResponseValue General_Game_GameDifficultyAndLength(string difficulty, string length) {
-            return base.Channel.General_Game_GameDifficultyAndLength(difficulty, length);
+        public tbot_client.Settings.ResponseValue GameDifficultyAndLength(string difficulty, string length) {
+            return base.Channel.GameDifficultyAndLength(difficulty, length);
         }
         
-        public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> General_Game_GameDifficultyAndLengthAsync(string difficulty, string length) {
-            return base.Channel.General_Game_GameDifficultyAndLengthAsync(difficulty, length);
+        public System.Threading.Tasks.Task<tbot_client.Settings.ResponseValue> GameDifficultyAndLengthAsync(string difficulty, string length) {
+            return base.Channel.GameDifficultyAndLengthAsync(difficulty, length);
         }
     }
 }

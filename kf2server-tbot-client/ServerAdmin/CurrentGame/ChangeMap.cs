@@ -83,7 +83,14 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
             /// Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
+            /// Save current map, since changing game type resets map to first map in select
+            string currentMap = new SelectElement(Driver.FindElement(By.Name("map"))).SelectedOption.Text;
+
+            /// Perform game type selection
             new SelectElement(Driver.FindElement(By.Name("gametype"))).SelectByValue(gametype);
+
+            /// Perform map re-selection
+            new SelectElement(Driver.FindElement(By.Name("map"))).SelectByValue(currentMap);
 
             Driver.FindElement(By.Id("btnchange")).Click();
 

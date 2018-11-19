@@ -15,7 +15,7 @@ namespace kf2server_tbot_client.Service {
         /// <param name="difficulty">Difficulty, either as key (double, e.g. 1.0000), or value (text, e.g. "normal")</param>
         /// <returns>ResponseValue object</returns>
         [OperationContract]
-        ResponseValue General_Game_GameDifficulty(string difficulty);
+        ResponseValue GameDifficulty(string difficulty);
 
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace kf2server_tbot_client.Service {
         /// <param name="rawLength">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
         /// <returns>Tuple(bool:'True if successful, else false', str
         [OperationContract]
-        ResponseValue General_Game_GameLength(string length);
+        ResponseValue GameLength(string length);
 
 
         /// <summary>
@@ -38,6 +38,6 @@ namespace kf2server_tbot_client.Service {
         /// <param name="rawLength">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
         /// <returns>Tuple(bool:'True if successful, else false', string:'error message')</returns>
         [OperationContract]
-        ResponseValue General_Game_GameDifficultyAndLength(string difficulty, string length);
+        ResponseValue GameDifficultyAndLength(string difficulty, string length);
     }
 }

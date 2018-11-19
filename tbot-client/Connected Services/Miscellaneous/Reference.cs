@@ -118,12 +118,6 @@ namespace tbot_client.Miscellaneous {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/RemoveUser", ReplyAction="http://tempuri.org/IMiscellaneousService/RemoveUserResponse")]
         System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> RemoveUserAsync(string telegramUUID, string[] roles);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/Status", ReplyAction="http://tempuri.org/IMiscellaneousService/StatusResponse")]
-        tbot_client.Miscellaneous.ResponseValue Status();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/Status", ReplyAction="http://tempuri.org/IMiscellaneousService/StatusResponse")]
-        System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> StatusAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMiscellaneousService/Test", ReplyAction="http://tempuri.org/IMiscellaneousService/TestResponse")]
         tbot_client.Miscellaneous.ResponseValue Test();
         
@@ -188,14 +182,6 @@ namespace tbot_client.Miscellaneous {
         
         public System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> RemoveUserAsync(string telegramUUID, string[] roles) {
             return base.Channel.RemoveUserAsync(telegramUUID, roles);
-        }
-        
-        public tbot_client.Miscellaneous.ResponseValue Status() {
-            return base.Channel.Status();
-        }
-        
-        public System.Threading.Tasks.Task<tbot_client.Miscellaneous.ResponseValue> StatusAsync() {
-            return base.Channel.StatusAsync();
         }
         
         public tbot_client.Miscellaneous.ResponseValue Test() {

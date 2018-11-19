@@ -142,38 +142,6 @@ namespace kf2server_tbot_client.Service {
 
 
 
-        [ServiceMethodRoleID("Miscellaneous.Status")]
-        public ResponseValue Status() {
-
-            System.Threading.ManualResetEvent syncEvent = new System.Threading.ManualResetEvent(false);
-
-            Tuple<bool, Dictionary<string, string>> Result = new Tuple<bool, Dictionary<string, string>>(false, null);
-
-            ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                Result = ServerInfo.Instance.Status();
-                syncEvent.Set();
-            }));
-
-            syncEvent.WaitOne();
-
-            if(!Result.Item1) {
-
-                LogEngine.Log(Utils.Status.SERVICE_FAILURE, "Failed to retrieve status information from ServerInfo");
-
-                return new ResponseValue(false, null, null);
-
-            } else {
-
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
-                    string.Format("{0} from {1}", GetType().GetMethod("Status")
-                    .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, GetIP()));
-
-                return new ResponseValue(true, string.Empty, Result.Item2);
-            }
-        }
-
-
-
         [ServiceMethodRoleID("Miscellaneous.Test")]
         public ResponseValue Test() {
 

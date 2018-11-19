@@ -17,11 +17,11 @@ namespace kf2server_tbot_client.Service {
         /// </summary>
         /// <param name="difficulty">Difficulty, either as key (double, e.g. 1.0000), or value (text, e.g. "normal")</param>
         /// <returns>ResponseValue object</returns>
-        [ServiceMethodRoleID("Settings.General_Game_GameDifficulty")]
-        public ResponseValue General_Game_GameDifficulty(string difficulty) {
+        [ServiceMethodRoleID("Settings.GameDifficulty")]
+        public ResponseValue GameDifficulty(string difficulty) {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
-                GetType().GetMethod("General_Game_GameDifficulty").GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
+                GetType().GetMethod("GameDifficulty").GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                 OperationContext.Current);
 
 
@@ -33,7 +33,7 @@ namespace kf2server_tbot_client.Service {
 
 
                 LogEngine.Log(Status.SERVICE_INFO,
-                    string.Format("{0} from {1} ('{2}')", GetType().GetMethod("General_Game_GameDifficulty")
+                    string.Format("{0} from {1} ('{2}')", GetType().GetMethod("GameDifficulty")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), difficulty));
 
@@ -54,11 +54,11 @@ namespace kf2server_tbot_client.Service {
         /// </summary>
         /// <param name="length">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
         /// <returns>ResponseValue object</returns>
-        [ServiceMethodRoleID("Settings.General_Game_GameLength")]
-        public ResponseValue General_Game_GameLength(string length) {
+        [ServiceMethodRoleID("Settings.GameLength")]
+        public ResponseValue GameLength(string length) {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
-                GetType().GetMethod("General_Game_GameLength").GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
+                GetType().GetMethod("GameLength").GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                 OperationContext.Current);
 
 
@@ -70,7 +70,7 @@ namespace kf2server_tbot_client.Service {
 
 
                 LogEngine.Log(Status.SERVICE_INFO,
-                    string.Format("{0} from {1} ('{2}')", GetType().GetMethod("General_Game_GameLength")
+                    string.Format("{0} from {1} ('{2}')", GetType().GetMethod("GameLength")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), length));
 
@@ -93,11 +93,11 @@ namespace kf2server_tbot_client.Service {
         /// <param name="difficulty">Difficulty, either as key (double, e.g. 1.0000), or value (text, e.g. "normal")</param>
         /// <param name="length">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
         /// <returns>ResponseValue object</returns>
-        [ServiceMethodRoleID("Settings.General_Game_GameDifficultyAndLength")]
-        public ResponseValue General_Game_GameDifficultyAndLength(string difficulty, string length) {
+        [ServiceMethodRoleID("Settings.GameDifficultyAndLength")]
+        public ResponseValue GameDifficultyAndLength(string difficulty, string length) {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
-                GetType().GetMethod("General_Game_GameDifficultyAndLength").GetCustomAttributes(true)
+                GetType().GetMethod("GameDifficultyAndLength").GetCustomAttributes(true)
                     .OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                 OperationContext.Current);
 
@@ -110,7 +110,7 @@ namespace kf2server_tbot_client.Service {
 
 
                 LogEngine.Log(Status.SERVICE_INFO,
-                    string.Format("{0} from {1} ('{2}, {3}')", GetType().GetMethod("General_Game_GameDifficultyAndLength")
+                    string.Format("{0} from {1} ('{2}, {3}')", GetType().GetMethod("GameDifficultyAndLength")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), difficulty, length));
 

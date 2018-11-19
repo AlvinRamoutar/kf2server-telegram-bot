@@ -15,43 +15,43 @@
       <xsd:import schemaLocation="http://localhost:8733/Design_Time_Addresses/kf2server_tbot_client.Service/SettingsService/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="ISettingsService_General_Game_GameDifficulty_InputMessage">
-    <wsdl:part name="parameters" element="tns:General_Game_GameDifficulty" />
+  <wsdl:message name="ISettingsService_GameDifficulty_InputMessage">
+    <wsdl:part name="parameters" element="tns:GameDifficulty" />
   </wsdl:message>
-  <wsdl:message name="ISettingsService_General_Game_GameDifficulty_OutputMessage">
-    <wsdl:part name="parameters" element="tns:General_Game_GameDifficultyResponse" />
+  <wsdl:message name="ISettingsService_GameDifficulty_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GameDifficultyResponse" />
   </wsdl:message>
-  <wsdl:message name="ISettingsService_General_Game_GameLength_InputMessage">
-    <wsdl:part name="parameters" element="tns:General_Game_GameLength" />
+  <wsdl:message name="ISettingsService_GameLength_InputMessage">
+    <wsdl:part name="parameters" element="tns:GameLength" />
   </wsdl:message>
-  <wsdl:message name="ISettingsService_General_Game_GameLength_OutputMessage">
-    <wsdl:part name="parameters" element="tns:General_Game_GameLengthResponse" />
+  <wsdl:message name="ISettingsService_GameLength_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GameLengthResponse" />
   </wsdl:message>
-  <wsdl:message name="ISettingsService_General_Game_GameDifficultyAndLength_InputMessage">
-    <wsdl:part name="parameters" element="tns:General_Game_GameDifficultyAndLength" />
+  <wsdl:message name="ISettingsService_GameDifficultyAndLength_InputMessage">
+    <wsdl:part name="parameters" element="tns:GameDifficultyAndLength" />
   </wsdl:message>
-  <wsdl:message name="ISettingsService_General_Game_GameDifficultyAndLength_OutputMessage">
-    <wsdl:part name="parameters" element="tns:General_Game_GameDifficultyAndLengthResponse" />
+  <wsdl:message name="ISettingsService_GameDifficultyAndLength_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GameDifficultyAndLengthResponse" />
   </wsdl:message>
   <wsdl:portType name="ISettingsService">
-    <wsdl:operation name="General_Game_GameDifficulty">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISettingsService/General_Game_GameDifficulty" message="tns:ISettingsService_General_Game_GameDifficulty_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISettingsService/General_Game_GameDifficultyResponse" message="tns:ISettingsService_General_Game_GameDifficulty_OutputMessage" />
+    <wsdl:operation name="GameDifficulty">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISettingsService/GameDifficulty" message="tns:ISettingsService_GameDifficulty_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISettingsService/GameDifficultyResponse" message="tns:ISettingsService_GameDifficulty_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="General_Game_GameLength">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISettingsService/General_Game_GameLength" message="tns:ISettingsService_General_Game_GameLength_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISettingsService/General_Game_GameLengthResponse" message="tns:ISettingsService_General_Game_GameLength_OutputMessage" />
+    <wsdl:operation name="GameLength">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISettingsService/GameLength" message="tns:ISettingsService_GameLength_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISettingsService/GameLengthResponse" message="tns:ISettingsService_GameLength_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="General_Game_GameDifficultyAndLength">
-      <wsdl:input wsaw:Action="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLength" message="tns:ISettingsService_General_Game_GameDifficultyAndLength_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLengthResponse" message="tns:ISettingsService_General_Game_GameDifficultyAndLength_OutputMessage" />
+    <wsdl:operation name="GameDifficultyAndLength">
+      <wsdl:input wsaw:Action="http://tempuri.org/ISettingsService/GameDifficultyAndLength" message="tns:ISettingsService_GameDifficultyAndLength_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ISettingsService/GameDifficultyAndLengthResponse" message="tns:ISettingsService_GameDifficultyAndLength_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ISettingsService" type="tns:ISettingsService">
     <wsp:PolicyReference URI="#BasicHttpBinding_ISettingsService_policy" />
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="General_Game_GameDifficulty">
-      <soap:operation soapAction="http://tempuri.org/ISettingsService/General_Game_GameDifficulty" style="document" />
+    <wsdl:operation name="GameDifficulty">
+      <soap:operation soapAction="http://tempuri.org/ISettingsService/GameDifficulty" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -59,8 +59,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="General_Game_GameLength">
-      <soap:operation soapAction="http://tempuri.org/ISettingsService/General_Game_GameLength" style="document" />
+    <wsdl:operation name="GameLength">
+      <soap:operation soapAction="http://tempuri.org/ISettingsService/GameLength" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -68,8 +68,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="General_Game_GameDifficultyAndLength">
-      <soap:operation soapAction="http://tempuri.org/ISettingsService/General_Game_GameDifficultyAndLength" style="document" />
+    <wsdl:operation name="GameDifficultyAndLength">
+      <soap:operation soapAction="http://tempuri.org/ISettingsService/GameDifficultyAndLength" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -19,8 +19,8 @@ namespace kf2server_tbot_client.Security {
             "CurrentGame.ChangeGameType",
             "CurrentGame.ChangeGametypeAndMap",
             "CurrentGame.ChangeMap",
-            "CurrentGame.Players",
-            "CurrentGame.Players_KickPlayer",
+            "CurrentGame.Online",
+            "CurrentGame.Kick",
             "CurrentGame.Status",
 
             "Miscellaneous.AdminSay",
@@ -29,9 +29,9 @@ namespace kf2server_tbot_client.Security {
             "Miscellaneous.AddUser",
             "Miscellaneous.RemoveUser",
 
-            "Settings.General_Game_GameDifficulty",
-            "Settings.General_Game_GameLength",
-            "Settings.General_Game_GameDifficultyAndLength"
+            "Settings.GameDifficulty",
+            "Settings.GameLength",
+            "Settings.GameDifficultyAndLength"
         });
 
         public Users() {

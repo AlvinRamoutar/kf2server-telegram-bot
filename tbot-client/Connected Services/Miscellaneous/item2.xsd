@@ -58,18 +58,6 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="Status">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="StatusResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="StatusResult" nillable="true" type="q7:ResponseValue" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="Test">
     <xs:complexType>
       <xs:sequence />
@@ -78,7 +66,7 @@
   <xs:element name="TestResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="TestResult" nillable="true" type="q8:ResponseValue" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/kf2server_tbot_client.Utils" minOccurs="0" name="TestResult" nillable="true" type="q7:ResponseValue" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

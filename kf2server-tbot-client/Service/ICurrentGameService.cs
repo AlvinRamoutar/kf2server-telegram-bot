@@ -24,10 +24,10 @@ namespace kf2server_tbot_client.Service {
 
 
         [OperationContract]
-        ResponseValue Players();
+        ResponseValue Online();
 
         [OperationContract]
-        ResponseValue Players_KickPlayer();
+        ResponseValue Kick(string playername);
 
     }
 }

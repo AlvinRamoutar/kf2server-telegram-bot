@@ -118,17 +118,17 @@ namespace tbot_client.CurrentGame {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/ChangeGametypeAndMap", ReplyAction="http://tempuri.org/ICurrentGameService/ChangeGametypeAndMapResponse")]
         System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> ChangeGametypeAndMapAsync(string gametype, string map);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Players", ReplyAction="http://tempuri.org/ICurrentGameService/PlayersResponse")]
-        tbot_client.CurrentGame.ResponseValue Players();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Online", ReplyAction="http://tempuri.org/ICurrentGameService/OnlineResponse")]
+        tbot_client.CurrentGame.ResponseValue Online();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Players", ReplyAction="http://tempuri.org/ICurrentGameService/PlayersResponse")]
-        System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> PlayersAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Online", ReplyAction="http://tempuri.org/ICurrentGameService/OnlineResponse")]
+        System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> OnlineAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Players_KickPlayer", ReplyAction="http://tempuri.org/ICurrentGameService/Players_KickPlayerResponse")]
-        tbot_client.CurrentGame.ResponseValue Players_KickPlayer();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Kick", ReplyAction="http://tempuri.org/ICurrentGameService/KickResponse")]
+        tbot_client.CurrentGame.ResponseValue Kick(string playername);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Players_KickPlayer", ReplyAction="http://tempuri.org/ICurrentGameService/Players_KickPlayerResponse")]
-        System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> Players_KickPlayerAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICurrentGameService/Kick", ReplyAction="http://tempuri.org/ICurrentGameService/KickResponse")]
+        System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> KickAsync(string playername);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -190,20 +190,20 @@ namespace tbot_client.CurrentGame {
             return base.Channel.ChangeGametypeAndMapAsync(gametype, map);
         }
         
-        public tbot_client.CurrentGame.ResponseValue Players() {
-            return base.Channel.Players();
+        public tbot_client.CurrentGame.ResponseValue Online() {
+            return base.Channel.Online();
         }
         
-        public System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> PlayersAsync() {
-            return base.Channel.PlayersAsync();
+        public System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> OnlineAsync() {
+            return base.Channel.OnlineAsync();
         }
         
-        public tbot_client.CurrentGame.ResponseValue Players_KickPlayer() {
-            return base.Channel.Players_KickPlayer();
+        public tbot_client.CurrentGame.ResponseValue Kick(string playername) {
+            return base.Channel.Kick(playername);
         }
         
-        public System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> Players_KickPlayerAsync() {
-            return base.Channel.Players_KickPlayerAsync();
+        public System.Threading.Tasks.Task<tbot_client.CurrentGame.ResponseValue> KickAsync(string playername) {
+            return base.Channel.KickAsync(playername);
         }
     }
 }

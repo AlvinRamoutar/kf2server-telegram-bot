@@ -39,17 +39,17 @@
   <wsdl:message name="ICurrentGameService_ChangeGametypeAndMap_OutputMessage">
     <wsdl:part name="parameters" element="tns:ChangeGametypeAndMapResponse" />
   </wsdl:message>
-  <wsdl:message name="ICurrentGameService_Players_InputMessage">
-    <wsdl:part name="parameters" element="tns:Players" />
+  <wsdl:message name="ICurrentGameService_Online_InputMessage">
+    <wsdl:part name="parameters" element="tns:Online" />
   </wsdl:message>
-  <wsdl:message name="ICurrentGameService_Players_OutputMessage">
-    <wsdl:part name="parameters" element="tns:PlayersResponse" />
+  <wsdl:message name="ICurrentGameService_Online_OutputMessage">
+    <wsdl:part name="parameters" element="tns:OnlineResponse" />
   </wsdl:message>
-  <wsdl:message name="ICurrentGameService_Players_KickPlayer_InputMessage">
-    <wsdl:part name="parameters" element="tns:Players_KickPlayer" />
+  <wsdl:message name="ICurrentGameService_Kick_InputMessage">
+    <wsdl:part name="parameters" element="tns:Kick" />
   </wsdl:message>
-  <wsdl:message name="ICurrentGameService_Players_KickPlayer_OutputMessage">
-    <wsdl:part name="parameters" element="tns:Players_KickPlayerResponse" />
+  <wsdl:message name="ICurrentGameService_Kick_OutputMessage">
+    <wsdl:part name="parameters" element="tns:KickResponse" />
   </wsdl:message>
   <wsdl:portType name="ICurrentGameService">
     <wsdl:operation name="Status">
@@ -68,13 +68,13 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeGametypeAndMap" message="tns:ICurrentGameService_ChangeGametypeAndMap_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/ChangeGametypeAndMapResponse" message="tns:ICurrentGameService_ChangeGametypeAndMap_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Players">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/Players" message="tns:ICurrentGameService_Players_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/PlayersResponse" message="tns:ICurrentGameService_Players_OutputMessage" />
+    <wsdl:operation name="Online">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/Online" message="tns:ICurrentGameService_Online_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/OnlineResponse" message="tns:ICurrentGameService_Online_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="Players_KickPlayer">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/Players_KickPlayer" message="tns:ICurrentGameService_Players_KickPlayer_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/Players_KickPlayerResponse" message="tns:ICurrentGameService_Players_KickPlayer_OutputMessage" />
+    <wsdl:operation name="Kick">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICurrentGameService/Kick" message="tns:ICurrentGameService_Kick_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICurrentGameService/KickResponse" message="tns:ICurrentGameService_Kick_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_ICurrentGameService" type="tns:ICurrentGameService">
@@ -116,8 +116,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Players">
-      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/Players" style="document" />
+    <wsdl:operation name="Online">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/Online" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -125,8 +125,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="Players_KickPlayer">
-      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/Players_KickPlayer" style="document" />
+    <wsdl:operation name="Kick">
+      <soap:operation soapAction="http://tempuri.org/ICurrentGameService/Kick" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -1,4 +1,5 @@
 ﻿using kf2server_tbot_client.Security;
+using kf2server_tbot_client.ServerAdmin.CurrentGame;
 using kf2server_tbot_client.Utils;
 using System;
 using System.Collections.Generic;
@@ -106,21 +107,100 @@ namespace kf2server_tbot_client.Service {
         }
 
 
-        [ServiceMethodRoleID("CurrentGame.Players")]
-        public ResponseValue Players() {
-            throw new NotImplementedException();
+        [ServiceMethodRoleID("CurrentGame.Online")]
+        public ResponseValue Online() {
+
+            System.Threading.ManualResetEvent syncEvent = new System.Threading.ManualResetEvent(false);
+
+            Tuple<bool, string> Result = new Tuple<bool, string>(false, null);
+
+            ActionQueue.Instance.Act(new System.Threading.Thread(() => {
+                Result = Players.Instance.Online();
+                syncEvent.Set();
+            }));
+
+            syncEvent.WaitOne();
+
+            if (!Result.Item1) {
+
+                LogEngine.Log(Utils.Status.SERVICE_FAILURE, "Failed to retrieve player info from Players");
+
+                return new ResponseValue(false, null, null);
+
+            } else {
+
+                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                    string.Format("{0} from {1}", GetType().GetMethod("Online")
+                    .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, GetIP()));
+
+                return new ResponseValue(true, string.Empty, new Dictionary<string, string>() { { "online", Result.Item2 } });
+            }
+
         }
 
 
-        [ServiceMethodRoleID("CurrentGame.Players_KickPlayer")]
-        public ResponseValue Players_KickPlayer() {
-            throw new NotImplementedException();
+        [ServiceMethodRoleID("CurrentGame.Kick")]
+        public ResponseValue Kick(string playername) {
+
+            //Tuple<bool, string> AuthResult = AuthManager.Authorize(
+            //    GetType().GetMethod("Kick").GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
+            //    OperationContext.Current);
+
+
+            //if (AuthResult.Item1) {
+
+                ActionQueue.Instance.Act(new System.Threading.Thread(() => {
+                    ServerAdmin.CurrentGame.Players.Instance.Kick(playername);
+                }));
+
+
+                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                    string.Format("{0} for {1} ('{2}')", GetType().GetMethod("Kick").GetCustomAttributes(true)
+                        .OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
+                    GetIP(), playername));
+
+                return new ResponseValue(true, string.Format("Kicking player: {0}", playername), null);
+
+            //} else {
+            //    LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+
+            //    throw new FaultException("You don't have the privilege to perform this action.");
+            //}
+
         }
+
+
+
 
 
         [ServiceMethodRoleID("CurrentGame.Status")]
         public ResponseValue Status() {
-            throw new NotImplementedException();
+
+            System.Threading.ManualResetEvent syncEvent = new System.Threading.ManualResetEvent(false);
+
+            Tuple<bool, Dictionary<string, string>> Result = new Tuple<bool, Dictionary<string, string>>(false, null);
+
+            ActionQueue.Instance.Act(new System.Threading.Thread(() => {
+                Result = ServerInfo.Instance.Status();
+                syncEvent.Set();
+            }));
+
+            syncEvent.WaitOne();
+
+            if (!Result.Item1) {
+
+                LogEngine.Log(Utils.Status.SERVICE_FAILURE, "Failed to retrieve status information from ServerInfo");
+
+                return new ResponseValue(false, null, null);
+
+            } else {
+
+                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                    string.Format("{0} from {1}", GetType().GetMethod("Status")
+                    .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, GetIP()));
+
+                return new ResponseValue(true, string.Empty, Result.Item2);
+            }
         }
     }
 }
