@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using tbot_client.KF2ServiceReference;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
@@ -29,9 +31,27 @@ namespace tbot_client {
         }
 
 
-        public async void Setup(string telegramUUID, Chat chat) {
+        public async void Setup(object sender, MessageEventArgs e) {
+
+            await this.SendTextMessageAsync(
+                chatId: e.Message.Chat.Id,
+                text: string.Format(Prompts.ServiceSetup, Prompts.TBotServerName)
+            );
 
 
+            Tuple<string, ResponseValue> result = await _KF2Service.CMD(e.Message.Contact.UserId.ToString(),
+                "setup", new List<string>() { e.Message.Chat.Id.ToString() });
+
+
+            if (result.Item2.IsSuccess) {
+
+                Properties.Settings.Default.ChatId = e.Message.Chat.Id.ToString();
+            }
+
+            await this.SendTextMessageAsync(
+                chatId: e.Message.Chat.Id,
+                text: result.Item1
+            );
 
         }
 
@@ -47,64 +67,25 @@ namespace tbot_client {
 
                 OnMessageEntitiesHandler(sender, e);
 
-            } else if(e.Message.Document != null) {
-
-                OnMessageDocumentHandler(sender, e);
-
-            }
+            } 
 
         }
 
 
         private async void OnMessageEntitiesHandler(object sender, MessageEventArgs e) {
 
-            if(e.Message.Entities[0].ToString().Equals("setup")) {
+            if(string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) {
 
-                this.OnMessage -= this.OnMessageHandler;
-                this.OnMessage += this.OnMessageSetupHandler;
+                Setup(sender, e);
+            } else {
 
                 await this.SendTextMessageAsync(
-                    chatId: e.Message.Chat.Id,
-                    text: string.Format(Prompts.TokenRequest, Prompts.TBotServerName)
+                    chatId: Chat.Id,
+                    text: (await _KF2Service.CMD(e.Message.Contact.UserId.ToString(),
+                        e.Message.Entities[0].ToString(),
+                        new List<string>(e.Message.EntityValues))).Item1
                 );
-
-                _SetupTelegramUUID = e.Message.Contact.UserId.ToString();
-
-                return;
             }
-
-
-
-            await this.SendTextMessageAsync(
-                chatId: Chat.Id,
-                text: await _KF2Service.CMD(e.Message.Contact.UserId.ToString(), 
-                    e.Message.Entities[0].ToString(), 
-                    e.Message.EntityValues)
-            );
-
-        }
-
-
-        /// <summary>
-        /// Mainly for handling token file.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void OnMessageSetupHandler(object sender, MessageEventArgs e) {
-
-            if(e.Message.Contact.UserId.ToString().Equals(_SetupTelegramUUID)) {
-
-                if(e.Message.Document != null) {
-
-                    File token = await this.GetFileAsync(e.Message.Document.FileId);
-
-                    _KF2Service.ValidateToken(token);
-
-
-                }
-
-            }
-
         }
 
     }

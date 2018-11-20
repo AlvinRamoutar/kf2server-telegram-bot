@@ -1,4 +1,5 @@
 ﻿using kf2server_tbot_client.Utils;
+using LogEngine;
 using OpenQA.Selenium;
 using System;
 
@@ -37,12 +38,12 @@ namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
                 PageManager.Pages[PageType.Passwords] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
                 WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
 
-                LogEngine.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded Passwords page ({0})", WindowHandleID));
+                Logger.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded Passwords page ({0})", WindowHandleID));
 
                 return new Tuple<bool, string>(true, null);
 
             } catch(NoSuchElementException nsee) {
-                LogEngine.Log(Status.PAGELOAD_FAILURE, "Failed to load Passwords page");
+                Logger.Log(Status.PAGELOAD_FAILURE, "Failed to load Passwords page");
                 return new Tuple<bool, string>(false, nsee.Message);
             }
 
@@ -72,12 +73,12 @@ namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
 
                 GamePasswordForm.FindElement(By.CssSelector("input[type='submit']"));
 
-                LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed GamePwd ({0})", string.IsNullOrEmpty(pwd) ? "none" : pwd));
+                Logger.Log(Status.SERVICE_INFO, string.Format("Successfully executed GamePwd ({0})", string.IsNullOrEmpty(pwd) ? "none" : pwd));
 
                 return new Tuple<bool, string>(true, null);
 
             } catch(Exception e) {
-                LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with GamePwd ({0})", e.Message));
+                Logger.Log(Status.SERVICE_INFO, string.Format("Unknown error with GamePwd ({0})", e.Message));
 
                 return new Tuple<bool, string>(false, string.Format("Unknown error with GamePwd ({0})", e.Message));
             }

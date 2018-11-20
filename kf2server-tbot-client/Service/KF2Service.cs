@@ -4,6 +4,7 @@ using kf2server_tbot_client.ServerAdmin.AccessPolicy;
 using kf2server_tbot_client.ServerAdmin.CurrentGame;
 using kf2server_tbot_client.ServerAdmin.Settings;
 using kf2server_tbot_client.Utils;
+using LogEngine;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} for {1} ('{2}')", GetType().GetMethod("ChangeGameType").GetCustomAttributes(true)
                         .OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), gametype));
@@ -39,7 +40,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -63,7 +64,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} for {1} ('{2}', '{3}')", GetType().GetMethod("ChangeGametypeAndMap").GetCustomAttributes(true)
                         .OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), gametype, map));
@@ -72,7 +73,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -95,7 +96,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} for {1} ('{2}')", GetType().GetMethod("ChangeMap").GetCustomAttributes(true)
                         .OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), map));
@@ -104,7 +105,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -128,14 +129,14 @@ namespace kf2server_tbot_client.Service {
 
             if (!Result.Item1) {
 
-                LogEngine.Log(Utils.Status.SERVICE_FAILURE, "Failed to retrieve player info from Players");
+                Logger.Log(LogEngine.Status.SERVICE_FAILURE, "Failed to retrieve player info from Players");
 
                 return new ResponseValue(false, null, null);
 
             }
             else {
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1}", GetType().GetMethod("Online")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, GetIP()));
 
@@ -160,7 +161,7 @@ namespace kf2server_tbot_client.Service {
             }));
 
 
-            LogEngine.Log(Utils.Status.SERVICE_INFO,
+            Logger.Log(LogEngine.Status.SERVICE_INFO,
                 string.Format("{0} for {1} ('{2}')", GetType().GetMethod("Kick").GetCustomAttributes(true)
                     .OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                 GetIP(), playername));
@@ -168,7 +169,7 @@ namespace kf2server_tbot_client.Service {
             return new ResponseValue(true, string.Format("Kicking player: {0}", playername), null);
 
             //} else {
-            //    LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+            //    Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
             //    throw new FaultException("You don't have the privilege to perform this action.");
             //}
@@ -193,14 +194,14 @@ namespace kf2server_tbot_client.Service {
 
             if (!Result.Item1) {
 
-                LogEngine.Log(Utils.Status.SERVICE_FAILURE, "Failed to retrieve status information from ServerInfo");
+                Logger.Log(LogEngine.Status.SERVICE_FAILURE, "Failed to retrieve status information from ServerInfo");
 
                 return new ResponseValue(false, null, null);
 
             }
             else {
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1}", GetType().GetMethod("Status")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, GetIP()));
 
@@ -233,7 +234,7 @@ namespace kf2server_tbot_client.Service {
                     Passwords.Instance.GamePwd((string.IsNullOrEmpty(pwd)) ? Properties.Settings.Default.DefaultGamePassword : pwd);
                 }));
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} for {1} ('{2}')", GetType().GetMethod("GamePasswordOn").
                     GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), pwd));
@@ -244,7 +245,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -269,7 +270,7 @@ namespace kf2server_tbot_client.Service {
                     Passwords.Instance.GamePwd();
                 }));
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} for {1}", GetType().GetMethod("GamePasswordOff").
                     GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP()));
@@ -279,7 +280,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -309,7 +310,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1} ('{2}')", GetType().GetMethod("GameDifficulty")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), difficulty));
@@ -319,7 +320,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -347,7 +348,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1} ('{2}')", GetType().GetMethod("GameLength")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), length));
@@ -358,7 +359,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -388,7 +389,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1} ('{2}, {3}')", GetType().GetMethod("GameDifficultyAndLength")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), difficulty, length));
@@ -398,7 +399,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -428,7 +429,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} for {1} ('{2}')", GetType().GetMethod("AdminSay").GetCustomAttributes(true)
                         .OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), message));
@@ -438,7 +439,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -477,7 +478,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1} ('{2}', '{3}')", GetType().GetMethod("AddUser")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), telegramUUID, JsonConvert.SerializeObject(roles)));
@@ -490,7 +491,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -516,7 +517,7 @@ namespace kf2server_tbot_client.Service {
                 }));
 
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1} ('{2}', '{3}')", GetType().GetMethod("RemoveUser")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
                     GetIP(), telegramUUID, JsonConvert.SerializeObject(roles)));
@@ -529,7 +530,7 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
@@ -547,7 +548,7 @@ namespace kf2server_tbot_client.Service {
 
             if (AuthResult.Item1) {
 
-                LogEngine.Log(Utils.Status.SERVICE_INFO,
+                Logger.Log(LogEngine.Status.SERVICE_INFO,
                     string.Format("{0} from {1}", GetType().GetMethod("Test")
                     .GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID, GetIP()));
 
@@ -556,11 +557,36 @@ namespace kf2server_tbot_client.Service {
 
             }
             else {
-                LogEngine.Log(Utils.Status.SERVICE_WARNING, AuthResult.Item2);
+                Logger.Log(LogEngine.Status.SERVICE_WARNING, AuthResult.Item2);
 
                 throw new FaultException("You don't have the privilege to perform this action.");
             }
 
+        }
+
+
+        /// <summary>
+        /// Binds the supplied telegram ChatId to AuthManager.
+        /// All SOAP requests must now contain this ChatId.
+        /// </summary>
+        /// <param name="chatId">Telegram ChatId</param>
+        /// <returns>ResponseValue object</returns>
+        [ServiceMethodRoleID("Miscellaneous.Setup")]
+        public ResponseValue Setup(string chatId) {
+
+            /// If none is bound, then bound.
+            if (string.IsNullOrWhiteSpace(AuthManager.ChatId)) {
+
+                AuthManager.ChatId = chatId;
+                return new ResponseValue(true, chatId, new Dictionary<string, string>() { { "errors", null } });
+
+            /// If one already exists, check if it is 
+            } else if(AuthManager.ChatId.Equals(chatId)) {
+
+                return new ResponseValue(true, chatId, new Dictionary<string, string>() { { "errors", null } });
+            }
+
+            return new ResponseValue(false, "Already bound to existing chat", new Dictionary<string, string>() { { "errors", null } });
         }
 
         #endregion

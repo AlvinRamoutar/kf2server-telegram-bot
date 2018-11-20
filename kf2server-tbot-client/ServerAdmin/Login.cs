@@ -1,4 +1,5 @@
 ﻿using kf2server_tbot_client.Utils;
+using LogEngine;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
@@ -59,12 +60,12 @@ namespace kf2server_tbot_client.ServerAdmin {
                 try { 
                     errorMessage = Driver.FindElement(By.CssSelector("div[class='message error']")).Text;
 
-                    LogEngine.Log(Status.PAGELOAD_FAILURE, string.Format("Failed to login: {0}", errorMessage));
+                    Logger.Log(Status.PAGELOAD_FAILURE, string.Format("Failed to login: {0}", errorMessage));
                     IsLoggedIn = false;
                     return new Tuple<bool, string>(false, string.Format("Failed to login: {0}", errorMessage));
 
                 } catch(NoSuchElementException) {
-                    LogEngine.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully logged in ({0})", WindowHandleID));
+                    Logger.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully logged in ({0})", WindowHandleID));
                     IsLoggedIn = true;
                 }
 

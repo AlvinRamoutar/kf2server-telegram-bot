@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
-using Telegram.Bot;
-using Telegram.Bot.Args;
-using Telegram.Bot.Types;
+using tbot_client.KF2ServiceReference;
 
 namespace tbot_client {
 
@@ -49,7 +47,7 @@ namespace tbot_client {
 
         private static void PlayersTest() {
 
-            KF2ServiceClient kf2s = new KF2ServiceClient();
+            KF2ServiceReference.KF2ServiceClient kf2s = new KF2ServiceReference.KF2ServiceClient();
 
             kf2s.ClientCredentials.UserName.UserName = "admin";
             kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
@@ -68,7 +66,7 @@ namespace tbot_client {
 
 
         private static void AddUsers() {
-            KF2ServiceClient kf2s = new KF2ServiceClient();
+            KF2ServiceReference.KF2ServiceClient kf2s = new KF2ServiceReference.KF2ServiceClient();
 
             kf2s.ClientCredentials.UserName.UserName = "admin";
             kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
@@ -92,7 +90,7 @@ namespace tbot_client {
 
             //using (Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient()) {
 
-            KF2ServiceClient kf2s = new KF2ServiceClient();
+            KF2ServiceReference.KF2ServiceClient kf2s = new KF2ServiceReference.KF2ServiceClient();
 
             kf2s.ClientCredentials.UserName.UserName = "admin";
                 kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
@@ -111,7 +109,7 @@ namespace tbot_client {
 
 
         private static void SettingsServiceTest() {
-            KF2ServiceClient kf2s = new KF2ServiceClient();
+            KF2ServiceReference.KF2ServiceClient kf2s = new KF2ServiceReference.KF2ServiceClient();
 
             kf2s.ClientCredentials.UserName.UserName = "admin";
             kf2s.ClientCredentials.UserName.Password = "WelcomeToBrampton69";

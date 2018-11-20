@@ -47,5 +47,14 @@
     <Setting Name="DefaultGamePassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">there's no password like no password</Value>
     </Setting>
+    <Setting Name="ServiceUsername" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ServicePassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ChatId" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

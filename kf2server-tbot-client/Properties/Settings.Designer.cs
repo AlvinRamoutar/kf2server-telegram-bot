@@ -202,5 +202,41 @@ namespace kf2server_tbot_client.Properties {
                 this["DefaultGamePassword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ServiceUsername {
+            get {
+                return ((string)(this["ServiceUsername"]));
+            }
+            set {
+                this["ServiceUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ServicePassword {
+            get {
+                return ((string)(this["ServicePassword"]));
+            }
+            set {
+                this["ServicePassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChatId {
+            get {
+                return ((string)(this["ChatId"]));
+            }
+            set {
+                this["ChatId"] = value;
+            }
+        }
     }
 }

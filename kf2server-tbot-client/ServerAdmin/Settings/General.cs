@@ -1,5 +1,6 @@
 ﻿using kf2server_tbot_client.ServerAdmin.CurrentGame;
 using kf2server_tbot_client.Utils;
+using LogEngine;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -70,12 +71,12 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
 
                 }
 
-                LogEngine.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded General page ({0})", WindowHandleID));
+                Logger.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded General page ({0})", WindowHandleID));
 
                 return new Tuple<bool, string>(true, null);
 
             } catch (NoSuchElementException nsee) {
-                LogEngine.Log(Status.PAGELOAD_FAILURE, "Failed to load General page");
+                Logger.Log(Status.PAGELOAD_FAILURE, "Failed to load General page");
                 return new Tuple<bool, string>(false, nsee.Message);
             }
         }
@@ -123,14 +124,14 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
                 Tuple<bool, string> ApplyResult = ApplySettingsTrigger();
 
                 if (ApplyResult.Item1) {
-                    LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameDifficulty ({0})", difficulty));
+                    Logger.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameDifficulty ({0})", difficulty));
                     return new Tuple<bool, string>(true, string.Empty);
                 } else {
                     throw new Exception(ApplyResult.Item2);
                 }
 
             } catch(Exception e) {
-                LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameDifficulty ({0})", e.Message));
+                Logger.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameDifficulty ({0})", e.Message));
 
                 return new Tuple<bool, string>(false, string.Format("Unknown error with ChangeGameDifficulty ({0})", e.Message));
             }
@@ -178,7 +179,7 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
                 Tuple<bool, string> ApplyResult = ApplySettingsTrigger();
 
                 if (ApplyResult.Item1) {
-                    LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameLength ({0})", length));
+                    Logger.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameLength ({0})", length));
                     return new Tuple<bool, string>(true, string.Empty);
                 }
                 else {
@@ -186,7 +187,7 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
                 }
 
             } catch (Exception e) {
-                LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameLength ({0})", e.Message));
+                Logger.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameLength ({0})", e.Message));
 
                 return new Tuple<bool, string>(false, string.Format("Unknown error with ChangeGameLength ({0})", e.Message));
             }
@@ -258,7 +259,7 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
                 Tuple<bool, string> ApplyResult = ApplySettingsTrigger();
 
                 if (ApplyResult.Item1) {
-                    LogEngine.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameDifficultyAndLength ({0}, {1})", difficulty, length));
+                    Logger.Log(Status.SERVICE_INFO, string.Format("Successfully executed ChangeGameDifficultyAndLength ({0}, {1})", difficulty, length));
                     return new Tuple<bool, string>(true, string.Empty);
                 }
                 else {
@@ -266,7 +267,7 @@ namespace kf2server_tbot_client.ServerAdmin.Settings {
                 }
 
             } catch (Exception e) {
-                LogEngine.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameDifficultyAndLength ({0})", e.Message));
+                Logger.Log(Status.SERVICE_INFO, string.Format("Unknown error with ChangeGameDifficultyAndLength ({0})", e.Message));
 
                 return new Tuple<bool, string>(false, string.Format("Unknown error with ChangeGameDifficultyAndLength ({0})", e.Message));
             }

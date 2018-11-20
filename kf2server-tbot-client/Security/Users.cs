@@ -28,6 +28,7 @@ namespace kf2server_tbot_client.Security {
             "Miscellaneous.Test",
             "Miscellaneous.AddUser",
             "Miscellaneous.RemoveUser",
+            "Miscellaneous.Setup",
 
             "Settings.GameDifficulty",
             "Settings.GameLength",

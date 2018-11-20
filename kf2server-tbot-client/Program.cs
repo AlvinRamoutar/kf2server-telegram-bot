@@ -3,6 +3,7 @@ using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Utils;
 using OpenQA.Selenium;
 using System;
+using LogEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace kf2server_tbot_client {
 
         static void Main(string[] args) {
 
-            LogEngine.Instance.HelpText();
+            Logger.Instance.HelpText();
 
             /// Implementing handler for ProcessExit
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ClientClose);
@@ -28,14 +29,22 @@ namespace kf2server_tbot_client {
                 AuthManager.Users = Crypto.DecryptalizeUsers();
 
                 /// Init Browsers (Selenium)
-                sm = new SeleniumManager();
+                //sm = new SeleniumManager();
 
-                /// Init WCF
+                /// Init WCF Service
                 wcf = new WCFServiceManager();
 
-            } catch(Exception e) {
+                /// Assigns ChatId to AuthManager (if it exists in Settings [has been bound in the past])
+                if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) {
+                    Logger.Log(Status.SERVICE_WARNING, "There is no Telegram chat bound to this server.");
+                } else {
+                    AuthManager.ChatId = Properties.Settings.Default.ChatId;
+                }
 
-                LogEngine.Log(Status.GENERIC_FAILURE, e.Message);
+            }
+            catch (Exception e) {
+
+                Logger.Log(Status.GENERIC_FAILURE, e.Message);
 
                 try {
                     SeleniumManager.Quit();
@@ -73,7 +82,7 @@ namespace kf2server_tbot_client {
 
             WCFServiceManager.Quit();
 
-            LogEngine.Log(Status.GENERIC_WARNING, "Quitting Application...");
+            Logger.Log(Status.GENERIC_WARNING, "Quitting Application...");
 
             System.Threading.Thread.Sleep(1000);
 

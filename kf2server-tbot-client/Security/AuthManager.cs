@@ -17,18 +17,34 @@ namespace kf2server_tbot_client.Security {
 
 
         /// <summary>
-        /// Validator for service authorization. Authorizes against KF2 Server Webmin credentials from config.
+        /// Telegram Chat UUID, must be passed as parameter for all CMDs.
         /// </summary>
-        /// <param name="userName">KF2 Server Webmin Username</param>
-        /// <param name="password">KF2 Server Webmin Password</param>
+        private static string chatId;
+        public static string ChatId {
+            get {
+                return chatId;
+            }
+
+            set {
+                if(string.IsNullOrWhiteSpace(chatId))
+                    chatId = value;
+            }
+        }
+
+
+        /// <summary>
+        /// Validator for service authorization. Authorizes against Service credentials from config.
+        /// </summary>
+        /// <param name="userName">ServiceUsername</param>
+        /// <param name="password">ServicePassword</param>
         public override void Validate(string userName, string password) {
 
             if (null == userName || null == password) {
                 throw new ArgumentNullException();
             }
 
-            if (!(userName == Properties.Settings.Default.WebAdminUsername &&
-                password == Properties.Settings.Default.WebAdminPassword)) {
+            if (!(userName == Properties.Settings.Default.ServiceUsername &&
+                password == Properties.Settings.Default.ServicePassword)) {
 
                 throw new FaultException("Unknown Username or Password");
 
@@ -46,6 +62,7 @@ namespace kf2server_tbot_client.Security {
         public static Tuple<bool, string> Authorize(string roleID, OperationContext context) {
 
             string TelegramUUID = string.Empty;
+            string _ChatId = string.Empty;
 
             try {
 
@@ -53,12 +70,17 @@ namespace kf2server_tbot_client.Security {
                 MessageHeaders headers = requestContext.RequestMessage.Headers;
 
                 TelegramUUID = headers.GetHeader<string>(headers.FindHeader("TelegramID", ""));
+                _ChatId = headers.GetHeader<string>(headers.FindHeader("ChatId", ""));
 
                 Account userAcc = AuthManager.Users[Crypto.Hash(TelegramUUID)];
 
-                foreach (string userRole in userAcc.Roles.RoleID) {
-                    if (userRole.Equals(roleID))
-                        return new Tuple<bool, string>(true, null);
+
+                if (_ChatId.Equals(ChatId)) {
+
+                    foreach (string userRole in userAcc.Roles.RoleID) {
+                        if (userRole.Equals(roleID))
+                            return new Tuple<bool, string>(true, null);
+                    }
                 }
 
             } catch (Exception e) {

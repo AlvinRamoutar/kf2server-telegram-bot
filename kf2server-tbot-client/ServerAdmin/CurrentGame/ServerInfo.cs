@@ -1,4 +1,5 @@
 ﻿using kf2server_tbot_client.Utils;
+using LogEngine;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -59,12 +60,12 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
                     "difficulty", "wave", "players", "spectators"
                 };
 
-                LogEngine.Log(Utils.Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded ServerInfo page ({0})", WindowHandleID));
+                Logger.Log(LogEngine.Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded ServerInfo page ({0})", WindowHandleID));
 
                 return new Tuple<bool, string>(true, null);
 
             } catch(NoSuchElementException nsee) {
-                LogEngine.Log(Utils.Status.PAGELOAD_FAILURE, "Failed to load ServerInfo page");
+                Logger.Log(LogEngine.Status.PAGELOAD_FAILURE, "Failed to load ServerInfo page");
                 return new Tuple<bool, string>(false, nsee.Message);
             }
         }

@@ -108,6 +108,9 @@ namespace kf2server_tbot_client.Service {
         [OperationContract]
         ResponseValue Test();
 
+        [OperationContract]
+        ResponseValue Setup(string chatId);
+
         #endregion
 
     }

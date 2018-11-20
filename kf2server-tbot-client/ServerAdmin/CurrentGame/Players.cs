@@ -1,4 +1,5 @@
 ﻿using kf2server_tbot_client.Utils;
+using LogEngine;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
@@ -37,12 +38,12 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
                 PageManager.Pages[PageType.Players] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
                 WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
 
-                LogEngine.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded Players page ({0})", WindowHandleID));
+                Logger.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded Players page ({0})", WindowHandleID));
 
                 return new Tuple<bool, string>(true, null);
 
             } catch(NoSuchElementException nsee) {
-                LogEngine.Log(Status.PAGELOAD_FAILURE, "Failed to load Players page");
+                Logger.Log(Status.PAGELOAD_FAILURE, "Failed to load Players page");
                 return new Tuple<bool, string>(false, nsee.Message);
             }
             

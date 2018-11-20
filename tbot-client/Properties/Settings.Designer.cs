@@ -58,5 +58,17 @@ namespace tbot_client.Properties {
                 this["ServicePassword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChatId {
+            get {
+                return ((string)(this["ChatId"]));
+            }
+            set {
+                this["ChatId"] = value;
+            }
+        }
     }
 }

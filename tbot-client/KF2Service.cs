@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using tbot_client.KF2ServiceReference;
@@ -23,28 +24,31 @@ namespace tbot_client {
         }
 
 
-        public async Task<string> CMD(string telegramUUID, string command, IEnumerable<string> args) {
+        public async Task<Tuple<string, ResponseValue>> CMD(string telegramUUID, string command, List<string> args) {
 
             ResponseValue tmpResponseValue = null;
             string tmpResponseMessage = null;
 
             switch(command) {
 
-                case "Test":
-                    tmpResponseValue = await _client.TestAsync();
-                    tmpResponseMessage = tmpResponseValue.Message;
+                case "setup":
+                    tmpResponseValue = await _client.SetupAsync(args[0]);
+                    if (tmpResponseValue.IsSuccess) {
+                        tmpResponseMessage = string.Format(Prompts.ServiceSetupSuccess, Prompts.TBotServerName);
+                    }
+                    else {
+                        tmpResponseMessage = string.Format(Prompts.ServiceSetupFailure, Prompts.TBotServerName, tmpResponseValue.Message);
+                    }
                     break;
 
+                case "Test":
+                    tmpResponseValue = await _client.TestAsync();
+                    break;
             }
 
-            return tmpResponseMessage;
-
+            return new Tuple<string, ResponseValue>(tmpResponseMessage, tmpResponseValue);
         }
 
-
-        public async Task<bool> ValidateToken(File tokenFile) {
-
-        }
 
 
     }

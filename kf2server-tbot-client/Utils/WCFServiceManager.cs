@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Service;
+using LogEngine;
 
 namespace kf2server_tbot_client.Utils {
 
@@ -37,7 +38,7 @@ namespace kf2server_tbot_client.Utils {
             KF2Service = new ServiceHost(typeof(KF2Service));
             KF2Service.Open();
 
-            LogEngine.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", KF2Service.Description.Name,
+            Logger.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", KF2Service.Description.Name,
                 KF2Service.Description.Endpoints[0].Address));
 
         }
