@@ -48,10 +48,10 @@
       <Value Profile="(Default)">there's no password like no password</Value>
     </Setting>
     <Setting Name="ServiceUsername" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">1234</Value>
     </Setting>
     <Setting Name="ServicePassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">5678</Value>
     </Setting>
     <Setting Name="ChatId" Type="System.String" Scope="User">
       <Value Profile="(Default)" />

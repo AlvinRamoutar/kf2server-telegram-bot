@@ -1,13 +1,8 @@
 ﻿using kf2server_tbot_client.Browsers;
 using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Utils;
-using OpenQA.Selenium;
 using System;
 using LogEngine;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace kf2server_tbot_client {
 
@@ -15,7 +10,12 @@ namespace kf2server_tbot_client {
 
         static void Main(string[] args) {
 
+            /// Initialize logger
+            Logger.Logfile = Properties.Settings.Default.Logfile;
             Logger.Instance.HelpText();
+
+            /// Initialize AuthManager
+            AuthManager.ChatId = Properties.Settings.Default.ChatId;
 
             /// Implementing handler for ProcessExit
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ClientClose);

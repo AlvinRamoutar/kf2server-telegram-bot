@@ -15,7 +15,7 @@ namespace tbot_client {
 
         public Chat Chat { get; private set; }
 
-        private KF2Service _KF2Service { get; set; } 
+        private KF2Service _KF2Service { get; set; }
 
         private string _SetupTelegramUUID { get; set; }
         #endregion
@@ -25,10 +25,28 @@ namespace tbot_client {
 
             Identity = this.GetMeAsync().Result;
 
+            Chat = (!string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) ?
+                this.GetChatAsync(Properties.Settings.Default.ChatId).Result : null;
+
             this.StartReceiving();
 
             this.OnMessage += this.OnMessageHandler;
+
+            _KF2Service = new KF2Service();
+
+            //this.Welcome();
         }
+
+
+        public async void Welcome() {
+
+            await this.SendTextMessageAsync(
+                chatId: Chat.Id,
+                text: "Welcome, to the Jungle."
+            );
+
+        }
+
 
 
         public async void Setup(object sender, MessageEventArgs e) {
@@ -39,13 +57,14 @@ namespace tbot_client {
             );
 
 
-            Tuple<string, ResponseValue> result = await _KF2Service.CMD(e.Message.Contact.UserId.ToString(),
+            Tuple<string, ResponseValue> result = await _KF2Service.CMD(e,
                 "setup", new List<string>() { e.Message.Chat.Id.ToString() });
 
 
             if (result.Item2.IsSuccess) {
 
                 Properties.Settings.Default.ChatId = e.Message.Chat.Id.ToString();
+                Properties.Settings.Default.Save();
             }
 
             await this.SendTextMessageAsync(
@@ -74,16 +93,19 @@ namespace tbot_client {
 
         private async void OnMessageEntitiesHandler(object sender, MessageEventArgs e) {
 
-            if(string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) {
+            if(Chat == null) {
 
                 Setup(sender, e);
             } else {
 
+                Tuple<string, ResponseValue> result = await _KF2Service.CMD(e,
+                    e.Message.Text.Split(' ')[0],
+                    new List<string>(e.Message.Text.Split(' ')));
+
+                
                 await this.SendTextMessageAsync(
                     chatId: Chat.Id,
-                    text: (await _KF2Service.CMD(e.Message.Contact.UserId.ToString(),
-                        e.Message.Entities[0].ToString(),
-                        new List<string>(e.Message.EntityValues))).Item1
+                    text: (string.IsNullOrWhiteSpace(result.Item1)) ? "This command does not exist." : result.Item1
                 );
             }
         }

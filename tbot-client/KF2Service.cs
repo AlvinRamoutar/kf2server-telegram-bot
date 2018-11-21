@@ -1,8 +1,10 @@
-﻿using System;
+﻿using LogEngine;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using tbot_client.KF2ServiceReference;
+using Telegram.Bot.Args;
 
 namespace tbot_client {
 
@@ -19,20 +21,24 @@ namespace tbot_client {
             _client.ClientCredentials.UserName.UserName = Properties.Settings.Default.ServiceUsername;
             _client.ClientCredentials.UserName.Password = Properties.Settings.Default.ServicePassword;
 
-            _client.Open();
+            try {
+                _client.Open();
+            } catch(Exception e) {
+                Logger.Log(LogEngine.Status.SERVICE_FAILURE, e.Message);
+            }
 
         }
 
 
-        public async Task<Tuple<string, ResponseValue>> CMD(string telegramUUID, string command, List<string> args) {
+        public async Task<Tuple<string, ResponseValue>> CMD(MessageEventArgs e, string command, List<string> args) {
 
             ResponseValue tmpResponseValue = null;
             string tmpResponseMessage = null;
 
-            switch(command) {
+            switch(command.Substring(1).ToLower()) {
 
                 case "setup":
-                    tmpResponseValue = await _client.SetupAsync(args[0]);
+                    tmpResponseValue = await _client.SetupAsync(e.Message.Chat.Id.ToString());
                     if (tmpResponseValue.IsSuccess) {
                         tmpResponseMessage = string.Format(Prompts.ServiceSetupSuccess, Prompts.TBotServerName);
                     }

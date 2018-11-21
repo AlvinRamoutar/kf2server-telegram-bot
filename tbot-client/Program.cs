@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogEngine;
+using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using tbot_client.KF2ServiceReference;
@@ -16,8 +17,13 @@ namespace tbot_client {
 
         static void Main(string[] args) {
 
+            /// Initialize logger
+            Logger.Logfile = Properties.Settings.Default.Logfile;
+            Logger.Instance.HelpText();
+
             bot = new Bot(Properties.Settings.Default.Token);
 
+            Console.ReadKey();
         }
 
 

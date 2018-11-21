@@ -578,6 +578,10 @@ namespace kf2server_tbot_client.Service {
             if (string.IsNullOrWhiteSpace(AuthManager.ChatId)) {
 
                 AuthManager.ChatId = chatId;
+
+                Properties.Settings.Default.ChatId = chatId;
+                Properties.Settings.Default.Save();
+
                 return new ResponseValue(true, chatId, new Dictionary<string, string>() { { "errors", null } });
 
             /// If one already exists, check if it is 

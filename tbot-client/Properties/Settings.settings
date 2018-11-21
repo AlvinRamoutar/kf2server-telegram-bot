@@ -6,13 +6,16 @@
       <Value Profile="(Default)">700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY</Value>
     </Setting>
     <Setting Name="ServiceUsername" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">1234</Value>
     </Setting>
     <Setting Name="ServicePassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">5678</Value>
     </Setting>
     <Setting Name="ChatId" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Logfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Log.txt</Value>
     </Setting>
   </Settings>
 </SettingsFile>
