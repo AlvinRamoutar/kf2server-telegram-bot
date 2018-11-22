@@ -1,12 +1,18 @@
 ﻿using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin {
 
+
+    /// <summary>
+    /// ChatConsole frame 
+    /// </summary>
     class ChatConsole : WebminPage {
 
         #region Singleton Structure
@@ -33,6 +39,10 @@ namespace kf2server_tbot_client.ServerAdmin {
         }
 
 
+        /// <summary>
+        /// Selects ChatConsole frame, then sends message
+        /// </summary>
+        /// <param name="msg"></param>
         public static void SendMessage(string msg) {
 
             IWebElement chatWindowFrame = 
@@ -48,7 +58,5 @@ namespace kf2server_tbot_client.ServerAdmin {
             ChatConsole.Instance.Driver.SwitchTo().DefaultContent();
 
         }
-
-
     }
 }

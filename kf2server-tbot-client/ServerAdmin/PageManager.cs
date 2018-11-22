@@ -5,8 +5,17 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin {
 
+
+    /// <summary>
+    /// Known, navigateable pages
+    /// </summary>
     public enum PageType {
         Login,
         ServerInfo, ChangeMap, Players,
@@ -14,6 +23,10 @@ namespace kf2server_tbot_client.ServerAdmin {
         General
     }
 
+
+    /// <summary>
+    /// Handles launching of windows for each navegateable page using FirefoxDriver
+    /// </summary>
     class PageManager {
 
         #region Singleton Structure
@@ -48,6 +61,11 @@ namespace kf2server_tbot_client.ServerAdmin {
         #endregion
 
 
+        /// <summary>
+        /// Launches a FirefoxDriver browser window for each navigateable page
+        /// </summary>
+        /// <param name="driver"></param>
+        /// <returns></returns>
         public Tuple<bool, string> Init(IWebDriver driver) {
 
             string errorMessage = null;

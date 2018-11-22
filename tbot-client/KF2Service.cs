@@ -1,19 +1,30 @@
 ﻿using LogEngine;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using tbot_client.KF2ServiceReference;
 using Telegram.Bot.Args;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace tbot_client {
 
+    /// <summary>
+    /// Service consumer class, performs requests and returns data back to bot for chat relay
+    /// </summary>
     class KF2Service : KF2ServiceClient {
 
 
         private KF2ServiceClient _client { get; set; }
 
 
+        /// <summary>
+        /// Assigns Service credentials before starting
+        /// </summary>
         public KF2Service() : base() {
 
             _client = new KF2ServiceClient();
@@ -24,17 +35,27 @@ namespace tbot_client {
             try {
                 _client.Open();
             } catch(Exception e) {
-                Logger.Log(LogEngine.Status.SERVICE_FAILURE, e.Message);
+                Logger.Log(LogEngine.Status.TELEGRAM_FAILURE, e.Message);
             }
 
         }
 
 
+        /// <summary>
+        /// Performs requests based on supplied command
+        /// Acts on TEXT commands (e.g. '/cmd $argn' from chat)
+        /// Awaits response, and formats message (to send back to telegram chat) based on prompts
+        /// </summary>
+        /// <param name="e">Message</param>
+        /// <param name="command">Command in the form: '/cmd'</param>
+        /// <param name="args">All arguments of command, including original command itself</param>
+        /// <returns>Tuple result with message (sent back to chat), and service ResponseValue object</returns>
         public async Task<Tuple<string, ResponseValue>> CMD(MessageEventArgs e, string command, List<string> args) {
 
             ResponseValue tmpResponseValue = null;
             string tmpResponseMessage = string.Empty;
 
+            /// Omitting the '/', and converting to completely lowercase, what is the command?
             switch(command.Substring(1).ToLower()) {
 
                 #region Current Game

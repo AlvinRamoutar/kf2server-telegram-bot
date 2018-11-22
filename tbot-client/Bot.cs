@@ -1,13 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using tbot_client.KF2ServiceReference;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace tbot_client {
 
+
+    /// <summary>
+    /// Bot class, handles all bot-related operations, including sending/receiving from Telegram chat
+    /// </summary>
     class Bot : TelegramBotClient {
 
         #region Properties and Fields
@@ -17,10 +25,14 @@ namespace tbot_client {
 
         private KF2Service _KF2Service { get; set; }
 
-        private string _SetupTelegramUUID { get; set; }
         #endregion
 
 
+        /// <summary>
+        /// Constructs new bot, retrieve bot identity, assign ChatId (if one is stored), 
+        ///  starts receiving, attaches message handlers, and kickstarts service consumer
+        /// </summary>
+        /// <param name="token">Telegram Bot Token</param>
         public Bot(string token) : base(token) {
 
             Identity = this.GetMeAsync().Result;
@@ -33,22 +45,14 @@ namespace tbot_client {
             this.OnMessage += this.OnMessageHandler;
 
             _KF2Service = new KF2Service();
-
-            //this.Welcome();
         }
 
 
-        public async void Welcome() {
-
-            await this.SendTextMessageAsync(
-                chatId: Chat.Id,
-                text: "Welcome, to the Jungle."
-            );
-
-        }
-
-
-
+        /// <summary>
+        /// Performs assignment to Telegram chat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public async void Setup(object sender, MessageEventArgs e) {
 
             await this.SendTextMessageAsync(
@@ -56,11 +60,12 @@ namespace tbot_client {
                 text: string.Format(Prompts.ServiceSetup, Prompts.TBotServerName)
             );
 
-
+            /// Tries to assign ChatId to server
+            /// Ideally, you would like to perform further authentication in server-side method 'Setup'
             Tuple<string, ResponseValue> result = await _KF2Service.CMD(e,
                 "setup", new List<string>() { e.Message.Chat.Id.ToString() });
 
-
+            /// If server isn't already binded to another chat
             if (result.Item2.IsSuccess) {
 
                 Properties.Settings.Default.ChatId = e.Message.Chat.Id.ToString();
@@ -78,8 +83,8 @@ namespace tbot_client {
         /// <summary>
         /// Routes to specific handler based on kind of message (entity or document)
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Telegram</param>
+        /// <param name="e">Message</param>
         private void OnMessageHandler(object sender, MessageEventArgs e) {
 
             if (e.Message.Text != null) {
@@ -91,11 +96,21 @@ namespace tbot_client {
         }
 
 
+        /// <summary>
+        /// Directs message to appropriate response method.
+        /// <para>In the case where setup hasn't been ran (no ChatId assigned), then that is done.</para>
+        /// <para>Else, command sent to KF2Service, where it tries to execute cmd based on existing service methods</para>
+        /// </summary>
+        /// <param name="sender">Telegram</param>
+        /// <param name="e">Message</param>
         private async void OnMessageEntitiesHandler(object sender, MessageEventArgs e) {
 
+            /// If setup hasn't been performed yet
             if(Chat == null) {
 
                 Setup(sender, e);
+
+            /// Otherwise, send message to KF2Service
             } else {
 
                 Tuple<string, ResponseValue> result = await _KF2Service.CMD(e,

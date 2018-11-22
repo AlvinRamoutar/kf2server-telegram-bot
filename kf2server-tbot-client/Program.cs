@@ -3,12 +3,36 @@ using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Utils;
 using System;
 using LogEngine;
+using System.Runtime.InteropServices;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client {
 
+    /// <summary>
+    /// Launcher class
+    /// </summary>
     class Program {
 
+
+        /// <summary>
+        /// Capture console window close (exit) event
+        /// </summary>
+        /// <param name="Handler"><see cref="WindowClose"/></param>
+        /// <param name="Add"></param>
+        /// <returns></returns>
+        [DllImport("Kernel32")]
+        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+        public delegate bool HandlerRoutine();
+
+
         static void Main(string[] args) {
+
+            /// Assigning handler for console window exit
+            SetConsoleCtrlHandler(new HandlerRoutine(WindowClose), true);
 
             /// Initialize logger
             Logger.Logfile = Properties.Settings.Default.Logfile;
@@ -16,9 +40,6 @@ namespace kf2server_tbot_client {
 
             /// Initialize AuthManager
             AuthManager.ChatId = Properties.Settings.Default.ChatId;
-
-            /// Implementing handler for ProcessExit
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(ClientClose);
 
             SeleniumManager sm = null;
             WCFServiceManager wcf = null;
@@ -46,50 +67,40 @@ namespace kf2server_tbot_client {
 
                 Logger.Log(Status.GENERIC_FAILURE, e.Message);
 
-                try {
-                    SeleniumManager.Quit();
-                    WCFServiceManager.Quit();
-                }
-                catch (Exception) { }
-
-                return;
+                WindowClose();
             }
 
 
-            /* TESTS BEGIN */
-
-            //ServerAdmin.ChatConsole.SendMessage("Annual Diagnostics");
-            //Console.WriteLine("Action Start");
-            //Console.WriteLine(ServerAdmin.PageManager.Instance.ChangeMap.ChangeMapOnly("KF-BioticsLab").Item1);
-            //Console.WriteLine("Action End");
-            //sm.Quit();
-
-            Console.ReadKey();
+            while (true) {
+                Console.ReadKey();
+            }
         }
 
 
         /// <summary>
         /// Terminates console application.
         /// <para>First, active Users in AuthManager are serialized, encrypted, then flushed to disk.</para>
-        /// <para>Second, SeleniumManager is disposed, and with it, all open browsers for ServerAdmin pages.</para>
-        /// <para>Third, WCFServiceManager is halted, closing all open ServiceHosts.</para>
+        /// <para>Second, WCFServiceManager is halted, closing all open ServiceHosts.</para>
+        /// <para>Third, Close message logged to logfile, and logger instance disposed.</para>
+        /// <para>Fourth, SeleniumManager is disposed, and with it, all open browsers for ServerAdmin pages.</para>
         /// </summary>
-        /// <param name="sender">Console</param>
-        /// <param name="e">Close</param>
-        static void ClientClose(object sender, EventArgs e) {
+        /// <returns></returns>
+        static bool WindowClose() {
 
-            Crypto.EncryptalizeUsers(AuthManager.Users);
+            try {
+                Crypto.EncryptalizeUsers(AuthManager.Users);
 
-            WCFServiceManager.Quit();
+                WCFServiceManager.Quit();
 
-            Logger.Log(Status.GENERIC_WARNING, "Quitting Application...");
+                Logger.Log(Status.GENERIC_WARNING, "Quitting Application...");
+                Logger.Instance.Dispose();
 
-            System.Threading.Thread.Sleep(1000);
+                /// This should really close the console window itself...
+                SeleniumManager.Quit();
+            } catch (Exception) { }
 
-            SeleniumManager.Quit();
+            return true;
 
-            Environment.Exit(0);
         }
-
     }
 }

@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Serialization;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.Security {
 
+    /// <summary>
+    /// Serializable class containing user information, as well as role assignments
+    /// </summary>
     [Serializable, XmlRoot("Users")]
     public class Users {
 
@@ -46,10 +54,18 @@ namespace kf2server_tbot_client.Security {
             }
         }
 
+
+        /// <summary>
+        /// Adds a new user to the active Users object, or updates the roles assigned to an existing user (appends)
+        /// </summary>
+        /// <param name="user">Active users object</param>
+        /// <param name="telegramUUID">Telegram UUID</param>
+        /// <param name="roles">Roles to append to user</param>
+        /// <returns></returns>
         public static bool AddUser(Users user, string telegramUUID, string[] roles = null) {
+
             Account newUser = new Account();
             string hashedTelegramID = Crypto.Hash(telegramUUID);
-
 
             bool DoesUserExist = false;
 
@@ -103,7 +119,14 @@ namespace kf2server_tbot_client.Security {
 
 
 
-
+        /// <summary>
+        /// Removes a user from the active Users object, or updates the roles assigned to an existing user (pops)
+        /// If no roles are supplied, then the user is deleted.
+        /// </summary>
+        /// <param name="user">Active users object</param>
+        /// <param name="telegramUUID">Telegram UUID</param>
+        /// <param name="roles">Roles to pop from user. If all roles from user is popped, user is deleted.</param>
+        /// <returns></returns>
         public static bool RemoveUser(Users user, string telegramUUID, string[] roles = null) {
             Account currUser = new Account();
             string hashedTelegramID = Crypto.Hash(telegramUUID);

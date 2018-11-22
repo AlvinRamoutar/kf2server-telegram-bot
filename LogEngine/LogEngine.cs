@@ -1,12 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace LogEngine {
+
     /// <summary>
     /// All possible operation statuses
     /// </summary>
@@ -27,6 +29,11 @@ namespace LogEngine {
         SERVICE_INFO,
         SERVICE_WARNING,
         SERVICE_FAILURE,
+
+        TELEGRAM_SUCCESS,
+        TELEGRAM_INFO,
+        TELEGRAM_WARNING,
+        TELEGRAM_FAILURE,
 
         LOGGER_WARNING,
         LOGGER_ERROR
@@ -56,6 +63,7 @@ namespace LogEngine {
                             DirectorySecurity ds = Directory.GetAccessControl(
                                 Path.Combine(Directory.GetCurrentDirectory(), Logfile));
                         }
+                        catch(DirectoryNotFoundException) {  } /// Means file doesn't exist. That's fine; it'll be made.
                         catch (Exception e) {
                             Log(Status.LOGGER_ERROR, "Executing user can not write log data to " +
                                 Logfile + ": " + e.ToString());
@@ -72,8 +80,6 @@ namespace LogEngine {
 
         #region Properties and Fields
         private static object Locker = new object();
-
-        private StreamWriter sw { get; set; }
         #endregion
 
 
@@ -150,13 +156,13 @@ namespace LogEngine {
         /// Help text w. command descriptions
         /// </summary>
         public void HelpText() {
-            Log(Status.NONE, "================================================================", true);
-            Log(Status.NONE, "Project Title", true);
-            Log(Status.NONE, "Project Description", true);
-            Log(Status.NONE, "----------------------------------------------------------------", true);
-            Log(Status.NONE, "COMMANDS", true);
-            Log(Status.NONE, "  exit     |  Terminates application", true);
-            Log(Status.NONE, "================================================================", true);
+
+            Log(Status.NONE, "================================================================================", true);
+            Log(Status.NONE, "= KF2 Telegram Bot", true);
+            Log(Status.NONE, "= An experiment in command-based controls for Killing Floor 2 (TripWire)", true);
+            Log(Status.NONE, "=-------------------------------------------------------------------------------", true);
+            Log(Status.NONE, "=                                                           Alvin Ramoutar, 2018", true);
+            Log(Status.NONE, "================================================================================", true);
         }
 
 
