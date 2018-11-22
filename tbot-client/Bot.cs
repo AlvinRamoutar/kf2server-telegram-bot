@@ -105,7 +105,7 @@ namespace tbot_client {
                 
                 await this.SendTextMessageAsync(
                     chatId: Chat.Id,
-                    text: (string.IsNullOrWhiteSpace(result.Item1)) ? "This command does not exist." : result.Item1
+                    text: (string.IsNullOrWhiteSpace(result.Item1)) ? "This command does\n not exist." : result.Item1
                 );
             }
         }

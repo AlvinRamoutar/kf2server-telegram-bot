@@ -177,7 +177,6 @@ namespace kf2server_tbot_client.Service {
         }
 
 
-
         [ServiceMethodRoleID("CurrentGame.Status")]
         public ResponseValue Status() {
 
@@ -574,6 +573,9 @@ namespace kf2server_tbot_client.Service {
         [ServiceMethodRoleID("Miscellaneous.Setup")]
         public ResponseValue Setup(string chatId) {
 
+            bool isSuccess = false;
+            string message = "Already binded to another chat. Setup not possible.";
+
             /// If none is bound, then bound.
             if (string.IsNullOrWhiteSpace(AuthManager.ChatId)) {
 
@@ -582,15 +584,17 @@ namespace kf2server_tbot_client.Service {
                 Properties.Settings.Default.ChatId = chatId;
                 Properties.Settings.Default.Save();
 
-                return new ResponseValue(true, chatId, new Dictionary<string, string>() { { "errors", null } });
+                isSuccess = true;
+                message = "Binded successfully to this chat, setup complete.";
 
             /// If one already exists, check if it is 
             } else if(AuthManager.ChatId.Equals(chatId)) {
 
-                return new ResponseValue(true, chatId, new Dictionary<string, string>() { { "errors", null } });
+                isSuccess = true;
+                message = "Already bound to this chat, no setup necessary.";
             }
 
-            return new ResponseValue(false, "Already bound to existing chat", new Dictionary<string, string>() { { "errors", null } });
+            return new ResponseValue(isSuccess, message, new Dictionary<string, string>() { { "errors", null } });
         }
 
         #endregion

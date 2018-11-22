@@ -78,7 +78,7 @@ namespace kf2server_tbot_client.Security {
                 if (_ChatId.Equals(ChatId)) {
 
                     foreach (string userRole in userAcc.Roles.RoleID) {
-                        if (userRole.Equals(roleID))
+                        if (userRole.ToLower().Equals(roleID.ToLower()))
                             return new Tuple<bool, string>(true, null);
                     }
                 }

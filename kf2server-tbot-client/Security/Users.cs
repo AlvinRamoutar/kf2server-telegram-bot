@@ -13,26 +13,26 @@ namespace kf2server_tbot_client.Security {
 
         [XmlElement("RoleIDList")]
         public static Role Roles = new Role(new string[] {
-            "AccessPolicy.GamePasswordOn",
-            "AccessPolicy.GamePasswordOff",
+            "accesspolicy.gamepasswordon",
+            "accesspolicy.gamepasswordoff",
 
-            "CurrentGame.ChangeGameType",
-            "CurrentGame.ChangeGametypeAndMap",
-            "CurrentGame.ChangeMap",
-            "CurrentGame.Online",
-            "CurrentGame.Kick",
-            "CurrentGame.Status",
+            "currentgame.changegametype",
+            "currentgame.changegametypeandmap",
+            "currentgame.changemap",
+            "currentgame.online",
+            "currentgame.kick",
+            "currentgame.status",
 
-            "Miscellaneous.AdminSay",
-            "Miscellaneous.Pause",
-            "Miscellaneous.Test",
-            "Miscellaneous.AddUser",
-            "Miscellaneous.RemoveUser",
-            "Miscellaneous.Setup",
+            "miscellaneous.adminsay",
+            "miscellaneous.pause",
+            "miscellaneous.test",
+            "miscellaneous.adduser",
+            "miscellaneous.removeuser",
+            "miscellaneous.setup",
 
-            "Settings.GameDifficulty",
-            "Settings.GameLength",
-            "Settings.GameDifficultyAndLength"
+            "settings.gamedifficulty",
+            "settings.gamelength",
+            "settings.gamedifficultyandlength"
         });
 
         public Users() {
@@ -67,9 +67,11 @@ namespace kf2server_tbot_client.Security {
                 List<string> tmpNewUserRoles = new List<string>();
 
                 /// Create new Role object with all supplied roles
+                string tmpr = string.Empty;
                 foreach (string r in roles) {
-                    if (Users.Roles.RoleID.Contains(r)) {
-                        tmpNewUserRoles.Add(r);
+                    tmpr = r.ToLower().Trim();
+                    if (Users.Roles.RoleID.Contains(tmpr)) {
+                        tmpNewUserRoles.Add(tmpr);
                     }
                 }
 

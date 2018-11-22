@@ -117,17 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddUser" xml:space="preserve">
+    <value>Added/Updated user {0} with specified roles</value>
+    <comment>Where {0} is telegram user</comment>
+  </data>
+  <data name="AdminSay" xml:space="preserve">
+    <value>Broadcast: "{0}"</value>
+    <comment>Where {0} is message broadcasted to game session</comment>
+  </data>
+  <data name="ChangeGameType" xml:space="preserve">
+    <value>Changing game type to {0}</value>
+    <comment>Where {0} is game type</comment>
+  </data>
+  <data name="ChangeGameTypeAndMap" xml:space="preserve">
+    <value>Changing game type to {0} and map to {1}</value>
+    <comment>Where {0} is game type and {1} is map</comment>
+  </data>
+  <data name="ChangeMap" xml:space="preserve">
+    <value>Changing map to {0}</value>
+    <comment>Where {0} is map</comment>
+  </data>
+  <data name="GameDifficulty" xml:space="preserve">
+    <value>Changing game difficulty to {0}</value>
+    <comment>Where {0} is supplied game difficulty</comment>
+  </data>
+  <data name="GameDifficultyAndLength" xml:space="preserve">
+    <value>Changing game difficulty to {0} and length to {1}</value>
+    <comment>Where {0} is supplied game difficulty, and {1} is length</comment>
+  </data>
+  <data name="GameLength" xml:space="preserve">
+    <value>Changing game length to {0}</value>
+    <comment>Where {0} is supplied game length</comment>
+  </data>
+  <data name="GamePasswordOff" xml:space="preserve">
+    <value>Game password has been removed</value>
+  </data>
+  <data name="GamePasswordOn" xml:space="preserve">
+    <value>Game password has been set {0}</value>
+    <comment>Where {0} is optionally 'to default in config'</comment>
+  </data>
+  <data name="Kick" xml:space="preserve">
+    <value>Kicking {0} from current game</value>
+    <comment>Where {0} is player name of player to kick</comment>
+  </data>
+  <data name="Online" xml:space="preserve">
+    <value>Currently online: \n{0}</value>
+    <comment>Where {0} is a comma-seperated list of player names</comment>
+  </data>
+  <data name="RemoveUser" xml:space="preserve">
+    <value>Removed roles and/or user {0}</value>
+    <comment>Where {0} is telegram user</comment>
+  </data>
   <data name="ServiceSetup" xml:space="preserve">
     <value>Please assign the [ServiceUsername] and [ServicePassword] to settings file before launching this bot. These credentials must match what is present in {0}. Now attempting setup...</value>
     <comment>Where {0} is TBotServerName</comment>
   </data>
   <data name="ServiceSetupFailure" xml:space="preserve">
-    <value>Setup failed due to {0} being offline, or from a service credential mismatch (error: '{1}').</value>
+    <value>Setup failed due to {0} being offline, or from a service credential mismatch (error: '{1}')</value>
     <comment>Where {0} is TBotServerName and {1} is exception message</comment>
   </data>
   <data name="ServiceSetupSuccess" xml:space="preserve">
-    <value>Setup completed! {0} is now bound to this chat.</value>
+    <value>Setup completed! {0} is now bound to this chat</value>
     <comment>Where {0} is TBotServerName</comment>
+  </data>
+  <data name="StatusFailure" xml:space="preserve">
+    <value>{0} is currently offline, or not responding to requests</value>
+    <comment>Where {0} is TBotServerName</comment>
+  </data>
+  <data name="StatusSuccess" xml:space="preserve">
+    <value>Current Game Session: \n{0}</value>
+    <comment>Where {0} is a collection of '\n' seperated key/value pair game stats</comment>
   </data>
   <data name="TBotClientName" xml:space="preserve">
     <value>$TBOTCLIENT</value>

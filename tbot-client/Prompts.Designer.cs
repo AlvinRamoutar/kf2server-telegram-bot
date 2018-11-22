@@ -19,7 +19,7 @@ namespace tbot_client {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Prompts {
@@ -61,6 +61,123 @@ namespace tbot_client {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Added/Updated user {0} with specified roles.
+        /// </summary>
+        internal static string AddUser {
+            get {
+                return ResourceManager.GetString("AddUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broadcast: &quot;{0}&quot;.
+        /// </summary>
+        internal static string AdminSay {
+            get {
+                return ResourceManager.GetString("AdminSay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing game type to {0}.
+        /// </summary>
+        internal static string ChangeGameType {
+            get {
+                return ResourceManager.GetString("ChangeGameType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing game type to {0} and map to {1}.
+        /// </summary>
+        internal static string ChangeGameTypeAndMap {
+            get {
+                return ResourceManager.GetString("ChangeGameTypeAndMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing map to {0}.
+        /// </summary>
+        internal static string ChangeMap {
+            get {
+                return ResourceManager.GetString("ChangeMap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing game difficulty to {0}.
+        /// </summary>
+        internal static string GameDifficulty {
+            get {
+                return ResourceManager.GetString("GameDifficulty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing game difficulty to {0} and length to {1}.
+        /// </summary>
+        internal static string GameDifficultyAndLength {
+            get {
+                return ResourceManager.GetString("GameDifficultyAndLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing game length to {0}.
+        /// </summary>
+        internal static string GameLength {
+            get {
+                return ResourceManager.GetString("GameLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game password has been removed.
+        /// </summary>
+        internal static string GamePasswordOff {
+            get {
+                return ResourceManager.GetString("GamePasswordOff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game password has been set {0}.
+        /// </summary>
+        internal static string GamePasswordOn {
+            get {
+                return ResourceManager.GetString("GamePasswordOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kicking {0} from current game.
+        /// </summary>
+        internal static string Kick {
+            get {
+                return ResourceManager.GetString("Kick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currently online: \n{0}.
+        /// </summary>
+        internal static string Online {
+            get {
+                return ResourceManager.GetString("Online", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed roles and/or user {0}.
+        /// </summary>
+        internal static string RemoveUser {
+            get {
+                return ResourceManager.GetString("RemoveUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please assign the [ServiceUsername] and [ServicePassword] to settings file before launching this bot. These credentials must match what is present in {0}. Now attempting setup....
         /// </summary>
         internal static string ServiceSetup {
@@ -70,7 +187,7 @@ namespace tbot_client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setup failed due to {0} being offline, or from a service credential mismatch (error: &apos;{1}&apos;)..
+        ///   Looks up a localized string similar to Setup failed due to {0} being offline, or from a service credential mismatch (error: &apos;{1}&apos;).
         /// </summary>
         internal static string ServiceSetupFailure {
             get {
@@ -79,11 +196,29 @@ namespace tbot_client {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Setup completed! {0} is now bound to this chat..
+        ///   Looks up a localized string similar to Setup completed! {0} is now bound to this chat.
         /// </summary>
         internal static string ServiceSetupSuccess {
             get {
                 return ResourceManager.GetString("ServiceSetupSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is currently offline, or not responding to requests.
+        /// </summary>
+        internal static string StatusFailure {
+            get {
+                return ResourceManager.GetString("StatusFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Current Game Session: \n{0}.
+        /// </summary>
+        internal static string StatusSuccess {
+            get {
+                return ResourceManager.GetString("StatusSuccess", resourceCulture);
             }
         }
         
