@@ -36,6 +36,15 @@ namespace kf2server_tbot_client.Utils {
         private static void StartServices() {
 
             KF2Service = new ServiceHost(typeof(KF2Service));
+
+            if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostURI)) {
+
+                var currentEndpoint = KF2Service.Description.Endpoints.First(e => e.Contract.ContractType == typeof(KF2Service));
+                currentEndpoint.Address = new EndpointAddress(new Uri(Properties.Settings.Default.ServiceHostURI), 
+                    currentEndpoint.Address.Identity, currentEndpoint.Address.Headers);
+
+            }
+
             KF2Service.Open();
 
             Logger.Log(Status.SERVICE_SUCCESS, string.Format("{0} hosted at {1}", KF2Service.Description.Name,

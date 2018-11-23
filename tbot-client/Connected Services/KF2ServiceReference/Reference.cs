@@ -194,7 +194,7 @@ namespace tbot_client.KF2ServiceReference {
         tbot_client.KF2ServiceReference.ResponseValue Setup(string chatId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IKF2Service/Setup", ReplyAction="http://tempuri.org/IKF2Service/SetupResponse")]
-        System.Threading.Tasks.Task<tbot_client.KF2ServiceReference.ResponseValue> SetupAsync(string chatId);
+        System.Threading.Tasks.Task<tbot_client.KF2ServiceReference.ResponseValue> SetupAsync(string telegramUUID, string chatId);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -356,8 +356,8 @@ namespace tbot_client.KF2ServiceReference {
             return base.Channel.Setup(chatId);
         }
         
-        public System.Threading.Tasks.Task<tbot_client.KF2ServiceReference.ResponseValue> SetupAsync(string chatId) {
-            return base.Channel.SetupAsync(chatId);
+        public System.Threading.Tasks.Task<tbot_client.KF2ServiceReference.ResponseValue> SetupAsync(string telegramUUID, string chatId) {
+            return base.Channel.SetupAsync(telegramUUID, chatId);
         }
     }
 }

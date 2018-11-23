@@ -1,6 +1,7 @@
 ﻿using LogEngine;
 using System;
 using System.Collections.Generic;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using tbot_client.KF2ServiceReference;
 using Telegram.Bot.Args;
@@ -19,7 +20,7 @@ namespace tbot_client {
     class KF2Service : KF2ServiceClient {
 
 
-        private KF2ServiceClient _client { get; set; }
+        //private KF2ServiceClient _client { get; set; }
 
 
         /// <summary>
@@ -27,13 +28,17 @@ namespace tbot_client {
         /// </summary>
         public KF2Service() : base() {
 
-            _client = new KF2ServiceClient();
+            if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostURI)) {
+                this.Endpoint.Address = new EndpointAddress(new Uri(Properties.Settings.Default.ServiceHostURI),
+                    this.Endpoint.Address.Identity,
+                    this.Endpoint.Address.Headers);
+            }
 
-            _client.ClientCredentials.UserName.UserName = Properties.Settings.Default.ServiceUsername;
-            _client.ClientCredentials.UserName.Password = Properties.Settings.Default.ServicePassword;
+            this.ClientCredentials.UserName.UserName = Properties.Settings.Default.ServiceUsername;
+            this.ClientCredentials.UserName.Password = Properties.Settings.Default.ServicePassword;
 
             try {
-                _client.Open();
+                this.Open();
             } catch(Exception e) {
                 Logger.Log(LogEngine.Status.TELEGRAM_FAILURE, e.Message);
             }
@@ -61,31 +66,31 @@ namespace tbot_client {
                 #region Current Game
 
                 case "changegametype":
-                    tmpResponseValue = await _client.ChangeGameTypeAsync(args[1]);
+                    tmpResponseValue = await this.ChangeGameTypeAsync(args[1]);
                     tmpResponseMessage = string.Format(Prompts.ChangeGameType, args[1]);
 
                     break;
 
                 case "changegametypeandmap":
-                    tmpResponseValue = await _client.ChangeGametypeAndMapAsync(args[1], args[2]);
+                    tmpResponseValue = await this.ChangeGametypeAndMapAsync(args[1], args[2]);
                     tmpResponseMessage = string.Format(Prompts.ChangeGameTypeAndMap, args[1], args[2]);
 
                     break;
 
                 case "changemap":
-                    tmpResponseValue = await _client.ChangeMapAsync(args[1]);
+                    tmpResponseValue = await this.ChangeMapAsync(args[1]);
                     tmpResponseMessage = string.Format(Prompts.ChangeMap, args[1]);
 
                     break;
 
                 case "online":
-                    tmpResponseValue = await _client.OnlineAsync();
+                    tmpResponseValue = await this.OnlineAsync();
                     tmpResponseMessage = string.Format(Prompts.Online, tmpResponseValue.Data["online"]);
 
                     break;
 
                 case "status":
-                    tmpResponseValue = await _client.StatusAsync();
+                    tmpResponseValue = await this.StatusAsync();
 
                     if (tmpResponseValue.IsSuccess) {
                         foreach (KeyValuePair<string, string> kvp in tmpResponseValue.Data) {
@@ -101,13 +106,13 @@ namespace tbot_client {
                 #region Access Policy
 
                 case "gamepasswordon":
-                    tmpResponseValue = await _client.GamePasswordOnAsync((args.Count == 1) ? null : args[1]);
+                    tmpResponseValue = await this.GamePasswordOnAsync((args.Count == 1) ? null : args[1]);
                     tmpResponseMessage = string.Format(Prompts.GamePasswordOn, (args.Count == 1) ? "" : " to default in config");
 
                     break;
 
                 case "gamepasswordoff":
-                    tmpResponseValue = await _client.GamePasswordOffAsync();
+                    tmpResponseValue = await this.GamePasswordOffAsync();
                     tmpResponseMessage = Prompts.GamePasswordOff;
 
                     break;
@@ -117,19 +122,19 @@ namespace tbot_client {
                 #region Settings
 
                 case "gamedifficulty":
-                    tmpResponseValue = await _client.GameDifficultyAsync(args[1]);
+                    tmpResponseValue = await this.GameDifficultyAsync(args[1]);
                     tmpResponseMessage = string.Format(Prompts.GameDifficulty, args[1]);
 
                     break;
 
                 case "gamelength":
-                    tmpResponseValue = await _client.GameLengthAsync(args[1]);
+                    tmpResponseValue = await this.GameLengthAsync(args[1]);
                     tmpResponseMessage = string.Format(Prompts.GameLength, args[1]);
 
                     break;
 
                 case "gamedifficultyandlength":
-                    tmpResponseValue = await _client.GameDifficultyAndLengthAsync(args[1], args[2]);
+                    tmpResponseValue = await this.GameDifficultyAndLengthAsync(args[1], args[2]);
                     tmpResponseMessage = string.Format(Prompts.GameDifficultyAndLength, args[1], args[2]);
 
                     break;
@@ -139,14 +144,14 @@ namespace tbot_client {
                 #region Miscellaneous
 
                 case "adminsay":
-                    tmpResponseValue = await _client.AdminSayAsync(args[1]);
+                    tmpResponseValue = await this.AdminSayAsync(args[1]);
                     tmpResponseMessage = string.Format(Prompts.GameDifficultyAndLength, args[1], args[2]);
 
                     break;
 
                 case "adduser":
 
-                    tmpResponseValue = await _client.AddUserAsync(e.Message.Entities[1].User.Id.ToString(), 
+                    tmpResponseValue = await this.AddUserAsync(e.Message.Entities[1].User.Id.ToString(), 
                         (e.Message.Entities.Length > 2) ? args[2].Split(',') : null);
                     tmpResponseMessage = string.Format(Prompts.AddUser, e.Message.Entities[1].User.Id.ToString());
 
@@ -154,14 +159,14 @@ namespace tbot_client {
 
                 case "removeuser":
 
-                    tmpResponseValue = await _client.RemoveUserAsync(e.Message.Entities[1].User.Id.ToString(),
+                    tmpResponseValue = await this.RemoveUserAsync(e.Message.Entities[1].User.Id.ToString(),
                         (e.Message.Entities.Length > 2) ? args[2].Split(',') : null);
                     tmpResponseMessage = string.Format(Prompts.RemoveUser, e.Message.Entities[1].User.Id.ToString());
 
                     break;
 
                 case "setup":
-                    tmpResponseValue = await _client.SetupAsync(e.Message.Contact.UserId.ToString(), e.Message.Chat.Id.ToString());
+                    tmpResponseValue = await this.SetupAsync(e.Message.Contact.UserId.ToString(), e.Message.Chat.Id.ToString());
 
                     if (tmpResponseValue.IsSuccess)
                         tmpResponseMessage = string.Format(Prompts.ServiceSetupSuccess, Prompts.TBotServerName);
@@ -170,7 +175,7 @@ namespace tbot_client {
                     break;
 
                 case "Test":
-                    tmpResponseValue = await _client.TestAsync();
+                    tmpResponseValue = await this.TestAsync();
                     tmpResponseMessage = tmpResponseValue.Message;
 
                     break;

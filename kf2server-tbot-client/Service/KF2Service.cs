@@ -612,7 +612,7 @@ namespace kf2server_tbot_client.Service {
 
                 AuthManager.ChatId = chatId;
 
-                Properties.Settings.Default.ServiceHostURL = chatId;
+                Properties.Settings.Default.ChatId = chatId;
                 Properties.Settings.Default.Save();
 
                 /// Adds calling user as admin

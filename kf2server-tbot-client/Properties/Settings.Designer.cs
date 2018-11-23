@@ -230,12 +230,12 @@ namespace kf2server_tbot_client.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ServiceHostURL {
+        public string ServiceHostURI {
             get {
-                return ((string)(this["ServiceHostURL"]));
+                return ((string)(this["ServiceHostURI"]));
             }
             set {
-                this["ServiceHostURL"] = value;
+                this["ServiceHostURI"] = value;
             }
         }
         
