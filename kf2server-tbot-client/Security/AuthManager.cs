@@ -86,9 +86,9 @@ namespace kf2server_tbot_client.Security {
                 /// IF ChatId matches what is known by server
                 if (_ChatId.Equals(ChatId)) {
 
-                    /// IF Telegram user's account object contains role necessary for executing this operation
+                    /// IF Telegram user's account object contains role necessary for executing this operation, OR is admin
                     foreach (string userRole in userAcc.Roles.RoleID) {
-                        if (userRole.ToLower().Equals(roleID.ToLower()))
+                        if (userRole.ToLower().Equals(roleID.ToLower()) || userRole.ToLower().Equals("admin"))
                             return new Tuple<bool, string>(true, null);
                     }
                 }

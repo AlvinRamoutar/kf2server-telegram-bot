@@ -40,7 +40,9 @@ namespace kf2server_tbot_client.Security {
 
             "settings.gamedifficulty",
             "settings.gamelength",
-            "settings.gamedifficultyandlength"
+            "settings.gamedifficultyandlength",
+            
+            "admin"
         });
 
         public Users() {
@@ -86,8 +88,18 @@ namespace kf2server_tbot_client.Security {
                 string tmpr = string.Empty;
                 foreach (string r in roles) {
                     tmpr = r.ToLower().Trim();
+
+                    /// If supplied role is in the format $PAGECATEGORY.$ROLE
                     if (Users.Roles.RoleID.Contains(tmpr)) {
                         tmpNewUserRoles.Add(tmpr);
+                    
+                    /// If supplied role is in the format $ROLE (shorthand)
+                    } else {
+
+                        foreach(string shorthandRole in Users.Roles.RoleID) {
+                            if(shorthandRole.Substring(shorthandRole.IndexOf('.') + 1).ToLower().Equals(tmpr))
+                                tmpNewUserRoles.Add(shorthandRole);
+                        }
                     }
                 }
 

@@ -39,7 +39,7 @@ namespace kf2server_tbot_client {
             Logger.Instance.HelpText();
 
             /// Initialize AuthManager
-            AuthManager.ChatId = Properties.Settings.Default.ChatId;
+            AuthManager.ChatId = Properties.Settings.Default.ServiceHostURL;
 
             SeleniumManager sm = null;
             WCFServiceManager wcf = null;
@@ -56,10 +56,10 @@ namespace kf2server_tbot_client {
                 wcf = new WCFServiceManager();
 
                 /// Assigns ChatId to AuthManager (if it exists in Settings [has been bound in the past])
-                if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) {
+                if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostURL)) {
                     Logger.Log(Status.SERVICE_WARNING, "There is no Telegram chat bound to this server.");
                 } else {
-                    AuthManager.ChatId = Properties.Settings.Default.ChatId;
+                    AuthManager.ChatId = Properties.Settings.Default.ServiceHostURL;
                 }
 
             }

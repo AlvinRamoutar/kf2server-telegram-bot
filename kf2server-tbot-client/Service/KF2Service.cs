@@ -11,7 +11,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.Service {
+
+    /// <summary>
+    /// Service implementation
+    /// <para>Performs queued calls to ServerAdmin operation methods</para>
+    /// <para>Almost all methods follow this schema:</para>
+    /// <para>1. Have the 'ServiceMethodRoleID' attribute, which must be in Users.cs, and
+    ///  is used to authorization</para>
+    /// <para>2. Perform a call to AuthManager.Authorize, which supplies the method's 'ServiceMethodRoleID'
+    ///  attribute, as well as current OperationContext object (to grab user info from HTTP headers) </para>
+    /// <para>3. Check the result of call from 2., and perform calls to necessary ServerAdmin operations
+    ///  within a thread supplied to ActionQueue.Act (encapsulates for queue)</para>
+    /// <para>4. Log the call of this service method using LogEngine</para>
+    /// </summary>
     class KF2Service : ServiceTools, IKF2Service {
 
         #region Current Game
@@ -445,23 +464,26 @@ namespace kf2server_tbot_client.Service {
         }
 
 
-
+        /// <summary>
+        /// WIP
+        /// Not implemented, since there is no known way to pause through server admin
+        /// (pause is not a supported command in Management Console)
+        /// </summary>
+        /// <returns></returns>
         [ServiceMethodRoleID("Miscellaneous.Pause")]
         public ResponseValue Pause() {
             throw new NotImplementedException();
         }
 
 
-
+        /// <summary>
+        /// Adds a specified Telegram user to the list of known users. Also assigns supplied roles
+        /// </summary>
+        /// <param name="telegramUUID">Telegram UUID</param>
+        /// <param name="roles">Array of roles</param>
+        /// <returns>ResponseValue object</returns>
         [ServiceMethodRoleID("Miscellaneous.AddUser")]
         public ResponseValue AddUser(string telegramUUID, string[] roles = null) {
-
-            /*
-            Console.WriteLine(OperationContext.Current.RequestContext.RequestMessage.ToString());
-            foreach(var header in OperationContext.Current.RequestContext.RequestMessage.Headers) {
-                Console.WriteLine(header.ToString());
-            }
-            */
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("AddUser").GetCustomAttributes(true).OfType<ServiceMethodRoleIDAttribute>().FirstOrDefault().ID,
@@ -499,6 +521,12 @@ namespace kf2server_tbot_client.Service {
 
 
 
+        /// <summary>
+        /// Removes a specified Telegram user from list of known users, or updates their roles
+        /// </summary>
+        /// <param name="telegramUUID">Telegram UUID</param>
+        /// <param name="roles">Array of roles</param>
+        /// <returns>ResponseValue object</returns>
         [ServiceMethodRoleID("MiscellaneousService.RemoveUser")]
         public ResponseValue RemoveUser(string telegramUUID, string[] roles = null) {
 
@@ -537,7 +565,10 @@ namespace kf2server_tbot_client.Service {
         }
 
 
-
+        /// <summary>
+        /// Test service method, use for debugging auth or something.
+        /// </summary>
+        /// <returns></returns>
         [ServiceMethodRoleID("Miscellaneous.Test")]
         public ResponseValue Test() {
 
@@ -571,7 +602,7 @@ namespace kf2server_tbot_client.Service {
         /// <param name="chatId">Telegram ChatId</param>
         /// <returns>ResponseValue object</returns>
         [ServiceMethodRoleID("Miscellaneous.Setup")]
-        public ResponseValue Setup(string chatId) {
+        public ResponseValue Setup(string telegramUUID, string chatId) {
 
             bool isSuccess = false;
             string message = "Already binded to another chat. Setup not possible.";
@@ -581,8 +612,11 @@ namespace kf2server_tbot_client.Service {
 
                 AuthManager.ChatId = chatId;
 
-                Properties.Settings.Default.ChatId = chatId;
+                Properties.Settings.Default.ServiceHostURL = chatId;
                 Properties.Settings.Default.Save();
+
+                /// Adds calling user as admin
+                AddUser(telegramUUID, new string[] { "admin" });
 
                 isSuccess = true;
                 message = "Binded successfully to this chat, setup complete.";

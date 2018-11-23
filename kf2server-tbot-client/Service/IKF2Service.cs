@@ -1,8 +1,17 @@
 ﻿using kf2server_tbot_client.Utils;
 using System.ServiceModel;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.Service {
 
+    /// <summary>
+    /// Service methods interface
+    /// </summary>
     [ServiceContract]
     public interface IKF2Service {
 
@@ -109,7 +118,7 @@ namespace kf2server_tbot_client.Service {
         ResponseValue Test();
 
         [OperationContract]
-        ResponseValue Setup(string chatId);
+        ResponseValue Setup(string telegramUUID, string chatId);
 
         #endregion
 

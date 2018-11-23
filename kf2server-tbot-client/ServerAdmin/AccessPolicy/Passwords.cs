@@ -1,10 +1,17 @@
-﻿using kf2server_tbot_client.Utils;
-using LogEngine;
+﻿using LogEngine;
 using OpenQA.Selenium;
 using System;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin.AccessPolicy {
 
+    /// <summary>
+    /// Passwords page
+    /// </summary>
     class Passwords : WebminPage {
 
         #region Singleton Structure

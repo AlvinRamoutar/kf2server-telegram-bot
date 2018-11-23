@@ -1,12 +1,21 @@
-﻿using kf2server_tbot_client.Utils;
-using LogEngine;
+﻿using LogEngine;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
+
+    /// <summary>
+    /// ChangeMap page
+    /// </summary>
     class ChangeMap : WebminPage{
 
         #region Singleton Structure
@@ -27,10 +36,17 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
         ChangeMap() { }
         #endregion
 
+        #region Properties and Fields
         private Dictionary<string, string> GameType { get; set; }
         private Dictionary<string, string> Maps { get; set; }
+        #endregion
 
 
+        /// <summary>
+        /// Creates a collection from gametypes dropdown and maps dropdown.
+        /// <para>This collection is used to ensure a valid, known gametype/map is chosen.</para>
+        /// </summary>
+        /// <returns>Tuple result</returns>
         public override Tuple<bool, string> Init() {
 
             try {
@@ -74,7 +90,11 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
 
 
-
+        /// <summary>
+        /// Changes gametype, then performs a change map to apply to new game session.
+        /// </summary>
+        /// <param name="gametype">Gametype</param>
+        /// <returns>Tuple result</returns>
         public Tuple<bool, string> ChangeGameTypeOnly(string gametype) {
 
             /// Check if gametype even exist
@@ -84,7 +104,7 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
             /// Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
-            /// Save current map, since changing game type resets map to first map in select
+            /// Save current map, since changing game type resets map to first map in select dropdown
             string currentMap = new SelectElement(Driver.FindElement(By.Name("map"))).SelectedOption.Text;
 
             /// Perform game type selection
@@ -107,10 +127,11 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
         }
 
 
-
-
-
-
+        /// <summary>
+        /// Changes map, then performs a change map to apply to new game session.
+        /// </summary>
+        /// <param name="map">Map name (e.g. KF2-*)</param>
+        /// <returns>Tuple result</returns>
         public Tuple<bool, string> ChangeMapOnly(string map) {
 
             /// Check if map even exist
@@ -136,6 +157,13 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
         }
 
+
+        /// <summary>
+        /// Changes both gametype and map, then performs a change map to apply to new game session.
+        /// </summary>
+        /// <param name="gametype">Gametype</param>
+        /// <param name="map">Map name (e.g. KF2-*)</param>
+        /// <returns>Tuple result</returns>
         public Tuple<bool, string> ChangeMapAndGameType(string gametype, string map) {
 
             /// Check if gametype & map even exist

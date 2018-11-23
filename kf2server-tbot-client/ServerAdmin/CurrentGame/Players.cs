@@ -1,15 +1,21 @@
-﻿using kf2server_tbot_client.Utils;
-using LogEngine;
+﻿using LogEngine;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
+
+    /// <summary>
+    /// Players page
+    /// </summary>
     class Players : WebminPage{
 
         #region Singleton Structure
@@ -49,7 +55,10 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
             
         }
 
-
+        /// <summary>
+        /// Retrieves player names column values, concatenates into string 
+        /// </summary>
+        /// <returns>Tuple result with successful flag, and 'online players' string</returns>
         public Tuple<bool, string> Online() {
 
             /// Changes focus to this page
@@ -92,7 +101,11 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
         }
 
 
-
+        /// <summary>
+        /// Kicks a player from active game session
+        /// </summary>
+        /// <param name="playername">In-game name of player to kick</param>
+        /// <returns>Tuple result</returns>
         public Tuple<bool, string> Kick(string playername) {
 
             /// Changes focus to this page

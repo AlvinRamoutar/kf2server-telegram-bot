@@ -53,6 +53,9 @@
     <Setting Name="ServicePassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">5678</Value>
     </Setting>
+    <Setting Name="ServiceHostURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
     <Setting Name="ChatId" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>

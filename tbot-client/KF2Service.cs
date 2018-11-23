@@ -144,24 +144,24 @@ namespace tbot_client {
 
                     break;
 
-                /// WIP
                 case "adduser":
 
-                    tmpResponseValue = await _client.AddUserAsync(args[1], args[2].Split(','));
-                    tmpResponseMessage = string.Format(Prompts.GameDifficultyAndLength, args[1], args[2]);
+                    tmpResponseValue = await _client.AddUserAsync(e.Message.Entities[1].User.Id.ToString(), 
+                        (e.Message.Entities.Length > 2) ? args[2].Split(',') : null);
+                    tmpResponseMessage = string.Format(Prompts.AddUser, e.Message.Entities[1].User.Id.ToString());
 
                     break;
 
-                /// WIP
                 case "removeuser":
 
-                    tmpResponseValue = await _client.AddUserAsync(args[1], args[2].Split(','));
-                    tmpResponseMessage = string.Format(Prompts.GameDifficultyAndLength, args[1], args[2]);
+                    tmpResponseValue = await _client.RemoveUserAsync(e.Message.Entities[1].User.Id.ToString(),
+                        (e.Message.Entities.Length > 2) ? args[2].Split(',') : null);
+                    tmpResponseMessage = string.Format(Prompts.RemoveUser, e.Message.Entities[1].User.Id.ToString());
 
                     break;
 
                 case "setup":
-                    tmpResponseValue = await _client.SetupAsync(e.Message.Chat.Id.ToString());
+                    tmpResponseValue = await _client.SetupAsync(e.Message.Contact.UserId.ToString(), e.Message.Chat.Id.ToString());
 
                     if (tmpResponseValue.IsSuccess)
                         tmpResponseMessage = string.Format(Prompts.ServiceSetupSuccess, Prompts.TBotServerName);
