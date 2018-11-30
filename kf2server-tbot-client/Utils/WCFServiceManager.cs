@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Service;
 using LogEngine;
+using System.Diagnostics;
 
 namespace kf2server_tbot_client.Utils {
 
@@ -37,12 +38,10 @@ namespace kf2server_tbot_client.Utils {
 
             KF2Service = new ServiceHost(typeof(KF2Service));
 
-            if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostURI)) {
+            if(!string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostURI) && 
+                !string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostUser)) {
 
-                var currentEndpoint = KF2Service.Description.Endpoints.First(e => e.Contract.ContractType == typeof(KF2Service));
-                currentEndpoint.Address = new EndpointAddress(new Uri(Properties.Settings.Default.ServiceHostURI), 
-                    currentEndpoint.Address.Identity, currentEndpoint.Address.Headers);
-
+                AddServiceHostURIToURLACL();
             }
 
             KF2Service.Open();
@@ -53,99 +52,70 @@ namespace kf2server_tbot_client.Utils {
         }
 
 
-        [Obsolete]
-        private static void UserXMLSerialization() {
+        /// <summary>
+        /// Adds (does not replace) a new endpoint for accessing the KF2Service based on ServiceHostURI identified in settings
+        /// In addition to this URI, a user/group is required to assign the address to - hence, must also have ServiceHostUser
+        /// </summary>
+        /// <returns></returns>
+        private static Tuple<bool, string> AddServiceHostURIToURLACL() {
+
+            Tuple<bool, string> Result = new Tuple<bool, string>(true, "Created endpoint for ServiceHostURI: " +
+                Properties.Settings.Default.ServiceHostURI);
+
+            try {
+
+                /// Prepares argument string for 'netsh' command
+                /// First parameter is url, which is in the following form:
+                /// [http / https]://[domain / +]:[port]/
+                /// Where:
+                ///  [http / https] is the protocol
+                ///  [domain / +] is either a domain, or localhost (+)
+                ///  [port] is any valid port that is not in use
+                /// Example URL: http://+:8888/
+                /// Second parameter is User (default: \\Users group)
+                string parameter = string.Format("http add urlacl url={0} user={1}",
+                    Properties.Settings.Default.ServiceHostURI, Properties.Settings.Default.ServiceHostUser);
+
+                ProcessStartInfo psi = new ProcessStartInfo("netsh", parameter);
+                Process netshProcess = new Process();
+
+                /// Prepare various console options
+                psi.Verb = "runas";
+                psi.RedirectStandardError = false;
+                psi.RedirectStandardOutput = false;
+                psi.CreateNoWindow = true;
+                psi.WindowStyle = ProcessWindowStyle.Hidden;
+                psi.UseShellExecute = false;
 
 
-            XmlSerializer serializer = new XmlSerializer(typeof(Users));
+                netshProcess.EnableRaisingEvents = true;
+                netshProcess.OutputDataReceived += ((e, e2) => {
 
-            TextWriter writer = new StreamWriter(Properties.Settings.Default.UsersRelFilePath);
+                    Console.WriteLine(e);
+                    Console.WriteLine(e2);
 
-            Users users = new Users();
-
-            List<string> tmpRoleIDs = new List<string>();
-
-            for (int i = 0; i < 5; i++) {
-
-                tmpRoleIDs.Clear();
-                for (int j = 0; j < i; j++)
-                    tmpRoleIDs.Add("role" + j);
-
-                Security.Role tmpRole = new Security.Role();
-                tmpRole.RoleID = tmpRoleIDs.ToArray<string>();
-
-
-                users.Accounts.Add(new Security.Account() {
-                    TelegramUUID = "telegramUUID" + i,
-                    SteamUUID = "steamUUID" + i,
-                    Roles = tmpRole
                 });
-            }
 
-            serializer.Serialize(writer, users);
-            writer.Close();
+                netshProcess = Process.Start(psi);
 
-            Console.WriteLine("Done Serializing");
-        }
+                /// Wait until netsh cmd completed
+                while (!netshProcess.HasExited) { }
 
-        [Obsolete]
-        private static void UserXMLSerialization(Users users) {
-
-            XmlSerializer serializer = new XmlSerializer(typeof(Users));
-
-            TextWriter writer = new StreamWriter("Users.xml");
-
-            serializer.Serialize(writer, AuthManager.Users);
-            writer.Close();
-
-            Console.WriteLine("Done Serializing");
-
-        }
-
-        [Obsolete]
-        private static void UserXMLReader() {
-
-            using (XmlReader r = XmlReader.Create(Properties.Settings.Default.UsersRelFilePath)) {
-
-                Dictionary<string, string> NodeAttributes = new Dictionary<string, string>();
-
-                while (r.Read()) {
-
-                    switch (r.NodeType) {
-                        case XmlNodeType.Attribute:
-                            //if(!string.IsNullOrEmpty(r.GetAttribute("nature")))
-                            ///    Console.WriteLine("Attr: {0}", r.GetAttribute("nature"));
-
-                            break;
-
-                        case XmlNodeType.Element:
-
-                            if (r.HasAttributes) {
-                                int i = 0;
-                                while (r.MoveToNextAttribute()) {
-
-                                    NodeAttributes.Add(r.Name, r.Value);
-                                    i++;
-                                }
-                                r.MoveToElement();
-                            }
-
-                            break;
-                        case XmlNodeType.Text:
-
-                            break;
-                        case XmlNodeType.Whitespace:
-                        case XmlNodeType.EndElement:
-                            break;
-                    }
-
-
+                /// If netsh command failed
+                if(netshProcess.ExitCode != 0) {
+                    throw new SystemException(
+                        "netsh failed either due to lack of elevation (run as Administrator), or because URL reservation already exists, or some other generic failure");
                 }
 
-                foreach (KeyValuePair<string, string> kvp in NodeAttributes) {
-                    Console.WriteLine("Name: \"{0}\" Value:\"{1}\"", kvp.Key, kvp.Value);
-                }
+            } catch(Exception e) {
+                Result = new Tuple<bool, string>(false, string.Format("Could not create endpoint with ServiceHostURI ({0}). Error: {1}",
+                    Properties.Settings.Default.ServiceHostURI, e.Message));
             }
+
+
+            Logger.Log((Result.Item1) ? Status.SERVICE_SUCCESS : Status.SERVICE_WARNING, Result.Item2);
+
+            return Result;
         }
 
 
@@ -161,28 +131,6 @@ namespace kf2server_tbot_client.Utils {
             } catch (Exception) { }
 
         }
-
-
-
-
-        /*
-         * NEEDED for non-admin binding addr
-        public void Start() {
-            string everyone = new System.Security.Principal.SecurityIdentifier(
-                "S-1-1-0").Translate(typeof(System.Security.Principal.NTAccount)).ToString();
-
-            string parameter = @"http add urlacl url=http://+:8888/ user=\" + everyone;
-
-            ProcessStartInfo psi = new ProcessStartInfo("netsh", parameter);
-
-            psi.Verb = "runas";
-            psi.RedirectStandardOutput = false;
-            psi.CreateNoWindow = true;
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.UseShellExecute = false;
-            Process.Start(psi);
-        }
-    }*/
 
     }
 }

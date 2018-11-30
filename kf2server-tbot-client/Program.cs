@@ -4,6 +4,7 @@ using kf2server_tbot_client.Utils;
 using System;
 using LogEngine;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 /// <summary>
 /// KF2 Telegram Bot
@@ -39,7 +40,7 @@ namespace kf2server_tbot_client {
             Logger.Instance.HelpText();
 
             /// Initialize AuthManager
-            AuthManager.ChatId = Properties.Settings.Default.ChatId;
+            AuthManager.ChatId = Properties.Settings.Default.ServiceHostUser;
 
             SeleniumManager sm = null;
             WCFServiceManager wcf = null;
@@ -50,16 +51,20 @@ namespace kf2server_tbot_client {
                 AuthManager.Users = Crypto.DecryptalizeUsers();
 
                 /// Init Browsers (Selenium)
-                //sm = new SeleniumManager();
+                sm = new SeleniumManager();
 
                 /// Init WCF Service
                 wcf = new WCFServiceManager();
 
                 /// Assigns ChatId to AuthManager (if it exists in Settings [has been bound in the past])
-                if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) {
+                if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostUser)) {
                     Logger.Log(Status.SERVICE_WARNING, "There is no Telegram chat bound to this server.");
                 } else {
-                    AuthManager.ChatId = Properties.Settings.Default.ChatId;
+                    AuthManager.ChatId = Properties.Settings.Default.ServiceHostUser;
+                }
+
+                while (true) {
+                    Console.ReadKey();
                 }
 
             }
@@ -68,11 +73,6 @@ namespace kf2server_tbot_client {
                 Logger.Log(Status.GENERIC_FAILURE, e.Message);
 
                 WindowClose();
-            }
-
-
-            while (true) {
-                Console.ReadKey();
             }
         }
 

@@ -229,13 +229,25 @@ namespace kf2server_tbot_client.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8734/kf2server_tbot_client.Service/KF2Service/")]
         public string ServiceHostURI {
             get {
                 return ((string)(this["ServiceHostURI"]));
             }
             set {
                 this["ServiceHostURI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\Users")]
+        public string ServiceHostUser {
+            get {
+                return ((string)(this["ServiceHostUser"]));
+            }
+            set {
+                this["ServiceHostUser"] = value;
             }
         }
         
