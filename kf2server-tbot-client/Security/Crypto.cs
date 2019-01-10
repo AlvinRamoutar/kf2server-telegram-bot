@@ -4,6 +4,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml.Serialization;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.Security {
 
     /// <summary>
@@ -11,8 +16,10 @@ namespace kf2server_tbot_client.Security {
     /// </summary>
     class Crypto {
 
+
         /// <summary>
         /// Hashes provided data string using SHA256
+        /// Currently only used to hash Telegram UUIDs
         /// </summary>
         /// <param name="data">String to hash</param>
         /// <returns>Resultant hash</returns>
@@ -37,7 +44,7 @@ namespace kf2server_tbot_client.Security {
 
 
         /// <summary>
-        /// Serializes Users file using KeyManager (AESManaged)
+        /// Serializes and encrypts Users file using KeyManager (AESManaged), and writes to file.
         /// </summary>
         /// <param name="users">Users object</param>
         public static void EncryptalizeUsers(Users users) {
@@ -46,6 +53,7 @@ namespace kf2server_tbot_client.Security {
 
                 using (CryptoStream cs = new CryptoStream(fs, KeyManager.Instance.AES.CreateEncryptor(), CryptoStreamMode.Write)) {
 
+                    /// Writes encrypted, serialized Users object to file
                     XmlSerializer xmlser = new XmlSerializer(typeof(Users));
                     xmlser.Serialize(cs, users);
                 }
@@ -54,7 +62,7 @@ namespace kf2server_tbot_client.Security {
 
 
         /// <summary>
-        /// Deserializes Users file using KeyManager (AESManaged)
+        /// Decrypts and Deserializes Users file using KeyManager (AESManaged) from file.
         /// </summary>
         /// <returns>Users object</returns>
         public static Users DecryptalizeUsers() {
@@ -71,6 +79,7 @@ namespace kf2server_tbot_client.Security {
                     }
                 }
             } catch(FileNotFoundException) {
+
                 Users tmpUsers = new Users();
                 tmpUsers.Accounts = new System.Collections.Generic.List<Account>();
                 return tmpUsers;

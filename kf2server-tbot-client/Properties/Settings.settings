@@ -47,5 +47,20 @@
     <Setting Name="DefaultGamePassword" Type="System.String" Scope="User">
       <Value Profile="(Default)">there's no password like no password</Value>
     </Setting>
+    <Setting Name="ServiceUsername" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1234</Value>
+    </Setting>
+    <Setting Name="ServicePassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5678</Value>
+    </Setting>
+    <Setting Name="ServiceHostURI" Type="System.String" Scope="User">
+      <Value Profile="(Default)">http://localhost:8734/kf2server_tbot_client.Service/KF2Service/</Value>
+    </Setting>
+    <Setting Name="ServiceHostUser" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\Users</Value>
+    </Setting>
+    <Setting Name="ChatId" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -3,8 +3,16 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Linq;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin {
 
+    /// <summary>
+    /// Generic ServerAdmin page
+    /// </summary>
     abstract class WebminPage {
 
         #region Properties
@@ -62,7 +70,7 @@ namespace kf2server_tbot_client.ServerAdmin {
 
 
         /// <summary>
-        /// Initialization of Resource Page
+        /// Contains initialization logic for ServerAdmin page
         /// </summary>
         /// <returns>Result</returns>
         public abstract Tuple<bool, string> Init();

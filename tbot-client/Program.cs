@@ -1,175 +1,80 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ServiceModel;
-using tbot_client.CurrentGame;
-using Telegram.Bot;
-using Telegram.Bot.Args;
+﻿using LogEngine;
+using System;
+using System.Runtime.InteropServices;
 
-
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace tbot_client {
 
+    /// <summary>
+    /// Launcher class
+    /// </summary>
     class Program {
 
         #region Properties and Fields
-        public static readonly TelegramBotClient BOT = new TelegramBotClient("700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY");
+
+        static Bot bot { get; set; }
+
         #endregion
+
+        /// <summary>
+        /// Capture console window close (exit) event
+        /// </summary>
+        /// <param name="Handler"><see cref="WindowClose"/></param>
+        /// <param name="Add"></param>
+        /// <returns></returns>
+        [DllImport("Kernel32")]
+        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+        public delegate bool HandlerRoutine();
+
 
         static void Main(string[] args) {
 
+            /// Assigning handler for console window exit
+            SetConsoleCtrlHandler(new HandlerRoutine(WindowClose), true);
 
-            // Endpoint must be configured with netsh:
-            // netsh http add urlacl url=https://+:8443/ user=<username>
-            // netsh http add sslcert ipport=0.0.0.0:8443 certhash=<cert thumbprint> appid=<random guid>
+            /// Initialize logger
+            Logger.Logfile = Properties.Settings.Default.Logfile;
+            Logger.Instance.HelpText();
 
-            using (WebApp.Start<Startup>("https://+:8443")) {
-                // Register WebHook
-                // You should replace {YourHostname} with your Internet accessible hosname
-                Bot.Api.SetWebhookAsync("https://{YourHostname}:8443/WebHook").Wait();
-
-                Console.WriteLine("Server Started");
-
-                // Stop Server after <Enter>
-                Console.ReadLine();
-
-                // Unregister WebHook
-                Bot.Api.DeleteWebhookAsync().Wait();
+            /// Start bot with token from settings file
+            try {
+                bot = new Bot(Properties.Settings.Default.Token);
+            } catch (Exception e) {
+                Logger.Log(Status.TELEGRAM_FAILURE, 
+                    string.Format("Failed to start telegram bot (error: {0})", e.Message));
             }
 
-            var me = BOT.GetMeAsync().Result;
-            Console.WriteLine(
-              $"Hello, World! I am user {me.Id} and my name is {me.FirstName}."
-            );
-
-            BOT.OnMessage += Bot_OnMessage;
-            BOT.StartReceiving();
-
-            System.Threading.Thread.Sleep(int.MaxValue);
-
-            //System.Threading.Thread.Sleep(3000);
-
-            //bool IsStarted = false;
-            //while (!IsStarted) {
-            //    try {
-
-            //        // AddUsers();
-
-            //        //MiscellaneousServiceAuthTest("uuid02");
-
-            //        PlayersTest();
-
-
-            //        Console.WriteLine();
-            //        IsStarted = true;
-            //    } catch (EndpointNotFoundException) { }
-            //    System.Threading.Thread.SpinWait(1000000);
-            //}
-
-            ////SettingsServiceTest();
-
-            Console.ReadKey();
+            while (true) {
+                Console.ReadKey();
+            }
         }
 
 
-        static async void Bot_OnMessage(object sender, MessageEventArgs e) {
-            if (e.Message.Text != null) {
-                Console.WriteLine($"Received a text message in chat {e.Message.Chat.Id}.");
 
-                await BOT.SendTextMessageAsync(
-                  chatId: e.Message.Chat,
-                  text: "You said:\n" + e.Message.Text
+        /// <summary>
+        /// Terminates console application.
+        /// <para>First, closing message sent out to active telegram chat.</para>
+        /// <para>Second, closing message logged to logfile, and logger instance is disposed.</para>
+        /// </summary>
+        /// <returns></returns>
+        static bool WindowClose() {
+
+            try {
+                bot.SendTextMessageAsync(
+                    chatId: bot.Chat.Id,
+                    text: "I don't feel so good..."
                 );
+
+                Logger.Log(Status.GENERIC_WARNING, "Quitting Application...");
+                Logger.Instance.Dispose();
             }
-        }
+            catch (Exception) { }
 
-
-        private static void PlayersTest() {
-
-            CurrentGameServiceClient cgsc = new CurrentGameServiceClient();
-
-            cgsc.ClientCredentials.UserName.UserName = "admin";
-            cgsc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
-
-            cgsc.Open();
-
-            CurrentGame.ResponseValue rv = cgsc.Status();
-            Console.WriteLine(cgsc.Online().Data["online"]);
-            rv = cgsc.Kick("lygais");
-
-            foreach (KeyValuePair<string, string> kvp in rv.Data) {
-                Console.WriteLine("{0}, {1}", kvp.Key, kvp.Value);
-            }
-
-        }
-
-
-        private static void AddUsers() {
-            Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient();
-
-            misc.ClientCredentials.UserName.UserName = "admin";
-            misc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
-
-            misc.Open();
-
-            misc.AddUser("uuid01", new string[] {
-                "Miscellaneous.Pause"
-            });
-
-            misc.AddUser("uuid02", new string[] {
-                "Miscellaneous.Pause",
-                "Miscellaneous.Test"
-            });
-
-            misc.Close();
-        }
-
-
-        private static void MiscellaneousServiceAuthTest(string telegramID) {
-
-            //using (Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient()) {
-
-                Miscellaneous.MiscellaneousServiceClient misc = new Miscellaneous.MiscellaneousServiceClient();
-
-                misc.ClientCredentials.UserName.UserName = "admin";
-                misc.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
-
-                misc.Open();
-
-                using (OperationContextScope scope = new OperationContextScope(misc.InnerChannel)) {
-                    MessageHeader<string> header = new MessageHeader<string>("uuid02");
-                    var untyped = header.GetUntypedHeader("TelegramID", "");
-                    OperationContext.Current.OutgoingMessageHeaders.Add(untyped);
-
-                    misc.Test();
-                }
-            //}
-        }
-
-
-        private static void MiscellaneousServiceTest() {
-
-
-        }
-
-        private static void SettingsServiceTest() {
-            Settings.SettingsServiceClient set = new Settings.SettingsServiceClient();
-
-            set.ClientCredentials.UserName.UserName = "admin";
-            set.ClientCredentials.UserName.Password = "WelcomeToBrampton69";
-
-
-            bool IsStarted = false;
-            while(!IsStarted) {
-                try {
-                    //Console.WriteLine(set.General_Game_GameDifficultyAndLength("hard", "long").Message);
-                    //Console.WriteLine(set.General_Game_GameDifficultyAndLength("hard", "normal").Message);
-                    //Console.WriteLine(set.General_Game_GameLength("short").Message);
-                    Console.WriteLine();
-                    IsStarted = true;
-                } catch(System.ServiceModel.EndpointNotFoundException) { }
-                System.Threading.Thread.SpinWait(1000000);
-            }
-            
-
+            return true;
 
         }
     }

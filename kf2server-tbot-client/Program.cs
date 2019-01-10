@@ -1,23 +1,46 @@
 ﻿using kf2server_tbot_client.Browsers;
 using kf2server_tbot_client.Security;
 using kf2server_tbot_client.Utils;
-using OpenQA.Selenium;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using LogEngine;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client {
 
+    /// <summary>
+    /// Launcher class
+    /// </summary>
     class Program {
+
+
+        /// <summary>
+        /// Capture console window close (exit) event
+        /// </summary>
+        /// <param name="Handler"><see cref="WindowClose"/></param>
+        /// <param name="Add"></param>
+        /// <returns></returns>
+        [DllImport("Kernel32")]
+        public static extern bool SetConsoleCtrlHandler(HandlerRoutine Handler, bool Add);
+        public delegate bool HandlerRoutine();
+
 
         static void Main(string[] args) {
 
-            LogEngine.Instance.HelpText();
+            /// Assigning handler for console window exit
+            SetConsoleCtrlHandler(new HandlerRoutine(WindowClose), true);
 
-            /// Implementing handler for ProcessExit
-            AppDomain.CurrentDomain.ProcessExit += new EventHandler(ClientClose);
+            /// Initialize logger
+            Logger.Logfile = Properties.Settings.Default.Logfile;
+            Logger.Instance.HelpText();
+
+            /// Initialize AuthManager
+            AuthManager.ChatId = Properties.Settings.Default.ServiceHostUser;
 
             SeleniumManager sm = null;
             WCFServiceManager wcf = null;
@@ -30,57 +53,54 @@ namespace kf2server_tbot_client {
                 /// Init Browsers (Selenium)
                 sm = new SeleniumManager();
 
-                /// Init WCF
+                /// Init WCF Service
                 wcf = new WCFServiceManager();
 
-            } catch(Exception e) {
-
-                LogEngine.Log(Status.GENERIC_FAILURE, e.Message);
-
-                try {
-                    SeleniumManager.Quit();
-                    WCFServiceManager.Quit();
+                /// Assigns ChatId to AuthManager (if it exists in Settings [has been bound in the past])
+                if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ServiceHostUser)) {
+                    Logger.Log(Status.SERVICE_WARNING, "There is no Telegram chat bound to this server.");
+                } else {
+                    AuthManager.ChatId = Properties.Settings.Default.ServiceHostUser;
                 }
-                catch (Exception) { }
 
-                return;
+                while (true) {
+                    Console.ReadKey();
+                }
+
             }
+            catch (Exception e) {
 
+                Logger.Log(Status.GENERIC_FAILURE, e.Message);
 
-            /* TESTS BEGIN */
-
-            //ServerAdmin.ChatConsole.SendMessage("Annual Diagnostics");
-            //Console.WriteLine("Action Start");
-            //Console.WriteLine(ServerAdmin.PageManager.Instance.ChangeMap.ChangeMapOnly("KF-BioticsLab").Item1);
-            //Console.WriteLine("Action End");
-            //sm.Quit();
-
-            Console.ReadKey();
+                WindowClose();
+            }
         }
 
 
         /// <summary>
         /// Terminates console application.
         /// <para>First, active Users in AuthManager are serialized, encrypted, then flushed to disk.</para>
-        /// <para>Second, SeleniumManager is disposed, and with it, all open browsers for ServerAdmin pages.</para>
-        /// <para>Third, WCFServiceManager is halted, closing all open ServiceHosts.</para>
+        /// <para>Second, WCFServiceManager is halted, closing all open ServiceHosts.</para>
+        /// <para>Third, Close message logged to logfile, and logger instance disposed.</para>
+        /// <para>Fourth, SeleniumManager is disposed, and with it, all open browsers for ServerAdmin pages.</para>
         /// </summary>
-        /// <param name="sender">Console</param>
-        /// <param name="e">Close</param>
-        static void ClientClose(object sender, EventArgs e) {
+        /// <returns></returns>
+        static bool WindowClose() {
 
-            Crypto.EncryptalizeUsers(AuthManager.Users);
+            try {
+                Crypto.EncryptalizeUsers(AuthManager.Users);
 
-            WCFServiceManager.Quit();
+                WCFServiceManager.Quit();
 
-            LogEngine.Log(Status.GENERIC_WARNING, "Quitting Application...");
+                Logger.Log(Status.GENERIC_WARNING, "Quitting Application...");
+                Logger.Instance.Dispose();
 
-            System.Threading.Thread.Sleep(1000);
+                /// This should really close the console window itself...
+                SeleniumManager.Quit();
+            } catch (Exception) { }
 
-            SeleniumManager.Quit();
+            return true;
 
-            Environment.Exit(0);
         }
-
     }
 }

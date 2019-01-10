@@ -1,13 +1,20 @@
-﻿using kf2server_tbot_client.Utils;
+﻿using LogEngine;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
+
+    /// <summary>
+    /// ServerInfo page
+    /// </summary>
     class ServerInfo : WebminPage {
 
         #region Singleton Structure
@@ -28,11 +35,17 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
         ServerInfo() { }
         #endregion
 
-        private Dictionary<string, string> SummaryElements = new Dictionary<string, string>();
-
+        #region Properties and Fields
         private List<string> SummaryElementsToLookoutFor_CurrentGame = new List<string>();
-        private List<string> SummaryElementsToLookoutFor_Rules = new List<string>();
 
+        private List<string> SummaryElementsToLookoutFor_Rules = new List<string>();
+        #endregion
+
+
+        /// <summary>
+        /// Initializes ServerInfo by assembling a collection of elements to retrieve values from (by dt).
+        /// </summary>
+        /// <returns></returns>
         public override Tuple<bool, string> Init() {
 
             try {
@@ -40,18 +53,9 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
 
                 PageManager.Pages[PageType.ServerInfo] = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
                 WindowHandleID = Driver.WindowHandles[Driver.WindowHandles.Count - 1];
+                
 
-                /// Dictionary of selectors (xpath) and values for summary elements (used primarily for Status cmd)
-                SummaryElements = new Dictionary<string, string>() {
-                    { "ServerName", "/html/body/div[4]/table/tbody/tr/td[1]/div/dl/dd[1]" },
-                    { "GameType",   "/html/body/div[4]/table/tbody/tr/td[1]/div/dl/dd[3]" },
-                    { "Map",        "/html/body/div[4]/table/tbody/tr/td[1]/div/dl/dd[4]" },
-                    { "Difficulty", "/html/body/div[4]/table/tbody/tr/td[2]/div/dl/dd[2]" },
-                    { "Wave",       "/html/body/div[4]/table/tbody/tr/td[2]/div/dl/dd[1]" },
-                    { "Players",    "/html/body/div[4]/table/tbody/tr/td[2]/div/dl/dd[3]" },
-                    { "Spectators", "/html/body/div[4]/table/tbody/tr/td[2]/div/dl/dd[5]" }
-                };
-
+                /// Looks for the following dt's in sections '*_$SECTION'.
                 SummaryElementsToLookoutFor_CurrentGame = new List<string>() {
                     "server name", "game type", "map"
                 };
@@ -59,17 +63,21 @@ namespace kf2server_tbot_client.ServerAdmin.CurrentGame {
                     "difficulty", "wave", "players", "spectators"
                 };
 
-                LogEngine.Log(Utils.Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded ServerInfo page ({0})", WindowHandleID));
+                Logger.Log(LogEngine.Status.PAGELOAD_SUCCESS, string.Format("Successfully loaded ServerInfo page ({0})", WindowHandleID));
 
                 return new Tuple<bool, string>(true, null);
 
             } catch(NoSuchElementException nsee) {
-                LogEngine.Log(Utils.Status.PAGELOAD_FAILURE, "Failed to load ServerInfo page");
+                Logger.Log(LogEngine.Status.PAGELOAD_FAILURE, "Failed to load ServerInfo page");
                 return new Tuple<bool, string>(false, nsee.Message);
             }
         }
 
 
+        /// <summary>
+        /// Retrieves text from page for specified dt's from init
+        /// </summary>
+        /// <returns></returns>
         public Tuple<bool, Dictionary<string, string>> Status() {
 
             /// Changes focus to this page

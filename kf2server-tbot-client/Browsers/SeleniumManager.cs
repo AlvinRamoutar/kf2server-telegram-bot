@@ -3,8 +3,16 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using System;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.Browsers {
 
+    /// <summary>
+    /// Manages selenium driver
+    /// </summary>
     class SeleniumManager {
 
         #region Properties and Fields
@@ -19,6 +27,10 @@ namespace kf2server_tbot_client.Browsers {
         #endregion
 
 
+        /// <summary>
+        /// Constructs new selenium driver using FirefoxDriver.
+        /// <para>Also assigns profile options to FirefoxDriver, such as headless and no img/css rendering (via permission block)</para>
+        /// </summary>
         public SeleniumManager() {
 
             Profile = new FirefoxProfile();
@@ -26,7 +38,7 @@ namespace kf2server_tbot_client.Browsers {
             Profile.SetPreference("permissions.default.image", 2);
 
             Options = new FirefoxOptions();
-            //Options.AddArguments("--headless");
+            Options.AddArguments("--headless");
             Options.Profile = Profile;
 
             Driver = new FirefoxDriver(Options);
@@ -34,8 +46,8 @@ namespace kf2server_tbot_client.Browsers {
 
             CurrentDriver = Driver;
 
+            /// Prepares appropriate pages from left sidebar, each in its own window
             PageManager = PageManager.Instance;
-            
             PageManager.Init(Driver);
 
         }
@@ -49,6 +61,7 @@ namespace kf2server_tbot_client.Browsers {
 
             try {
 
+                /// Try to close all open windows from FirefoxDriver
                 foreach(string id in CurrentDriver.WindowHandles) {
 
                     CurrentDriver.SwitchTo().Window(id);

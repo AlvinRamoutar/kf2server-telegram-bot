@@ -202,5 +202,65 @@ namespace kf2server_tbot_client.Properties {
                 this["DefaultGamePassword"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1234")]
+        public string ServiceUsername {
+            get {
+                return ((string)(this["ServiceUsername"]));
+            }
+            set {
+                this["ServiceUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5678")]
+        public string ServicePassword {
+            get {
+                return ((string)(this["ServicePassword"]));
+            }
+            set {
+                this["ServicePassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8734/kf2server_tbot_client.Service/KF2Service/")]
+        public string ServiceHostURI {
+            get {
+                return ((string)(this["ServiceHostURI"]));
+            }
+            set {
+                this["ServiceHostURI"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\Users")]
+        public string ServiceHostUser {
+            get {
+                return ((string)(this["ServiceHostUser"]));
+            }
+            set {
+                this["ServiceHostUser"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ChatId {
+            get {
+                return ((string)(this["ChatId"]));
+            }
+            set {
+                this["ChatId"] = value;
+            }
+        }
     }
 }

@@ -1,15 +1,24 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2015
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kf2server-tbot-client", "kf2server-tbot-client\kf2server-tbot-client.csproj", "{BA898F79-B014-408C-993C-78EA1A626EF6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testerproj", "testerproj\testerproj.csproj", "{C8DC11FF-4EAA-4140-88DF-0F5809D925EC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TWCFClient", "TWCFClient\TWCFClient.csproj", "{519E96F5-F1E0-4EC5-95A8-840D24E748EC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82739B03-0987-4AE2-951D-B4386DA6FB69} = {82739B03-0987-4AE2-951D-B4386DA6FB69}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tbot-client", "tbot-client\tbot-client.csproj", "{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{82739B03-0987-4AE2-951D-B4386DA6FB69} = {82739B03-0987-4AE2-951D-B4386DA6FB69}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogEngine", "LogEngine\LogEngine.csproj", "{82739B03-0987-4AE2-951D-B4386DA6FB69}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D76DD973-53C1-409F-831E-9E9993279357}"
+	ProjectSection(SolutionItems) = preProject
+		icon.ico = icon.ico
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +30,14 @@ Global
 		{BA898F79-B014-408C-993C-78EA1A626EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA898F79-B014-408C-993C-78EA1A626EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA898F79-B014-408C-993C-78EA1A626EF6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C8DC11FF-4EAA-4140-88DF-0F5809D925EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C8DC11FF-4EAA-4140-88DF-0F5809D925EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C8DC11FF-4EAA-4140-88DF-0F5809D925EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C8DC11FF-4EAA-4140-88DF-0F5809D925EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{519E96F5-F1E0-4EC5-95A8-840D24E748EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{519E96F5-F1E0-4EC5-95A8-840D24E748EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{519E96F5-F1E0-4EC5-95A8-840D24E748EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{519E96F5-F1E0-4EC5-95A8-840D24E748EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D05F0BD4-E2A6-4E95-B000-4AB7B0B79D2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82739B03-0987-4AE2-951D-B4386DA6FB69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82739B03-0987-4AE2-951D-B4386DA6FB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82739B03-0987-4AE2-951D-B4386DA6FB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82739B03-0987-4AE2-951D-B4386DA6FB69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

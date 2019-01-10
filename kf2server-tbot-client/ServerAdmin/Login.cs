@@ -1,11 +1,19 @@
-﻿using kf2server_tbot_client.Utils;
+﻿using LogEngine;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
 
+
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in command-based controls for Killing Floor 2 (TripWire)
+/// Alvin Ramoutar, 2018
+/// </summary>
 namespace kf2server_tbot_client.ServerAdmin {
 
+    /// <summary>
+    /// Login page 
+    /// </summary>
     class Login : WebminPage {
 
         #region Singleton Structure
@@ -25,17 +33,27 @@ namespace kf2server_tbot_client.ServerAdmin {
         Login() { }
         #endregion
 
+        #region Properties and Fields
         public bool IsLoggedIn { get; set; }
+        #endregion
+
 
         public override Tuple<bool, string> Init() {
             throw new NotImplementedException();
         }
 
+
+        /// <summary>
+        /// Signs into ServerAdmin using credentials stored in Settings file.
+        /// This MUST be done as part of setup
+        /// </summary>
+        /// <returns></returns>
         public Tuple<bool, string> SignIn() {
 
             if(IsLoggedIn) {
                 return new Tuple<bool, string>(true, Properties.Resources.AlreadyLoggedInMessage);
             }
+
 
             string errorMessage = string.Empty;
 
@@ -59,12 +77,12 @@ namespace kf2server_tbot_client.ServerAdmin {
                 try { 
                     errorMessage = Driver.FindElement(By.CssSelector("div[class='message error']")).Text;
 
-                    LogEngine.Log(Status.PAGELOAD_FAILURE, string.Format("Failed to login: {0}", errorMessage));
+                    Logger.Log(Status.PAGELOAD_FAILURE, string.Format("Failed to login: {0}", errorMessage));
                     IsLoggedIn = false;
                     return new Tuple<bool, string>(false, string.Format("Failed to login: {0}", errorMessage));
 
                 } catch(NoSuchElementException) {
-                    LogEngine.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully logged in ({0})", WindowHandleID));
+                    Logger.Log(Status.PAGELOAD_SUCCESS, string.Format("Successfully logged in ({0})", WindowHandleID));
                     IsLoggedIn = true;
                 }
 
