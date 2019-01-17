@@ -25,10 +25,10 @@ namespace LogEngine {
         PAGELOAD_WARNING,
         PAGELOAD_FAILURE,
 
-        SERVICE_SUCCESS,
-        SERVICE_INFO,
-        SERVICE_WARNING,
-        SERVICE_FAILURE,
+        SERVERADMIN_SUCCESS,
+        SERVERADMIN_INFO,
+        SERVERADMIN_WARNING,
+        SERVERADMIN_FAILURE,
 
         TELEGRAM_SUCCESS,
         TELEGRAM_INFO,
@@ -131,7 +131,7 @@ namespace LogEngine {
                         Console.ForegroundColor = ConsoleColor.Blue;
                         break;
                     case "WARNING":
-                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         break;
                     case "FAILURE":
                         Console.ForegroundColor = ConsoleColor.Red;
