@@ -63,11 +63,12 @@ namespace kf2server_tbot.Browsers {
 
                 /// Try to close all open windows from FirefoxDriver
                 foreach (string id in CurrentDriver.WindowHandles) {
-
                     CurrentDriver.SwitchTo().Window(id);
                     CurrentDriver.Close();
 
                 }
+
+                CurrentDriver.Quit();
 
             }
             catch (Exception e) {

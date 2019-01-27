@@ -151,6 +151,15 @@ namespace kf2server_tbot {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid command.
+        /// </summary>
+        internal static string Invalid {
+            get {
+                return ResourceManager.GetString("Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kicking {0} from current game.
         /// </summary>
         internal static string Kick {
@@ -178,7 +187,7 @@ namespace kf2server_tbot {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ChatID is: {0}\n Set this value in the config server-sided, and restart.
+        ///   Looks up a localized string similar to ChatID is: {0}. Set this value in the config server-sided, and restart.
         /// </summary>
         internal static string Setup {
             get {

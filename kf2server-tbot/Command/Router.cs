@@ -22,11 +22,6 @@ namespace kf2server_tbot.Command {
 
         public string Request(MessageEventArgs e, string command, List<string> args) {
 
-            /// Is this command from the currently binded chat?
-            if (!e.Message.Chat.Id.ToString().Equals(AuthManager.ChatId)) {
-                return "Please bind this chat to server first. Run '/setup' to retrieve Chat ID.";
-            }
-
             return CMD(e, command, args);
 
         }
@@ -47,7 +42,7 @@ namespace kf2server_tbot.Command {
 
             CMDRequest cmd = new CMDRequest(command.Substring(1).ToLower(), args.ToArray(), e.Message.Chat.Id, e.Message.From.Id);
 
-            string tmpResponseMessage = string.Empty;
+            string tmpResponseMessage = Prompts.Invalid;
 
             switch (cmd.Command) {
 

@@ -61,6 +61,9 @@ namespace kf2server_tbot.Utils {
                 text: string.Format("Successfully bound to bot.", Prompts.TBotServerName)
             );
 
+            // Save chat object
+            Chat = this.GetChatAsync(chatID).Result;
+
         }
 
 
@@ -100,11 +103,12 @@ namespace kf2server_tbot.Utils {
             /// Otherwise, pass message to Router
             } else {
 
-                string result = Router.Request(e,
-                    e.Message.Text.Split(' ')[0],
-                    new List<string>(e.Message.Text.Split(' ')));
+                string cmd = (e.Message.Text.Contains(" ")) ? e.Message.Text.Split(' ')[0] : e.Message.Text;
+                string[] args = (e.Message.Text.Contains(" ")) ? e.Message.Text.Split(' ') : new string[] {  e.Message.Text };
 
-                await this.SendTextMessageAsync(chatId: Chat.Id, text: result);
+                string result = Router.Request(e, cmd, new List<string>(args));
+
+                await this.SendTextMessageAsync(Chat.Id, result);
             }
         }
 

@@ -64,6 +64,7 @@ namespace kf2server_tbot {
 
                     bool isChatIdSupplied = false;
                     string _chatId;
+                    string _key;
 
                     while(!isChatIdSupplied) {
 
@@ -73,8 +74,11 @@ namespace kf2server_tbot {
 
                         Logger.Log(Status.TELEGRAM_INFO, "If you received the token message successfully in Telegram, then enter 'Y', otherwise enter 'N'");
 
-                        if (Console.ReadKey().Key != ConsoleKey.Y) {
+                        _key = Console.ReadKey().Key.ToString();
+
+                        if (!_key.ToUpper().Equals("Y")) {
                             Logger.Log(Status.TELEGRAM_INFO, "Please try again");
+                        } else {
                             isChatIdSupplied = true;
                         }
 

@@ -156,6 +156,9 @@
     <value>Game password has been set {0}</value>
     <comment>Where {0} is optionally 'to default in config'</comment>
   </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Invalid command</value>
+  </data>
   <data name="Kick" xml:space="preserve">
     <value>Kicking {0} from current game</value>
     <comment>Where {0} is player name of player to kick</comment>
@@ -169,7 +172,7 @@
     <comment>Where {0} is telegram user</comment>
   </data>
   <data name="Setup" xml:space="preserve">
-    <value>ChatID is: {0}\n Set this value in the config server-sided, and restart</value>
+    <value>ChatID is: {0}. Set this value in the config server-sided, and restart</value>
     <comment>Where {0} is the Chat ID (long)</comment>
   </data>
   <data name="StatusFailure" xml:space="preserve">
