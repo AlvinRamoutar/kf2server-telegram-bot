@@ -23,17 +23,7 @@ namespace kf2server_tbot.Security {
         /// <summary>
         /// Telegram Chat UUID, must be passed as parameter for all CMDs.
         /// </summary>
-        private static string chatId;
-        public static string ChatId {
-            get {
-                return chatId;
-            }
-
-            set {
-                if(string.IsNullOrWhiteSpace(chatId))
-                    chatId = value;
-            }
-        }
+        public static string ChatId { get; set; }
 
 
 
@@ -53,7 +43,7 @@ namespace kf2server_tbot.Security {
                 Account userAcc = AuthManager.Users[Crypto.Hash(telegramID.ToString())];
 
                 /// IF ChatId matches what is known by server
-                if (chatID.Equals(ChatId)) {
+                if (chatID.ToString().Equals(ChatId)) {
 
                     /// IF Telegram user's account object contains role necessary for executing this operation, OR is admin
                     foreach (string userRole in userAcc.Roles.RoleID) {

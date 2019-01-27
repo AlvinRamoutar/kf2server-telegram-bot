@@ -438,8 +438,8 @@ namespace kf2server_tbot.Command {
                 cmdRequest.ChatID, cmdRequest.UserID);
 
             string builtMsg = "";
-            foreach(string part in cmdRequest.Args) {
-                builtMsg += builtMsg + " " + part;
+            foreach(string part in cmdRequest.Args.Skip(1)) {
+                builtMsg += " " + part;
             }
 
             if (AuthResult.Item1) {
@@ -491,11 +491,12 @@ namespace kf2server_tbot.Command {
                 GetType().GetMethod("AddUser").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
                 cmdRequest.ChatID, cmdRequest.UserID);
 
-            if (AuthResult.Item1) {
+            /// Confirms if user is authorized, OR if we're overriding, designated by a UUID of 777
+            if (AuthResult.Item1 || cmdRequest.UserID == 777) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
                     try {
-                        bool doesUserExist = Users.AddUser(AuthManager.Users, cmdRequest.UserID, cmdRequest.Args);
+                        Users.AddUser(AuthManager.Users, long.Parse(cmdRequest.Args[1]), cmdRequest.Args.Skip(2).ToArray());
                     }
                     catch (Exception) { }
                 }));

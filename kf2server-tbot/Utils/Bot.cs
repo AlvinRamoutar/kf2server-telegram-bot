@@ -5,6 +5,7 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using kf2server_tbot.Utils;
 using kf2server_tbot.Command;
+using kf2server_tbot.Security;
 
 /// <summary>
 /// KF2 Telegram Bot
@@ -12,6 +13,13 @@ using kf2server_tbot.Command;
 /// Alvin Ramoutar, 2018
 /// </summary>
 namespace kf2server_tbot.Utils {
+
+
+    public enum SetupStage {
+        SupplyChatId,
+        HandshakeMessage,
+        PostSetup
+    }
 
 
     /// <summary>
@@ -23,6 +31,8 @@ namespace kf2server_tbot.Utils {
         public User Identity { get; private set; }
 
         public Chat Chat { get; private set; }
+
+        private long SetupTelegramUUID = 0;
 
         private Router Router { get; set; }
 
@@ -50,24 +60,6 @@ namespace kf2server_tbot.Utils {
 
 
         /// <summary>
-        /// Performs assignment to Telegram chat
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public async void ReturnedSetupMessage(string chatID) {
-
-            await this.SendTextMessageAsync(
-                chatId: long.Parse(chatID),
-                text: string.Format("Successfully bound to bot.", Prompts.TBotServerName)
-            );
-
-            // Save chat object
-            Chat = this.GetChatAsync(chatID).Result;
-
-        }
-
-
-        /// <summary>
         /// Routes to specific handler based on kind of message (entity or document)
         /// </summary>
         /// <param name="sender">Telegram</param>
@@ -81,6 +73,50 @@ namespace kf2server_tbot.Utils {
             } 
 
         }
+        
+
+
+        public async void Setup(SetupStage stage, MessageEventArgs e, List<string> args) {
+
+            switch(stage) {
+
+                case SetupStage.SupplyChatId:
+                    await this.SendTextMessageAsync(
+                        chatId: e.Message.Chat.Id,
+                        text: string.Format(Prompts.Setup, e.Message.Chat.Id)
+                    );
+
+                    // Save initializer user's ID
+                    SetupTelegramUUID = e.Message.From.Id;
+                    LogEngine.Logger.Log(LogEngine.Status.TELEGRAM_INFO, 
+                        string.Format("Telegram UUID {0} initialized setup!", SetupTelegramUUID));
+                    break;
+
+                case SetupStage.HandshakeMessage:
+                    await this.SendTextMessageAsync(
+                        chatId: args[0],
+                        text: string.Format("Successfully bound to bot.", Prompts.TBotServerName)
+                    );
+
+                    // Save chat object
+                    Chat = this.GetChatAsync(args[0]).Result;
+                    break;
+
+                case SetupStage.PostSetup:
+
+                    Properties.Settings.Default.ChatId = Chat.Id.ToString();
+                    Properties.Settings.Default.Save();
+
+                    AuthManager.ChatId = Chat.Id.ToString();
+
+                    Router.Commander.AddUser(new CMDRequest("/adduser", 
+                        new string[] { "/adduser", SetupTelegramUUID.ToString(), "admin" },
+                        Chat.Id, 777));
+                    break;
+            }
+
+        }
+
 
 
         /// <summary>
@@ -92,19 +128,15 @@ namespace kf2server_tbot.Utils {
         /// <param name="e">Message</param>
         private async void OnMessageEntitiesHandler(object sender, MessageEventArgs e) {
 
-            /// If setup hasn't been performed yet
-            if(Chat == null) {
+            
+            if (Chat == null || e.Message.Text.ToLower().Contains("/setup")) { /// If setup hasn't been performed yet
 
-                await this.SendTextMessageAsync(
-                    chatId: e.Message.Chat.Id,
-                    text: string.Format(Prompts.Setup, e.Message.Chat.Id)
-                );
-    
-            /// Otherwise, pass message to Router
+                Setup(SetupStage.SupplyChatId, e, null);
+                
             } else {
 
                 string cmd = (e.Message.Text.Contains(" ")) ? e.Message.Text.Split(' ')[0] : e.Message.Text;
-                string[] args = (e.Message.Text.Contains(" ")) ? e.Message.Text.Split(' ') : new string[] {  e.Message.Text };
+                string[] args = (e.Message.Text.Contains(" ")) ? e.Message.Text.Split(' ') : new string[] { e.Message.Text };
 
                 string result = Router.Request(e, cmd, new List<string>(args));
 

@@ -4,6 +4,7 @@ using kf2server_tbot.Utils;
 using System;
 using LogEngine;
 using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 /// <summary>
 /// KF2 Telegram Bot
@@ -60,7 +61,7 @@ namespace kf2server_tbot {
                 /// Assigns ChatId to AuthManager (if it exists in Settings [has been bound in the past])
                 if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) {
                     Logger.Log(Status.TELEGRAM_FAILURE, "There is no Telegram chat bound to this server.");
-                    Logger.Log(Status.TELEGRAM_INFO, "Send a message with the '/setup/' command. Enter the provided ChatId below.");
+                    Logger.Log(Status.TELEGRAM_INFO, "Send a message with the '/setup' command. Enter the provided ChatId below.");
 
                     bool isChatIdSupplied = false;
                     string _chatId;
@@ -70,7 +71,7 @@ namespace kf2server_tbot {
 
                         _chatId = Console.ReadLine();
 
-                        bot.ReturnedSetupMessage(_chatId);
+                        bot.Setup(SetupStage.HandshakeMessage, null, new List<string>() { _chatId });
 
                         Logger.Log(Status.TELEGRAM_INFO, "If you received the token message successfully in Telegram, then enter 'Y', otherwise enter 'N'");
 
@@ -79,18 +80,21 @@ namespace kf2server_tbot {
                         if (!_key.ToUpper().Equals("Y")) {
                             Logger.Log(Status.TELEGRAM_INFO, "Please try again");
                         } else {
+                            bot.Setup(SetupStage.PostSetup, null, null);
                             isChatIdSupplied = true;
                         }
 
                     }
+                } else {
+
+                    AuthManager.ChatId = Properties.Settings.Default.ChatId;
+
                 }
 
                 Logger.Log(Status.GENERIC_INFO, "Startup Task Complete (3/3) - Telegram Bot");
                 Logger.Log(Status.GENERIC_SUCCESS, "Now accepting commands (and brainz)");
 
-                while (true) {
-                    Console.ReadKey();
-                }
+                Console.ReadKey();
 
             }
             catch (Exception e) {

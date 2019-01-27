@@ -13,7 +13,7 @@ namespace kf2server_tbot.Command {
         };
 
         #endregion
-        private Commander Commander;
+        public Commander Commander;
 
         public Router() {
             Commander = new Commander();
@@ -129,7 +129,11 @@ namespace kf2server_tbot.Command {
 
                 case "adminsay":
                     tmpResponseValue = Commander.AdminSay(cmd);
-                    tmpResponseMessage = string.Format(Prompts.GameDifficultyAndLength, args[1], args[2]);
+
+                    string msg = "";
+                    for (int i = 1; i < args.Count; i++)
+                        msg += " " + args[i];
+                    tmpResponseMessage = string.Format(Prompts.AdminSay, msg);
 
                     break;
 
@@ -143,10 +147,6 @@ namespace kf2server_tbot.Command {
 
                     tmpResponseValue = Commander.RemoveUser(cmd);
                     tmpResponseMessage = string.Format(Prompts.RemoveUser, e.Message.Entities[1].User.Id.ToString());
-                    break;
-
-                case "setup":
-                    tmpResponseMessage = string.Format(Prompts.Setup, cmd.ChatID);
                     break;
 
                 case "Test":
