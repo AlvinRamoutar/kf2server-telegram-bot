@@ -71,14 +71,12 @@ namespace kf2server_tbot.ServerAdmin.AccessPolicy {
                 /// Changes focus to this page
                 Driver.SwitchTo().Window(WindowHandleID);
 
-                IWebElement GamePasswordForm = Driver.FindElement(By.Id("gamepassword"));
-
-                if (!string.IsNullOrEmpty(pwd)) {
-                    GamePasswordForm.FindElement(By.Name("gamepw1")).SendKeys(pwd);
-                    GamePasswordForm.FindElement(By.Name("gamepw2")).SendKeys(pwd);
+                if (!string.IsNullOrWhiteSpace(pwd)) {
+                    Driver.FindElement(By.Id("gamepw1")).SendKeys(pwd);
+                    Driver.FindElement(By.Id("gamepw2")).SendKeys(pwd);
                 }
 
-                GamePasswordForm.FindElement(By.CssSelector("input[type='submit']"));
+                Driver.FindElement(By.XPath("//*[@id='gamepassword']/fieldset/div/button")).Click();
 
                 Logger.Log(Status.SERVERADMIN_INFO, string.Format("Successfully executed GamePwd ({0})", string.IsNullOrEmpty(pwd) ? "none" : pwd));
 

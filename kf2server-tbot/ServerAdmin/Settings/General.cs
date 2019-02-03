@@ -112,16 +112,25 @@ namespace kf2server_tbot.ServerAdmin.Settings {
                         .SelectByValue(difficultyValue.ToString());
                     Driver.FindElement(By.Id("btnsave")).Click();
 
-                } else if (GameDifficulties.ContainsValue(difficulty)) {
+                } else {
+
+                    string difficultyToChangeTo = null;
+                    foreach (KeyValuePair<string, string> gd in GameDifficulties) {
+                        if (gd.Value.Contains(difficulty)) { 
+                            difficultyToChangeTo = gd.Key;
+                            break;
+                        }
+                    }
+
+                    if(difficultyToChangeTo == null) {
+                        return new Tuple<bool, string>(false,
+                            string.Format("Game Difficulty '{0}' does not exist", difficulty));
+                    }
 
                     new SelectElement(Driver.FindElement(By.Name("settings_GameDifficulty")))
                         /// Get key from value (text)
-                        .SelectByValue(GameDifficulties.FirstOrDefault(x => x.Value == difficulty).Key.ToString());
+                        .SelectByValue(difficultyToChangeTo);
                     Driver.FindElement(By.Id("btnsave")).Click();
-
-                } else {
-                    return new Tuple<bool, string>(false,
-                        string.Format("Game Difficulty '{0}' does not exist", difficulty));
                 }
 
 
@@ -228,15 +237,24 @@ namespace kf2server_tbot.ServerAdmin.Settings {
                     new SelectElement(Driver.FindElement(By.Name("settings_GameDifficulty")))
                         .SelectByValue(difficultyValue.ToString());
 
-                } else if (GameDifficulties.ContainsValue(difficulty)) {
+                } else {
+
+                    string difficultyToChangeTo = null;
+                    foreach (KeyValuePair<string, string> gd in GameDifficulties) {
+                        if (gd.Value.Contains(difficulty)) {
+                            difficultyToChangeTo = gd.Key;
+                            break;
+                        }
+                    }
+
+                    if(difficultyToChangeTo == null) {
+                        return new Tuple<bool, string>(false,
+                        string.Format("Game Difficulty '{0}' does not exist", difficulty));
+                    }
 
                     new SelectElement(Driver.FindElement(By.Name("settings_GameDifficulty")))
                         /// Get key from value (text)
-                        .SelectByValue(GameDifficulties.FirstOrDefault(x => x.Value == difficulty).Key.ToString());
-
-                } else {
-                    return new Tuple<bool, string>(false,
-                        string.Format("Game Difficulty '{0}' does not exist", difficulty));
+                        .SelectByValue(difficultyToChangeTo);
                 }
 
                 /// Length

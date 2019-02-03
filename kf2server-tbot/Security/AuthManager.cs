@@ -27,7 +27,6 @@ namespace kf2server_tbot.Security {
 
 
 
-
         /// <summary>
         /// Authorizer for service methods. Checks that a user can execute a method based on assigned roles in config.
         /// </summary>
@@ -39,8 +38,13 @@ namespace kf2server_tbot.Security {
             string msg = String.Empty;
 
             try {
+
+                Account userAcc;
+
                 /// Retrieve user object from Account using hashed TelegramUUID
-                Account userAcc = AuthManager.Users[Crypto.Hash(telegramID.ToString())];
+                userAcc = AuthManager.Users[telegramID];
+                if(userAcc == null)
+                    throw new Exception("User does not exist.");
 
                 /// IF ChatId matches what is known by server
                 if (chatID.ToString().Equals(ChatId)) {
@@ -55,7 +59,7 @@ namespace kf2server_tbot.Security {
             } catch (Exception e) {
 
                 msg = string.Format("User failed authorization for {0} (UUID: {1}). In addition, an error was thrown: {2}",
-                    roleID, (string.IsNullOrEmpty(telegramID.ToString())) ? "Undefined" : Crypto.Hash(telegramID.ToString()), e.Message);
+                    roleID, telegramID, e.Message);
 
                 Logger.Log(Status.SERVERADMIN_WARNING, msg);
                 return new Tuple<bool, string>(false, msg);
@@ -63,7 +67,7 @@ namespace kf2server_tbot.Security {
             }
 
             msg = string.Format("User failed authorization for {0} (UUID: {1})",
-                roleID, (string.IsNullOrEmpty(telegramID.ToString())) ? "Undefined" : Crypto.Hash(telegramID.ToString()));
+                roleID, telegramID);
 
             Logger.Log(Status.SERVERADMIN_WARNING, msg);
             return new Tuple<bool, string>(false, msg);

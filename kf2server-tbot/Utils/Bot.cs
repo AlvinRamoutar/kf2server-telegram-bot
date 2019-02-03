@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
-using kf2server_tbot.Utils;
 using kf2server_tbot.Command;
 using kf2server_tbot.Security;
 
@@ -32,7 +31,7 @@ namespace kf2server_tbot.Utils {
 
         public Chat Chat { get; private set; }
 
-        private long SetupTelegramUUID = 0;
+        private User SetupTelegramUser = null;
 
         private Router Router { get; set; }
 
@@ -87,21 +86,26 @@ namespace kf2server_tbot.Utils {
                     );
 
                     // Save initializer user's ID
-                    SetupTelegramUUID = e.Message.From.Id;
+                    SetupTelegramUser = e.Message.From;
                     LogEngine.Logger.Log(LogEngine.Status.TELEGRAM_INFO, 
-                        string.Format("Telegram UUID {0} initialized setup!", SetupTelegramUUID));
+                        string.Format("Telegram UUID {0} initialized setup!", SetupTelegramUser));
                     break;
 
                 case SetupStage.HandshakeMessage:
-                    await this.SendTextMessageAsync(
-                        chatId: args[0],
-                        text: string.Format("Successfully bound to bot.", Prompts.TBotServerName)
-                    );
 
-                    // Save chat object
-                    Chat = this.GetChatAsync(args[0]).Result;
+                    try {
+                        await this.SendTextMessageAsync(
+                            chatId: args[0],
+                            text: string.Format("Successfully bound to bot.", Prompts.TBotServerName)
+                        );
+                        // Save chat object
+                        Chat = this.GetChatAsync(args[0]).Result;
+
+                    } catch(Telegram.Bot.Exceptions.ChatNotFoundException) {
+                        LogEngine.Logger.Log(LogEngine.Status.TELEGRAM_FAILURE, "Bot is not currently a part of '" + args[0] + "'");
+                    }
                     break;
-
+                    
                 case SetupStage.PostSetup:
 
                     Properties.Settings.Default.ChatId = Chat.Id.ToString();
@@ -110,8 +114,8 @@ namespace kf2server_tbot.Utils {
                     AuthManager.ChatId = Chat.Id.ToString();
 
                     Router.Commander.AddUser(new CMDRequest("/adduser", 
-                        new string[] { "/adduser", SetupTelegramUUID.ToString(), "admin" },
-                        Chat.Id, 777));
+                        new string[] { "/adduser", SetupTelegramUser.ToString(), "admin" },
+                        Chat.Id, SetupTelegramUser, "setup"), SetupTelegramUser);
                     break;
             }
 

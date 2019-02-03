@@ -104,11 +104,11 @@ namespace kf2server_tbot.Command {
         
         ResponseValue Pause(CMDRequest cmdRequest);
 
-        
-        ResponseValue AddUser(CMDRequest cmdRequest);
+
+        ResponseValue AddUser(CMDRequest cmdRequest, Telegram.Bot.Types.User mentionedUser);
 
         
-        ResponseValue RemoveUser(CMDRequest cmdRequest);
+        ResponseValue RemoveUser(CMDRequest cmdRequest, Telegram.Bot.Types.User mentionedUser);
 
         
         ResponseValue Test();

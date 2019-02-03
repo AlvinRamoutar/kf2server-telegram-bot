@@ -40,7 +40,8 @@ namespace kf2server_tbot.Command {
 
             ResponseValue tmpResponseValue = null;
 
-            CMDRequest cmd = new CMDRequest(command.Substring(1).ToLower(), args.ToArray(), e.Message.Chat.Id, e.Message.From.Id);
+            CMDRequest cmd = new CMDRequest(command.Substring(1).ToLower(), args.ToArray(), 
+                e.Message.Chat.Id , e.Message.From, null);
 
             string tmpResponseMessage = Prompts.Invalid;
 
@@ -48,19 +49,19 @@ namespace kf2server_tbot.Command {
 
                 #region Current Game
 
-                case "changegametype":
+                case "gametype":
                     tmpResponseValue = Commander.ChangeGameType(cmd);
                     tmpResponseMessage = string.Format(Prompts.ChangeGameType, args[1]);
 
                     break;
 
-                case "changegametypeandmap":
+                case "gametypeandmap":
                     tmpResponseValue = Commander.ChangeGametypeAndMap(cmd);
                     tmpResponseMessage = string.Format(Prompts.ChangeGameTypeAndMap, args[1], args[2]);
 
                     break;
 
-                case "changemap":
+                case "map":
                     tmpResponseValue = Commander.ChangeMap(cmd);
                     tmpResponseMessage = string.Format(Prompts.ChangeMap, args[1]);
 
@@ -74,6 +75,7 @@ namespace kf2server_tbot.Command {
 
                 case "status":
                     tmpResponseValue = Commander.Status();
+                    tmpResponseMessage = string.Empty;
 
                     if (tmpResponseValue.IsSuccess) {
                         foreach (KeyValuePair<string, string> kvp in tmpResponseValue.Data) {
@@ -89,13 +91,13 @@ namespace kf2server_tbot.Command {
 
                 #region Access Policy
 
-                case "gamepasswordon":
+                case "pwdon":
                     tmpResponseValue = Commander.GamePasswordOn(cmd);
-                    tmpResponseMessage = string.Format(Prompts.GamePasswordOn, (args.Count == 1) ? "" : " to default in config");
+                    tmpResponseMessage = string.Format(Prompts.GamePasswordOn, (args.Count == 1) ? " to default in config" : "");
 
                     break;
 
-                case "gamepasswordoff":
+                case "pwdoff":
                     tmpResponseValue = Commander.GamePasswordOff(cmd);
                     tmpResponseMessage = Prompts.GamePasswordOff;
 
@@ -105,19 +107,19 @@ namespace kf2server_tbot.Command {
 
                 #region Settings
 
-                case "gamedifficulty":
+                case "difficulty":
                     tmpResponseValue = Commander.GameDifficulty(cmd);
                     tmpResponseMessage = string.Format(Prompts.GameDifficulty, args[1]);
 
                     break;
 
-                case "gamelength":
+                case "length":
                     tmpResponseValue = Commander.GameLength(cmd);
                     tmpResponseMessage = string.Format(Prompts.GameLength, args[1]);
 
                     break;
 
-                case "gamedifficultyandlength":
+                case "difficultyandlength":
                     tmpResponseValue = Commander.GameDifficultyAndLength(cmd);
                     tmpResponseMessage = string.Format(Prompts.GameDifficultyAndLength, args[1], args[2]);
 
@@ -139,14 +141,18 @@ namespace kf2server_tbot.Command {
 
                 case "adduser":
 
-                    tmpResponseValue = Commander.AddUser(cmd);
-                    tmpResponseMessage = string.Format(Prompts.AddUser, e.Message.Entities[1].User.Id.ToString());
+                    if(e.Message.Entities[1].Type == Telegram.Bot.Types.Enums.MessageEntityType.TextMention) {                           
+                        tmpResponseValue = Commander.AddUser(cmd, e.Message.Entities[1].User);
+                        tmpResponseMessage = string.Format(Prompts.AddUser, e.Message.Entities[1].User.ToString());
+                    }
                     break;
 
                 case "removeuser":
 
-                    tmpResponseValue = Commander.RemoveUser(cmd);
-                    tmpResponseMessage = string.Format(Prompts.RemoveUser, e.Message.Entities[1].User.Id.ToString());
+                    if (e.Message.Entities[1].Type == Telegram.Bot.Types.Enums.MessageEntityType.TextMention) {
+                        tmpResponseValue = Commander.RemoveUser(cmd, e.Message.Entities[1].User);
+                        tmpResponseMessage = string.Format(Prompts.RemoveUser, e.Message.Entities[1].User.ToString());
+                    }
                     break;
 
                 case "Test":

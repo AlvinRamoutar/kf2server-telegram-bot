@@ -134,14 +134,23 @@ namespace kf2server_tbot.ServerAdmin.CurrentGame {
         /// <returns>Tuple result</returns>
         public Tuple<bool, string> ChangeMapOnly(string map) {
 
+            string mapToChangeTo = null;
+            foreach (KeyValuePair<string, string> m in Maps) {
+                if (m.Key.ToLower().Contains(map)) {
+                    mapToChangeTo = m.Key;
+                    break;
+                }
+            }
+
             /// Check if map even exist
-            if (!Maps.ContainsKey(map))
+            if(mapToChangeTo == null)
                 return new Tuple<bool, string>(false, "Map does not exist.");
+
 
             /// Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
-            new SelectElement(Driver.FindElement(By.Name("map"))).SelectByValue(map);
+            new SelectElement(Driver.FindElement(By.Name("map"))).SelectByValue(mapToChangeTo);
 
             Driver.FindElement(By.Id("btnchange")).Click();
 
@@ -166,15 +175,31 @@ namespace kf2server_tbot.ServerAdmin.CurrentGame {
         /// <returns>Tuple result</returns>
         public Tuple<bool, string> ChangeMapAndGameType(string gametype, string map) {
 
+            string gameTypeToChangeTo = null;
+            foreach (KeyValuePair<string, string> gt in GameType) {
+                if (gt.Key.ToLower().Contains(gametype)) {
+                    gameTypeToChangeTo = gt.Key;
+                    break;
+                }
+            }
+
+            string mapToChangeTo = null;
+            foreach (KeyValuePair<string, string> m in Maps) {
+                if (m.Key.ToLower().Contains(map)) {
+                    mapToChangeTo = m.Key;
+                    break;
+                }
+            }
+
             /// Check if gametype & map even exist
-            if (!GameType.ContainsKey(gametype) || !Maps.ContainsKey(map))
+            if (gameTypeToChangeTo == null || mapToChangeTo == null)
                 return new Tuple<bool, string>(false, "Gametype/Map does not exist.");
 
             /// Changes focus to this page
             Driver.SwitchTo().Window(WindowHandleID);
 
-            new SelectElement(Driver.FindElement(By.Name("gametype"))).SelectByValue(gametype);
-            new SelectElement(Driver.FindElement(By.Name("map"))).SelectByValue(map);
+            new SelectElement(Driver.FindElement(By.Name("gametype"))).SelectByValue(gameTypeToChangeTo);
+            new SelectElement(Driver.FindElement(By.Name("map"))).SelectByValue(mapToChangeTo);
 
             Driver.FindElement(By.Id("btnchange")).Click();
 

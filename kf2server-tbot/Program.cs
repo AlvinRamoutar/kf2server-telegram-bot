@@ -60,14 +60,15 @@ namespace kf2server_tbot {
 
                 /// Assigns ChatId to AuthManager (if it exists in Settings [has been bound in the past])
                 if (string.IsNullOrWhiteSpace(Properties.Settings.Default.ChatId)) {
-                    Logger.Log(Status.TELEGRAM_FAILURE, "There is no Telegram chat bound to this server.");
-                    Logger.Log(Status.TELEGRAM_INFO, "Send a message with the '/setup' command. Enter the provided ChatId below.");
 
                     bool isChatIdSupplied = false;
                     string _chatId;
                     string _key;
 
                     while(!isChatIdSupplied) {
+
+                        Logger.Log(Status.TELEGRAM_FAILURE, "There is no Telegram chat bound to this server.");
+                        Logger.Log(Status.TELEGRAM_INFO, "Send a message with the '/setup' command. Enter the provided ChatId below.");
 
                         _chatId = Console.ReadLine();
 
@@ -96,6 +97,7 @@ namespace kf2server_tbot {
 
                 Console.ReadKey();
 
+                WindowClose();
             }
             catch (Exception e) {
 

@@ -16,7 +16,7 @@ namespace kf2server_tbot.Security {
     /// </summary>
     class Crypto {
 
-
+        /*
         /// <summary>
         /// Hashes provided data string using SHA256
         /// Currently only used to hash Telegram UUIDs
@@ -41,7 +41,7 @@ namespace kf2server_tbot.Security {
             }
 
         }
-
+        */
 
         /// <summary>
         /// Serializes and encrypts Users file using KeyManager (AESManaged), and writes to file.

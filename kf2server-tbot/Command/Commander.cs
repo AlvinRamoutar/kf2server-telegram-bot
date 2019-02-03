@@ -39,22 +39,22 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("ChangeGameType").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    ServerAdmin.CurrentGame.ChangeMap.Instance.ChangeGameTypeOnly(cmdRequest.Args[0]);
+                    ServerAdmin.CurrentGame.ChangeMap.Instance.ChangeGameTypeOnly(cmdRequest.Args[1]);
                 }));
 
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}')", GetType().GetMethod("ChangeGameType").GetCustomAttributes(true)
                         .OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                        cmdRequest.Args[0]));
+                        cmdRequest.Args[1]));
 
-                return new ResponseValue(true, string.Format("Changing game type to: {0}", cmdRequest.Args[0]), null);
+                return new ResponseValue(true, string.Format("Changing game type to: {0}", cmdRequest.Args[1]), null);
 
             }
             else {
@@ -71,23 +71,23 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("ChangeGametypeAndMap").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    ServerAdmin.CurrentGame.ChangeMap.Instance.ChangeMapAndGameType(cmdRequest.Args[0], cmdRequest.Args[1]);
+                    ServerAdmin.CurrentGame.ChangeMap.Instance.ChangeMapAndGameType(cmdRequest.Args[1], cmdRequest.Args[2]);
                 }));
 
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}', '{2}')", GetType().GetMethod("ChangeGametypeAndMap").GetCustomAttributes(true)
                         .OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                        cmdRequest.Args[0], cmdRequest.Args[1]));
+                        cmdRequest.Args[1], cmdRequest.Args[2]));
 
-                return new ResponseValue(true, string.Format("Changing game type to: {0} and map to: {1}", 
-                    cmdRequest.Args[0], cmdRequest.Args[1]), null);
+                return new ResponseValue(true, string.Format("Changing gametype to: {0} and map to: {1}", 
+                    cmdRequest.Args[1], cmdRequest.Args[2]), null);
 
             }
             else {
@@ -104,22 +104,22 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("ChangeMap").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    ServerAdmin.CurrentGame.ChangeMap.Instance.ChangeMapOnly(cmdRequest.Args[0]);
+                    ServerAdmin.CurrentGame.ChangeMap.Instance.ChangeMapOnly(cmdRequest.Args[1]);
                 }));
 
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}')", GetType().GetMethod("ChangeMap").GetCustomAttributes(true)
                         .OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                        cmdRequest.Args[0]));
+                        cmdRequest.Args[1]));
 
-                return new ResponseValue(true, string.Format("Changing map to: {0}", cmdRequest.Args[0]), null);
+                return new ResponseValue(true, string.Format("Changing map to: {0}", cmdRequest.Args[1]), null);
 
             }
             else {
@@ -169,22 +169,22 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("Kick").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    Players.Instance.Kick(cmdRequest.Args[0]);
+                    Players.Instance.Kick(cmdRequest.Args[1]);
                 }));
 
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}')", GetType().GetMethod("Kick").GetCustomAttributes(true)
                         .OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                        cmdRequest.Args[0]));
+                        cmdRequest.Args[1]));
 
-                return new ResponseValue(true, string.Format("Kicking player: {0}", cmdRequest.Args[0]), null);
+                return new ResponseValue(true, string.Format("Kicking player: {0}", cmdRequest.Args[1]), null);
 
             }
             else {
@@ -243,19 +243,19 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("GamePasswordOn").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    Passwords.Instance.GamePwd((cmdRequest.Args.Length == 0) ? Properties.Settings.Default.DefaultGamePassword : cmdRequest.Args[0]);
+                    Passwords.Instance.GamePwd((cmdRequest.Args.Length == 1) ? Properties.Settings.Default.DefaultGamePassword : cmdRequest.Args[1]);
                 }));
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}')", GetType().GetMethod("GamePasswordOn").
                     GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                    (cmdRequest.Args.Length == 0) ? Properties.Settings.Default.DefaultGamePassword : cmdRequest.Args[0]));
+                    (cmdRequest.Args.Length == 0) ? Properties.Settings.Default.DefaultGamePassword : cmdRequest.Args[1]));
 
                 return new ResponseValue(true, string.Format("Changing game password"), null);
 
@@ -278,7 +278,7 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("GamePasswordOff").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
@@ -316,22 +316,22 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("GameDifficulty").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    General.Instance.ChangeGameDifficulty(cmdRequest.Args[0]);
+                    General.Instance.ChangeGameDifficulty(cmdRequest.Args[1]);
                 }));
 
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}')", GetType().GetMethod("GameDifficulty")
                     .GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                    cmdRequest.Args[0]));
+                    cmdRequest.Args[1]));
 
-                return new ResponseValue(true, string.Format("Changing game difficulty to: {0}", cmdRequest.Args[0]), null);
+                return new ResponseValue(true, string.Format("Changing game difficulty to: {0}", cmdRequest.Args[1]), null);
 
 
             }
@@ -354,23 +354,23 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("GameLength").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    General.Instance.ChangeGameLength(cmdRequest.Args[0]);
+                    General.Instance.ChangeGameLength(cmdRequest.Args[1]);
                 }));
 
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}')", GetType().GetMethod("GameLength")
                     .GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                    cmdRequest.Args[0]));
+                    cmdRequest.Args[1]));
 
 
-                return new ResponseValue(true, string.Format("Changing game length to: {0}", cmdRequest.Args[0]), null);
+                return new ResponseValue(true, string.Format("Changing game length to: {0}", cmdRequest.Args[1]), null);
 
 
             }
@@ -394,23 +394,23 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("GameDifficultyAndLength").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
-                    General.Instance.ChangeGameDifficultyAndLength(cmdRequest.Args[0], cmdRequest.Args[1]);
+                    General.Instance.ChangeGameDifficultyAndLength(cmdRequest.Args[1], cmdRequest.Args[2]);
                 }));
 
 
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}, {2}')", GetType().GetMethod("GameDifficultyAndLength")
                     .GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                    cmdRequest.Args[0], cmdRequest.Args[1]));
+                    cmdRequest.Args[1], cmdRequest.Args[2]));
 
                 return new ResponseValue(true, string.Format("Changing game difficulty to: {0} and length to: {1}", 
-                    cmdRequest.Args[0], cmdRequest.Args[1]), null);
+                    cmdRequest.Args[1], cmdRequest.Args[2]), null);
 
 
             }
@@ -435,7 +435,7 @@ namespace kf2server_tbot.Command {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("AdminSay").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
             string builtMsg = "";
             foreach(string part in cmdRequest.Args.Skip(1)) {
@@ -478,6 +478,7 @@ namespace kf2server_tbot.Command {
         }
 
 
+
         /// <summary>
         /// Adds a specified Telegram user to the list of known users. Also assigns supplied roles
         /// </summary>
@@ -485,18 +486,20 @@ namespace kf2server_tbot.Command {
         /// <param name="roles">Array of roles</param>
         /// <returns>ResponseValue object</returns>
         [RoleID("Miscellaneous.AddUser")]
-        public ResponseValue AddUser(CMDRequest cmdRequest) {
+        public ResponseValue AddUser(CMDRequest cmdRequest, Telegram.Bot.Types.User mentionedUser) {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("AddUser").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
-            /// Confirms if user is authorized, OR if we're overriding, designated by a UUID of 777
-            if (AuthResult.Item1 || cmdRequest.UserID == 777) {
+            /// Confirms if user is authorized, or part of the setup process
+            if (AuthResult.Item1 || 
+                ((cmdRequest.Data == null) ? false : cmdRequest.Data.ToString().Equals("setup"))) {
 
+              
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
                     try {
-                        Users.AddUser(AuthManager.Users, long.Parse(cmdRequest.Args[1]), cmdRequest.Args.Skip(2).ToArray());
+                        Users.AddUser(mentionedUser, cmdRequest.Args.Skip(2).ToArray());
                     }
                     catch (Exception) { }
                 }));
@@ -505,13 +508,12 @@ namespace kf2server_tbot.Command {
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}', '{2}')", GetType().GetMethod("AddUser")
                     .GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                    cmdRequest.UserID, JsonConvert.SerializeObject(cmdRequest.Args)));
+                    cmdRequest.Args[1], JsonConvert.SerializeObject(cmdRequest.Args.Skip<string>(2))));
 
 
                 return new ResponseValue(true, "New User Added", new Dictionary<string, string>() {
                     { "roles", (cmdRequest.Args != null) ? JsonConvert.SerializeObject(cmdRequest.Args) : string.Empty }
                 });
-
 
             }
             else {
@@ -531,17 +533,17 @@ namespace kf2server_tbot.Command {
         /// <param name="roles">Array of roles</param>
         /// <returns>ResponseValue object</returns>
         [RoleID("MiscellaneousService.RemoveUser")]
-        public ResponseValue RemoveUser(CMDRequest cmdRequest) {
+        public ResponseValue RemoveUser(CMDRequest cmdRequest, Telegram.Bot.Types.User mentionedUser) {
 
             Tuple<bool, string> AuthResult = AuthManager.Authorize(
                 GetType().GetMethod("RemoveUser").GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                cmdRequest.ChatID, cmdRequest.UserID);
+                cmdRequest.ChatID, cmdRequest.User.Id);
 
             if (AuthResult.Item1) {
 
                 ActionQueue.Instance.Act(new System.Threading.Thread(() => {
                     try {
-                        Users.RemoveUser(AuthManager.Users, cmdRequest.UserID, cmdRequest.Args);
+                        Users.RemoveUser(mentionedUser, cmdRequest.Args);
                     }
                     catch (Exception) { }
                 }));
@@ -550,7 +552,7 @@ namespace kf2server_tbot.Command {
                 Logger.Log(LogEngine.Status.SERVERADMIN_INFO,
                     string.Format("{0} ('{1}', '{2}')", GetType().GetMethod("RemoveUser")
                     .GetCustomAttributes(true).OfType<RoleIDAttribute>().FirstOrDefault().ID,
-                    cmdRequest.UserID, JsonConvert.SerializeObject(cmdRequest.Args)));
+                    mentionedUser.Id, JsonConvert.SerializeObject(cmdRequest.Args)));
 
 
                 return new ResponseValue(true, "User or roles were removed", new Dictionary<string, string>() {

@@ -164,7 +164,7 @@
     <comment>Where {0} is player name of player to kick</comment>
   </data>
   <data name="Online" xml:space="preserve">
-    <value>Currently online: \n{0}</value>
+    <value>Currently online: {0}</value>
     <comment>Where {0} is a comma-seperated list of player names</comment>
   </data>
   <data name="RemoveUser" xml:space="preserve">
@@ -180,7 +180,7 @@
     <comment>Where {0} is TBotServerName</comment>
   </data>
   <data name="StatusSuccess" xml:space="preserve">
-    <value>Current Game Session: \n{0}</value>
+    <value>Current Game Session: {0}</value>
     <comment>Where {0} is a collection of '\n' seperated key/value pair game stats</comment>
   </data>
   <data name="TBotClientName" xml:space="preserve">
