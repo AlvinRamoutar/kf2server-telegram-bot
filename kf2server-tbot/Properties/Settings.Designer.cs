@@ -25,7 +25,7 @@ namespace kf2server_tbot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://kf2server.rhome.net:8080/ServerAdmin/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string KF2ServerURL {
             get {
                 return ((string)(this["KF2ServerURL"]));
@@ -37,7 +37,7 @@ namespace kf2server_tbot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("admin")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string WebAdminUsername {
             get {
                 return ((string)(this["WebAdminUsername"]));
@@ -49,7 +49,7 @@ namespace kf2server_tbot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WelcomeToBrampton69")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string WebAdminPassword {
             get {
                 return ((string)(this["WebAdminPassword"]));
@@ -217,7 +217,7 @@ namespace kf2server_tbot.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string TelegramBotToken {
             get {
                 return ((string)(this["TelegramBotToken"]));

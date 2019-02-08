@@ -172,7 +172,7 @@
     <comment>Where {0} is telegram user</comment>
   </data>
   <data name="Setup" xml:space="preserve">
-    <value>ChatID is: {0}. Set this value in the config server-sided, and restart</value>
+    <value>ChatID is: {0}. Enter this value in the server-sided console.</value>
     <comment>Where {0} is the Chat ID (long)</comment>
   </data>
   <data name="StatusFailure" xml:space="preserve">
@@ -183,10 +183,7 @@
     <value>Current Game Session: {0}</value>
     <comment>Where {0} is a collection of '\n' seperated key/value pair game stats</comment>
   </data>
-  <data name="TBotClientName" xml:space="preserve">
-    <value>$TBOTCLIENT</value>
-  </data>
   <data name="TBotServerName" xml:space="preserve">
-    <value>$TBOTSERVER</value>
+    <value>ZedBot</value>
   </data>
 </root>

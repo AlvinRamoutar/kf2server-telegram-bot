@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="KF2ServerURL" Type="System.String" Scope="User">
-      <Value Profile="(Default)">http://kf2server.rhome.net:8080/ServerAdmin/</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="WebAdminUsername" Type="System.String" Scope="User">
-      <Value Profile="(Default)">admin</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="WebAdminPassword" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WelcomeToBrampton69</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ServerInfoURL" Type="System.String" Scope="User">
       <Value Profile="(Default)">current/info</Value>
@@ -51,7 +51,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="TelegramBotToken" Type="System.String" Scope="User">
-      <Value Profile="(Default)">700284658:AAGYopYqRltTjLUw-V9V4PKAj-VYYP0T5fY</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

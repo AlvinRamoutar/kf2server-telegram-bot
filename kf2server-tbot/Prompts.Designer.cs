@@ -187,7 +187,7 @@ namespace kf2server_tbot {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ChatID is: {0}. Set this value in the config server-sided, and restart.
+        ///   Looks up a localized string similar to ChatID is: {0}. Enter this value in the server-sided console..
         /// </summary>
         internal static string Setup {
             get {
@@ -214,16 +214,7 @@ namespace kf2server_tbot {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to $TBOTCLIENT.
-        /// </summary>
-        internal static string TBotClientName {
-            get {
-                return ResourceManager.GetString("TBotClientName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to $TBOTSERVER.
+        ///   Looks up a localized string similar to ZedBot.
         /// </summary>
         internal static string TBotServerName {
             get {
