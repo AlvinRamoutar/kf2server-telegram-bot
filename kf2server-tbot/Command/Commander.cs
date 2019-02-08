@@ -10,24 +10,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.Command {
 
     /// <summary>
-    /// Command Implementation
+    /// Command Handler
     /// <para>Performs queued calls to ServerAdmin operation methods</para>
     /// <para>Almost all methods follow this schema:</para>
-    /// <para>1. Have the 'CommandRoleID' attribute, which must be in Users.cs, and
-    ///  is used to authorization</para>
-    /// <para>2. Perform a call to AuthManager.Authorize, which supplies the method's 'ServiceMethodRoleID'
-    ///  attribute, as well as current OperationContext object (to grab user info from HTTP headers) </para>
-    /// <para>3. Check the result of call from 2., and perform calls to necessary ServerAdmin operations
-    ///  within a thread supplied to ActionQueue.Act (encapsulates for queue)</para>
+    /// <para>1. Have the 'CommandRoleID' attribute which identifies this method, which must
+    ///  be defined in Users.cs, and is used for authorization</para>
+    /// <para>2. Perform a call to AuthManager.Authorize, which supplies the method's 'ServiceMethodRoleID'</para>
+    /// <para>3. Check the result of call from previous, and perform calls to necessary ServerAdmin operations
+    ///  within a thread supplied to ActionQueue.Act (encapsulated for queue)</para>
     /// <para>4. Log the call of this service method using LogEngine</para>
     /// </summary>
     class Commander : ICommander {
@@ -231,13 +229,6 @@ namespace kf2server_tbot.Command {
 
         #region Access Policy
 
-        /// <summary>
-        /// Sets an active game password for players joining.
-        /// <para>If no parameter passed, then take from config (DefaultGamePassword)</para>
-        /// <para>If config (DefaultGamePassword) is empty or null, then no password set (Open)</para>
-        /// </summary>
-        /// <param name="pwd">Game Password</param>
-        /// <returns>ResponseValue object</returns>
         [RoleID("AccessPolicy.GamePasswordOn")]
         public ResponseValue GamePasswordOn(CMDRequest cmdRequest) {
 
@@ -269,10 +260,6 @@ namespace kf2server_tbot.Command {
         }
 
 
-        /// <summary>
-        /// Removes an active game password.
-        /// </summary>
-        /// <returns>ResponseValue object</returns>
         [RoleID("AccessPolicy.GamePasswordOff")]
         public ResponseValue GamePasswordOff(CMDRequest cmdRequest) {
 
@@ -306,11 +293,6 @@ namespace kf2server_tbot.Command {
 
         #region Settings
 
-        /// <summary>
-        /// Change Game Difficulty service method
-        /// </summary>
-        /// <param name="difficulty">Difficulty, either as key (double, e.g. 1.0000), or value (text, e.g. "normal")</param>
-        /// <returns>ResponseValue object</returns>
         [RoleID("Settings.GameDifficulty")]
         public ResponseValue GameDifficulty(CMDRequest cmdRequest) {
 
@@ -343,12 +325,6 @@ namespace kf2server_tbot.Command {
 
         }
 
-
-        /// <summary>
-        /// Change Game Length service method
-        /// </summary>
-        /// <param name="length">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
-        /// <returns>ResponseValue object</returns>
         [RoleID("Settings.GameLength")]
         public ResponseValue GameLength(CMDRequest cmdRequest) {
 
@@ -383,12 +359,6 @@ namespace kf2server_tbot.Command {
         }
 
 
-        /// <summary>
-        /// Change Game Difficulty and Length service method
-        /// </summary>
-        /// <param name="difficulty">Difficulty, either as key (double, e.g. 1.0000), or value (text, e.g. "normal")</param>
-        /// <param name="length">Length, either as key (int, e.g. 1), or value (text, e.g. "short")</param>
-        /// <returns>ResponseValue object</returns>
         [RoleID("Settings.GameDifficultyAndLength")]
         public ResponseValue GameDifficultyAndLength(CMDRequest cmdRequest) {
 
@@ -425,11 +395,6 @@ namespace kf2server_tbot.Command {
 
         #region Miscellaneous
 
-        /// <summary>
-        /// Submits a message through Chat Console directly to game under user 'admin'
-        /// </summary>
-        /// <param name="message">Message to send</param>
-        /// <returns>ResponseValue object</returns>
         [RoleID("Miscellaneous.AdminSay")]
         public ResponseValue AdminSay(CMDRequest cmdRequest) {
 
@@ -466,25 +431,12 @@ namespace kf2server_tbot.Command {
         }
 
 
-        /// <summary>
-        /// WIP
-        /// Not implemented, since there is no known way to pause through server admin
-        /// (pause is not a supported command in Management Console)
-        /// </summary>
-        /// <returns></returns>
         [RoleID("Miscellaneous.Pause")]
         public ResponseValue Pause(CMDRequest cmdRequest) {
             throw new NotImplementedException();
         }
 
 
-
-        /// <summary>
-        /// Adds a specified Telegram user to the list of known users. Also assigns supplied roles
-        /// </summary>
-        /// <param name="telegramUUID">Telegram UUID</param>
-        /// <param name="roles">Array of roles</param>
-        /// <returns>ResponseValue object</returns>
         [RoleID("Miscellaneous.AddUser")]
         public ResponseValue AddUser(CMDRequest cmdRequest, Telegram.Bot.Types.User mentionedUser) {
 
@@ -525,13 +477,6 @@ namespace kf2server_tbot.Command {
         }
 
 
-
-        /// <summary>
-        /// Removes a specified Telegram user from list of known users, or updates their roles
-        /// </summary>
-        /// <param name="telegramUUID">Telegram UUID</param>
-        /// <param name="roles">Array of roles</param>
-        /// <returns>ResponseValue object</returns>
         [RoleID("MiscellaneousService.RemoveUser")]
         public ResponseValue RemoveUser(CMDRequest cmdRequest, Telegram.Bot.Types.User mentionedUser) {
 
@@ -570,10 +515,6 @@ namespace kf2server_tbot.Command {
         }
 
 
-        /// <summary>
-        /// Test service method, use for debugging auth or something.
-        /// </summary>
-        /// <returns></returns>
         [RoleID("Miscellaneous.Test")]
         public ResponseValue Test() {
 

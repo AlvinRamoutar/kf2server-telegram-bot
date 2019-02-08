@@ -1,8 +1,12 @@
-﻿using kf2server_tbot.Security;
-using kf2server_tbot.Utils;
+﻿using kf2server_tbot.Utils;
 using System.Collections.Generic;
 using Telegram.Bot.Args;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
+/// </summary>
 namespace kf2server_tbot.Command {
     class Router {
 
@@ -12,34 +16,43 @@ namespace kf2server_tbot.Command {
             "test"
         };
 
-        #endregion
         public Commander Commander;
+
+        #endregion
 
         public Router() {
             Commander = new Commander();
         }
 
 
+        /// <summary>
+        /// Pre-route method for logic to occur before routing command to appropriate Commander method.
+        /// </summary>
+        /// <param name="e">Telegram Message object</param>
+        /// <param name="command">Command verb following '/' ending at space.</param>
+        /// <param name="args">Split (space as delimiter) of command message. Includes command.</param>
+        /// <returns></returns>
         public string Request(MessageEventArgs e, string command, List<string> args) {
 
             return CMD(e, command, args);
 
         }
-        
-        
+
+
         /// <summary>
-        /// Requests a command from Commander.
-        /// Acts on TEXT commands (e.g. '/cmd $argn' from chat)
-        /// Awaits response, and formats message (to send back to telegram chat) based on prompts
+        /// Performs call to appropriate method in Commander.
+        /// Acts on commands (e.g. '/cmd $argn' from chat)
+        /// Returns a 'will-do' prompt which will be pushed to chat
         /// </summary>
-        /// <param name="e">Message</param>
-        /// <param name="command">Command in the form: '/cmd'</param>
-        /// <param name="args">All arguments of command, including original command itself</param>
+        /// <param name="e">Telegram Message object</param>
+        /// <param name="command">Command verb following '/' ending at space.</param>
+        /// <param name="args">Split (space as delimiter) of command message. Includes command.</param>
         /// <returns>Tuple result with message (sent back to chat), and ResponseValue object</returns>
         private string CMD(MessageEventArgs e, string command, List<string> args) {
 
             ResponseValue tmpResponseValue = null;
 
+            /// Build CMDRequest object to hold message/command data for Commander methods
             CMDRequest cmd = new CMDRequest(command.Substring(1).ToLower(), args.ToArray(), 
                 e.Message.Chat.Id , e.Message.From, null);
 

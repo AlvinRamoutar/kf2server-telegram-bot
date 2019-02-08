@@ -1,34 +1,30 @@
 ﻿using LogEngine;
 using System;
 
-
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.Security {
 
     /// <summary>
-    /// Simple custom Authorization and Authentication
+    /// Authorization tool for ensuring Users can perform particular Commander methods
     /// </summary>
     public class AuthManager {
 
-        /// <summary>
-        /// Users object containing data to authorize Telegram users
-        /// </summary>
+        #region Properties and Fields
+
         public static Users Users { get; set; }
 
-
-        /// <summary>
-        /// Telegram Chat UUID, must be passed as parameter for all CMDs.
-        /// </summary>
         public static string ChatId { get; set; }
 
-
+        #endregion
 
         /// <summary>
-        /// Authorizer for service methods. Checks that a user can execute a method based on assigned roles in config.
+        /// Authorization handler for Commander methods.
+        /// <para>>Determine if a particular user (based on supplied telegramUUID) has a RoleID which matches that
+        ///  of the caller (Commander method)</para
         /// </summary>
         /// <param name="roleID">RoleID of service method</param>
         /// <param name="context">OperationContext of service, used to retrieve Telegram UUID and ChatId stored in header</param>

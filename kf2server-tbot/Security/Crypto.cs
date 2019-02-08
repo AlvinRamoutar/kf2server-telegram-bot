@@ -1,13 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using System.Xml.Serialization;
 
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.Security {
 
@@ -15,33 +13,6 @@ namespace kf2server_tbot.Security {
     /// Handles encryption/decryption of XML Users data object
     /// </summary>
     class Crypto {
-
-        /*
-        /// <summary>
-        /// Hashes provided data string using SHA256
-        /// Currently only used to hash Telegram UUIDs
-        /// </summary>
-        /// <param name="data">String to hash</param>
-        /// <returns>Resultant hash</returns>
-        public static string Hash(string data) {
-
-            using (SHA256 sha256Hash = SHA256.Create()) {
-                
-                /// Returns byte array (result of data hashed)
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(data));
-
-                /// Construct string object from byte array
-                StringBuilder builder = new StringBuilder();
-
-                for (int i = 0; i < bytes.Length; i++) {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-
-                return builder.ToString();
-            }
-
-        }
-        */
 
         /// <summary>
         /// Serializes and encrypts Users file using KeyManager (AESManaged), and writes to file.
@@ -75,7 +46,7 @@ namespace kf2server_tbot.Security {
 
                         Users tmpUsers = (Users)xmlser.Deserialize(cs);
 
-                        return (tmpUsers == null) ? new Users() : tmpUsers;
+                        return tmpUsers ?? new Users();
                     }
                 }
             } catch(FileNotFoundException) {
@@ -86,9 +57,7 @@ namespace kf2server_tbot.Security {
             }
         }
     }
-
-
-
+    
 
 
     /// <summary>

@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.ServerAdmin {
 
@@ -62,9 +62,9 @@ namespace kf2server_tbot.ServerAdmin {
 
 
         /// <summary>
-        /// Launches a FirefoxDriver browser window for each navigateable page
+        /// Launches a FirefoxDriver browser window for each page, and calls its Init method (if need be)
         /// </summary>
-        /// <param name="driver"></param>
+        /// <param name="driver">FirefoxDriver</param>
         /// <returns></returns>
         public Tuple<bool, string> Init(IWebDriver driver) {
 

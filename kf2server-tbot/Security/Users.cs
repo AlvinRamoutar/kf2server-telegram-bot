@@ -5,13 +5,13 @@ using System.Xml.Serialization;
 
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.Security {
 
     /// <summary>
-    /// Serializable class containing user information, as well as role assignments
+    /// Serializable class containing user information and user manipulation utility methods
     /// </summary>
     [Serializable, XmlRoot("Users")]
     public class Users {
@@ -62,41 +62,13 @@ namespace kf2server_tbot.Security {
         }
 
 
-        /// <summary>
-        /// Adds a user to the active Users object.
-        /// Essentially how bot is made aware of users.
-        /// </summary>
-        /// <param name="telegramUUID">Telegram UUID</param>
-        /// <param name="telegramUsername">Telegram User's Username (or if no username, then First Name)</param>
-        public static void OptIn(long telegramUUID, string telegramUsername) {
-
-            Account newUser = new Account();
-
-            /// Check: Does user already exist?
-            newUser = AuthManager.Users[telegramUUID];
-            if (newUser != null)
-                return;
-
-
-            Role roleContainer = new Role();
-            roleContainer.RoleID = new string[] { "miscellaneous.optin" };
-            
-            newUser.TelegramUsername = telegramUsername;
-            newUser.TelegramUUID = telegramUUID;
-            newUser.Roles = roleContainer;
-
-
-            AuthManager.Users.Accounts.Add(newUser);
-        }
-
 
         /// <summary>
         /// Adds a new user to the active Users object, or updates the roles assigned to an existing user (appends)
         /// </summary>
-        /// <param name="telegramUUID">Telegram UUID</param>
-        /// <param name="telegramUsername">Telegram Username, or if none, then First Name</param>
-        /// <param name="roles">Roles to append to user</param>
-        /// <returns></returns>
+        /// <param name="mentionedUser">User to add</param>
+        /// <param name="roles">Roles to assign to user</param>
+        /// <returns>True if successful, else false</returns>
         public static bool AddUser(Telegram.Bot.Types.User mentionedUser, string[] roles = null) {
 
             Account newUser;
@@ -155,10 +127,9 @@ namespace kf2server_tbot.Security {
         /// Removes a user from the active Users object, or updates the roles assigned to an existing user (pops)
         /// If no roles are supplied, then the user is deleted.
         /// </summary>
-        /// <param name="user">Active users object</param>
-        /// <param name="telegramUUID">Telegram UUID</param>
-        /// <param name="roles">Roles to pop from user. If all roles from user is popped, user is deleted.</param>
-        /// <returns></returns>
+        /// <param name="mentionedUser">User to add</param>
+        /// <param name="roles">Roles to assign to user</param>
+        /// <returns>True if successful, else false</returns>
         public static bool RemoveUser(Telegram.Bot.Types.User mentionedUser, string[] roles = null) {
 
             Account currUser;
@@ -202,6 +173,10 @@ namespace kf2server_tbot.Security {
 
     }
 
+
+    /// <summary>
+    /// User identification object
+    /// </summary>
     [Serializable, XmlRoot("Account")]
     public class Account {
 
@@ -232,7 +207,9 @@ namespace kf2server_tbot.Security {
         }
     }
 
-
+    /// <summary>
+    /// Role collection object
+    /// </summary>
     [Serializable, XmlRoot("Role")]
     public class Role {
 

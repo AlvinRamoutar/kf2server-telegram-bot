@@ -5,13 +5,13 @@ using System;
 
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.Browsers {
 
     /// <summary>
-    /// Manages selenium driver
+    /// Manages the Selenium WebDriver (FirefoxDriver)
     /// </summary>
     class SeleniumManager {
 
@@ -26,7 +26,6 @@ namespace kf2server_tbot.Browsers {
         public static IWebDriver CurrentDriver { get; private set; }
         #endregion
 
-
         /// <summary>
         /// Constructs new selenium driver using FirefoxDriver.
         /// <para>Also assigns profile options to FirefoxDriver, such as headless and no img/css rendering (via permission block)</para>
@@ -34,6 +33,8 @@ namespace kf2server_tbot.Browsers {
         public SeleniumManager() {
 
             Profile = new FirefoxProfile();
+
+            /// Disable CSS and images to save rendering resources
             Profile.SetPreference("permissions.default.stylesheet", 2);
             Profile.SetPreference("permissions.default.image", 2);
 
@@ -56,22 +57,20 @@ namespace kf2server_tbot.Browsers {
         /// <summary>
         /// Terminate Selenium Driver, and close all open browsers.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Tuple with success flag and message</returns>
         public static Tuple<bool, string> Quit() {
 
             try {
-
-                /// Try to close all open windows from FirefoxDriver
+                /// Try to close all open windows from FirefoxDriver, since calling
+                ///  WebDriver.Quit() has a bad tendency to leave marionettes open...
                 foreach (string id in CurrentDriver.WindowHandles) {
                     CurrentDriver.SwitchTo().Window(id);
                     CurrentDriver.Close();
-
                 }
 
                 CurrentDriver.Quit();
 
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 return new Tuple<bool, string>(false, e.Message);
             }
 

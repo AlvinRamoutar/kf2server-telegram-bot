@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
@@ -8,12 +7,14 @@ using kf2server_tbot.Security;
 
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.Utils {
 
-
+    /// <summary>
+    /// Stages of setup process, represented as enum
+    /// </summary>
     public enum SetupStage {
         SupplyChatId,
         HandshakeMessage,
@@ -59,38 +60,29 @@ namespace kf2server_tbot.Utils {
 
 
         /// <summary>
-        /// Routes to specific handler based on kind of message (entity or document)
+        /// A multi-stage process method for binding a chat to the Telegram bot
         /// </summary>
-        /// <param name="sender">Telegram</param>
-        /// <param name="e">Message</param>
-        private void OnMessageHandler(object sender, MessageEventArgs e) {
-
-            if (e.Message.Text != null) {
-
-                OnMessageEntitiesHandler(sender, e);
-
-            } 
-
-        }
-        
-
-
+        /// <param name="stage">Setup stage</param>
+        /// <param name="e">Telegram Message object</param>
+        /// <param name="args">Setup args</param>
         public async void Setup(SetupStage stage, MessageEventArgs e, List<string> args) {
 
             switch(stage) {
 
+                /// User performs '/setup'
                 case SetupStage.SupplyChatId:
                     await this.SendTextMessageAsync(
                         chatId: e.Message.Chat.Id,
                         text: string.Format(Prompts.Setup, e.Message.Chat.Id)
                     );
 
-                    // Save initializer user's ID
+                    /// Save initializer user's ID
                     SetupTelegramUser = e.Message.From;
                     LogEngine.Logger.Log(LogEngine.Status.TELEGRAM_INFO, 
                         string.Format("Telegram UUID {0} initialized setup!", SetupTelegramUser));
                     break;
 
+                /// Admin enters chatID in telegram bot console, and bot pings chat with that ID
                 case SetupStage.HandshakeMessage:
 
                     try {
@@ -106,6 +98,7 @@ namespace kf2server_tbot.Utils {
                     }
                     break;
                     
+                /// Admin confirms that above message was received by chat
                 case SetupStage.PostSetup:
 
                     Properties.Settings.Default.ChatId = Chat.Id.ToString();
@@ -122,6 +115,21 @@ namespace kf2server_tbot.Utils {
         }
 
 
+        /// <summary>
+        /// Routes to specific handler based on kind of message (entity or document)
+        /// </summary>
+        /// <param name="sender">Telegram</param>
+        /// <param name="e">Telegram Message object</param>
+        private void OnMessageHandler(object sender, MessageEventArgs e) {
+
+            if (e.Message.Text != null) {
+
+                OnMessageEntitiesHandler(sender, e);
+
+            }
+        }
+
+
 
         /// <summary>
         /// Directs message to appropriate response method.
@@ -129,9 +137,8 @@ namespace kf2server_tbot.Utils {
         /// <para>Else, command sent to KF2Service, where it tries to execute cmd based on existing service methods</para>
         /// </summary>
         /// <param name="sender">Telegram</param>
-        /// <param name="e">Message</param>
+        /// <param name="e">Telegram Message object</param>
         private async void OnMessageEntitiesHandler(object sender, MessageEventArgs e) {
-
             
             if (Chat == null || e.Message.Text.ToLower().Contains("/setup")) { /// If setup hasn't been performed yet
 

@@ -8,8 +8,8 @@ using System.Collections.Generic;
 
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot {
 
@@ -30,6 +30,10 @@ namespace kf2server_tbot {
         public delegate bool HandlerRoutine();
 
 
+        /// <summary>
+        /// Launcher method
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args) {
 
             /// Assigning handler for console window exit
@@ -111,11 +115,10 @@ namespace kf2server_tbot {
         /// <summary>
         /// Terminates console application.
         /// <para>First, active Users in AuthManager are serialized, encrypted, then flushed to disk.</para>
-        /// <para>Second, WCFServiceManager is halted, closing all open ServiceHosts.</para>
-        /// <para>Third, Close message logged to logfile, and logger instance disposed.</para>
-        /// <para>Fourth, SeleniumManager is disposed, and with it, all open browsers for ServerAdmin pages.</para>
+        /// <para>Second, Close message logged to logfile, and logger instance disposed.</para>
+        /// <para>Third, SeleniumManager is disposed, and with it, all open browsers for ServerAdmin pages.</para>
         /// </summary>
-        /// <returns></returns>
+        /// <returns>True when done</returns>
         static bool WindowClose() {
 
             try {

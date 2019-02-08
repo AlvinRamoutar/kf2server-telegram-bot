@@ -1,5 +1,10 @@
 ﻿using System;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
+/// </summary>
 namespace kf2server_tbot.Utils {
 
     /// <summary>

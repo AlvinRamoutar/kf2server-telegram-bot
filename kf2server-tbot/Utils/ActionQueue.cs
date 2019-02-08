@@ -5,6 +5,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
+/// <summary>
+/// KF2 Telegram Bot
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
+/// </summary>
 namespace kf2server_tbot.Utils {
 
     /// <summary>
@@ -116,26 +121,21 @@ namespace kf2server_tbot.Utils {
 
             /// If queue is empty, then this element will be the first.
             if (queue.Count == 0) {
-                ///Console.WriteLine("  Enqueueing ({0})", wrapperTask.Id);
                 queue.Enqueue(wrapperTask);
                 wrapperTask.Start();
                 timeoutTimer.Start();
-                ///Console.WriteLine("  Successfully enqueued {0}.", wrapperTask.Id);
             }
 
             /// Otherwise, next wrapper task being added to queue will start as a continuation of the previous
             ///  (task chaining)
             else {
-                //Console.WriteLine("  Enqueueing (child {0} of parent {1})", wrapperTask.Id, queue.Last<Task>().Id);
 
                 queue.Last<Task>().ContinueWith((pendingTask) => {
-                    //Console.WriteLine("Starting wrapperTask {0}", wrapperTask.Id);
                     wrapperTask.Start();
                     timeoutTimer.Start();
                 });
 
                 queue.Enqueue(wrapperTask);
-                //Console.WriteLine("  Successfully enqueued {0}.", wrapperTask.Id);
             }
 
         }
@@ -162,45 +162,6 @@ namespace kf2server_tbot.Utils {
             }
 
         }
-
-
-        //Testing, to be removed later.
-        public void Test() {
-
-            ActionQueue.Instance.Act(new Thread(() => {
-                Console.WriteLine("...");
-                for (int i = 0; i < new Random().Next(10, 20); i++) {
-                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
-                    System.Threading.Thread.SpinWait(9000000);
-                }
-                Console.WriteLine("...done");
-            }));
-            ActionQueue.Instance.Act(new Thread(() => {
-                Console.WriteLine("...");
-                for (int i = 0; i < new Random().Next(10, 20); i++) {
-                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
-                    System.Threading.Thread.SpinWait(9000000);
-                }
-                Console.WriteLine("...done");
-            }));
-            ActionQueue.Instance.Act(new Thread(() => {
-                Console.WriteLine("...");
-                for (int i = 0; i < new Random().Next(10, 20); i++) {
-                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
-                    System.Threading.Thread.SpinWait(9000000);
-                }
-                Console.WriteLine("...done");
-            }));
-            ActionQueue.Instance.Act(new Thread(() => {
-                Console.WriteLine("...");
-                for (int i = 0; i < new Random().Next(10, 20); i++) {
-                    Console.Write("{0}.", Thread.CurrentThread.ManagedThreadId);
-                    System.Threading.Thread.SpinWait(9000000);
-                }
-                Console.WriteLine("...done");
-            }));
-        }
-
 
     }
 }

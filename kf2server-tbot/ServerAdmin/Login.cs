@@ -6,8 +6,8 @@ using System;
 
 /// <summary>
 /// KF2 Telegram Bot
-/// An experiment in command-based controls for Killing Floor 2 (TripWire)
-/// Alvin Ramoutar, 2018
+/// An experiment in automating KF2 server webmin actions with Selenium, triggered via Telegram's Bot API
+/// Copyright (c) 2018-2019 Alvin Ramoutar https://alvinr.ca/ 
 /// </summary>
 namespace kf2server_tbot.ServerAdmin {
 
@@ -45,7 +45,7 @@ namespace kf2server_tbot.ServerAdmin {
 
         /// <summary>
         /// Signs into ServerAdmin using credentials stored in Settings file.
-        /// This MUST be done as part of setup
+        /// <para>This MUST be done as part of setup.</para>
         /// </summary>
         /// <returns></returns>
         public Tuple<bool, string> SignIn() {
