@@ -1,0 +1,57 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="kf2server_tbot.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="KF2ServerURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="WebAdminUsername" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="WebAdminPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ServerInfoURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">current/info</Value>
+    </Setting>
+    <Setting Name="ChangeMapURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">current/change</Value>
+    </Setting>
+    <Setting Name="PlayersURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">current/players</Value>
+    </Setting>
+    <Setting Name="PasswordsURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">policy/passwords</Value>
+    </Setting>
+    <Setting Name="GeneralURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">settings/general#SG_Game</Value>
+    </Setting>
+    <Setting Name="GameTypesURL" Type="System.String" Scope="User">
+      <Value Profile="(Default)">settings/gametypes</Value>
+    </Setting>
+    <Setting Name="MapChangeTimeoutSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">90</Value>
+    </Setting>
+    <Setting Name="DefaultTaskTimeoutSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">120</Value>
+    </Setting>
+    <Setting Name="UsersRelFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Users.dll</Value>
+    </Setting>
+    <Setting Name="PageNavTimeoutSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15</Value>
+    </Setting>
+    <Setting Name="Logfile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Log.txt</Value>
+    </Setting>
+    <Setting Name="DefaultGamePassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ChatId" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TelegramBotToken" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>
